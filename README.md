@@ -4,6 +4,12 @@ This is a simple vue frontend for my [CutSolver](https://github.com/ModischFabri
 
 This is also my first vue project, keep looking for other references if you want to learn it. 
 
+I use:
+1. IDE: WebStorm (while I have it)
+1. Vue
+2. Vue Bootstrap
+
+
 ## Project setup
 ```
 npm install
