@@ -2,7 +2,7 @@
 
 This is a simple vue frontend for my [CutSolver](https://github.com/ModischFabrications/CutSolver). 
 
-This is also my first vue project, keep look for other references if you want to learn it. 
+This is also my first vue project, keep looking for other references if you want to learn it. 
 
 ## Project setup
 ```
