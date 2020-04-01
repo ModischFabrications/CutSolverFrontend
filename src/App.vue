@@ -1,17 +1,27 @@
 <template>
     <div id="app">
-        <b-navbar type="dark">
-            <b-navbar-brand href="#">{{ title }}</b-navbar-brand>
+        <b-navbar type="light">
             <!-- display as clickable (home) icon in top left -->
-            <img alt="Vue logo" src="./assets/logo.png">
+
+            <b-navbar-brand href="#">
+                <img alt="Vue logo" height="32" src="./assets/logo.png" class="d-inline-block align-top">
+                {{ title }}
+            </b-navbar-brand>
 
             <b-navbar-nav class="ml-auto">
+                <!-- fold out/popup short explanation -->
+                <b-nav-item href="#">Manual</b-nav-item>
+                <!-- explain why/how I did it -->
+                <b-nav-item href="#">About</b-nav-item>
 
+                <!-- make icon: fontawesome? -->
+                <b-nav-item href="https://github.com/ModischFabrications/CutSolverFrontend">GitHub</b-nav-item>
             </b-navbar-nav>
         </b-navbar>
 
         <!-- side by side on desktop, top to bottom on mobile -->
         <SolverInput></SolverInput>
+
         <!-- Button "solve now" that collects input, calls API and displays output -->
         <!-- centered and square on desktop, long bar button on mobile -->
 

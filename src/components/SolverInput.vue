@@ -31,7 +31,10 @@
                         </template>-->
             <!-- add interactive third row with size -->
             <!-- [=======|.......] -->
+
             <!-- make table modifiable -->
+            <!-- https://codesandbox.io/s/modern-http-n293u-->
+
             <!-- pull to reorder -->
             <!-- [Add a new size] -->
         </b-table>
