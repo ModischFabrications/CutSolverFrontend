@@ -1,15 +1,31 @@
 <template>
     <div id="app">
-        <h1> {{ title }}</h1>
-        <img alt="Vue logo" src="./assets/logo.png">
-        <SolverInput></SolverInput>
+        <b-navbar type="dark">
+            <b-navbar-brand href="#">{{ title }}</b-navbar-brand>
+            <!-- display as clickable (home) icon in top left -->
+            <img alt="Vue logo" src="./assets/logo.png">
+
+            <b-navbar-nav class="ml-auto">
+
+            </b-navbar-nav>
+        </b-navbar>
+
+        <!-- side by side on desktop, top to bottom on mobile -->
+        <SolverInput :sizes="default_job"></SolverInput>
+        <!-- Button "solve now" that collects input, calls API and displays output -->
+        <!-- centered and square on desktop, long bar button on mobile -->
+
+        <!-- output field for json API answer -->
+
+        <!-- [x] live update ?-->
     </div>
 </template>
 
 <script>
     import SolverInput from "@/components/SolverInput";
+    import testjob from "./tests/data/testjob.json"
 
-    let title = "CutSolver";
+    const title = "CutSolver";
 
     export default {
         name: 'App',
@@ -19,7 +35,8 @@
         },
         data: function () {
             return {
-                title: title
+                title: title,
+                default_job: testjob
             };
         }
     }
