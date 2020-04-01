@@ -11,7 +11,7 @@
         </b-navbar>
 
         <!-- side by side on desktop, top to bottom on mobile -->
-        <SolverInput :sizes="default_job"></SolverInput>
+        <SolverInput></SolverInput>
         <!-- Button "solve now" that collects input, calls API and displays output -->
         <!-- centered and square on desktop, long bar button on mobile -->
 
@@ -23,7 +23,6 @@
 
 <script>
     import SolverInput from "@/components/SolverInput";
-    import testjob from "./tests/data/testjob.json"
 
     const title = "CutSolver";
 
@@ -36,7 +35,6 @@
         data: function () {
             return {
                 title: title,
-                default_job: testjob
             };
         }
     }

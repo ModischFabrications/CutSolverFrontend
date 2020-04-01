@@ -26,12 +26,17 @@
 
 <script>
     // testjob.target_sizes
+    import testjob from "../tests/data/testjob.json"
 
     export default {
         name: "SolverInput",
         props: {
-            sizes: Object
-        }
+            job: {
+                type: Object,
+                default: testjob
+                // add validator for json scheme
+            }
+        },
     }
 </script>
 
