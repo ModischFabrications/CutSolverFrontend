@@ -54,6 +54,13 @@
     // default values
     import testjob from "../tests/data/testjob.json"
 
+    function Job(max_length, cut_width, target_sizes) {
+        // other idea for default values?
+        this.max_length = max_length;
+        this.cut_width = cut_width;
+        this.target_sizes = target_sizes;
+    }
+
     export default {
         name: "SolverInput",
         props: {
@@ -70,11 +77,7 @@
         computed: {
             // having a better idea return "component state"?
             job: function () {
-                return {
-                    "max_length": this.max_length,
-                    "cut_width": this.cut_width,
-                    "target_sizes": this.target_sizes
-                }
+                return new Job(testjob.max_length, testjob.cut_width, testjob.target_sizes);
             },
             valid: function () {
                 return (this.$refs["grp_max_length"].state &&

@@ -1,5 +1,5 @@
 {
-  "solver": "bruteforce",
+  "solver_type": "bruteforce",
   "time_ms": 100,
   "lengths": [
     [

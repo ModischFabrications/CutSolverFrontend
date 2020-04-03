@@ -13,10 +13,19 @@
 </template>
 
 <script>
+    function Result(solver_type, time_ms, lengths) {
+        this.solver_type = solver_type;
+        this.time_ms = time_ms;
+        this.lengths = lengths;
+    }
+
     export default {
         name: "SolverOutput",
         props: {
-            result: Object
+            result: {
+                type: Result,
+                required: true
+            }
         },
     }
 </script>

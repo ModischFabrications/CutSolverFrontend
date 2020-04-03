@@ -29,7 +29,7 @@
         <b-button pill size="lg" type='submit'>Solve</b-button>
 
         <!-- output field for json API answer -->
-        <SolverOutput :result="testresult"></SolverOutput>
+        <SolverOutput :result="result"></SolverOutput>
 
         <!-- [x] live update ?-->
     </div>
@@ -38,8 +38,10 @@
 <script>
     import SolverInput from "@/components/SolverInput";
     import SolverOutput from "@/components/SolverOutput";
+    // import Result from "@/components/SolverOutput";
     // TODO example values
-    import testresult from "./tests/data/testresult.json"
+    import json_testresult from "./tests/data/testresult.json"
+    // let testresult = Result(json_testresult.solver_type, json_testresult.time_ms, json_testresult.lengths);
 
     const title = "CutSolver";
 
@@ -53,7 +55,8 @@
         data: function () {
             return {
                 title: title,
-                testresult: testresult
+                // typecast to Result
+                result: json_testresult
             };
         }
     }
