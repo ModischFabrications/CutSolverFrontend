@@ -3,25 +3,29 @@
         <h2>Input</h2>
 
         <b-row>
-            <b-col sm="2">
-                <label for="input_max_length">Maximum Length:</label>
+            <b-col sm="3">
+                <b-form-group
+                        id="grp_max_length"
+                        label="Enter the maximum length"
+                        label-for="input_max_length"
+                        invalid-feedback="Length needs to be between 1 and 9999"
+                        :state="(max_length >= 1 && max_length <= 9999)"
+                >
+                    <!-- fix state transfer, somehow input won't be set by group-->
+                    <b-form-input id="input-max_length" v-model="max_length" :state="state" trim></b-form-input>
+                </b-form-group>
             </b-col>
-            <b-col sm="2">
-                <!-- add validation and set state accordingly -->
-                <b-form-input id="input_max_length" type="number" :state="false" v-model="job.max_length" min="1"
-                              max="9999" placeholder="Enter maximum length"></b-form-input>
-            </b-col>
-        </b-row>
 
-        <b-row>
-            <b-col sm="2">
-                <label for="input_cut_width">Cut width:</label>
-            </b-col>
-            <b-col sm="2">
-                <!-- relative validation? -->
-                <b-form-input id="input_cut_width" type="number" :state="false" v-model="job.cut_width" min="0"
-                              max="input_max_length.value/10"
-                              placeholder="Enter cutting width"></b-form-input>
+            <b-col sm="3">
+                <b-form-group
+                        id="cut_width"
+                        label="Enter the cutting width"
+                        label-for="input_cut_width"
+                        invalid-feedback="Length needs to be between 0 and max-length/10"
+                        :state="(cut_width >= 0 && cut_width <= max_length/10)"
+                >
+                    <b-form-input id="input-cut_width" v-model="cut_width" :state="state" trim></b-form-input>
+                </b-form-group>
             </b-col>
         </b-row>
 
@@ -48,12 +52,24 @@
     export default {
         name: "SolverInput",
         props: {
-            job: {
-                type: Object,
-                default: testjob
-                // add validator for json scheme
+            // nothing...
+        },
+        data: function () {
+            return {
+                max_length: testjob.max_length,
+                cut_width: testjob.cut_width,
+                target_sizes: testjob.target_sizes
             }
         },
+        computed: {
+            job: function () {
+                return {
+                    "max_length": this.max_length,
+                    "cut_width": this.cut_width,
+                    "target_sizes": this.target_sizes
+                }
+            }
+        }
     }
 </script>
 
