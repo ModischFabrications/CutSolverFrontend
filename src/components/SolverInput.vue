@@ -75,8 +75,9 @@
             }
         },
         computed: {
-            // having a better idea return "component state"?
+            // better idea to return this component state as collection"?
             job: function () {
+                // TODO: this should return component state, but my ideas did not work
                 return new Job(testjob.max_length, testjob.cut_width, testjob.target_sizes);
             },
             valid: function () {
