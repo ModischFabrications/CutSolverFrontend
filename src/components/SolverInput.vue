@@ -3,33 +3,37 @@
         <h2>Input</h2>
 
         <b-row>
-            <b-col sm="3">
+            <b-col sm="6">
                 <b-form-group
-                        id="grp_max_length"
+                        ref="grp_max_length"
                         label="Enter the maximum length"
                         label-for="input_max_length"
                         invalid-feedback="Length needs to be between 1 and 9999"
                         :state="(max_length >= 1 && max_length <= 9999)"
                 >
                     <!-- fix state transfer, somehow input won't be set by group-->
-                    <b-form-input id="input-max_length" v-model="max_length" :state="state" trim></b-form-input>
+                    <!-- :state="$refs['grp_max_length'].state"-->
+                    <b-form-input id="input-max_length" type="number" trim v-model="max_length"
+                    ></b-form-input>
                 </b-form-group>
             </b-col>
 
-            <b-col sm="3">
+            <b-col sm="6">
                 <b-form-group
-                        id="cut_width"
+                        ref="grp_cut_width"
                         label="Enter the cutting width"
                         label-for="input_cut_width"
                         invalid-feedback="Length needs to be between 0 and max-length/10"
                         :state="(cut_width >= 0 && cut_width <= max_length/10)"
                 >
-                    <b-form-input id="input-cut_width" v-model="cut_width" :state="state" trim></b-form-input>
+                    <!-- :state="$refs['grp_cut_width'].state"-->
+                    <b-form-input id="input_cut_width" type="number" trim v-model="cut_width"
+                    ></b-form-input>
                 </b-form-group>
             </b-col>
         </b-row>
 
-        <b-table sticky-header=true hover outlined :items="job.target_sizes" :fields="['quantity', 'length']">
+        <b-table sticky-header=true hover outlined :items="target_sizes" :fields="['quantity', 'length']">
             <!--            <template v-slot:cell(amount)="amount">
                             <b-form-input type="number" v-model="amount"></b-form-input>
                         </template>-->
@@ -46,7 +50,7 @@
 </template>
 
 <script>
-    // testjob.target_sizes
+    // default values
     import testjob from "../tests/data/testjob.json"
 
     export default {
@@ -56,18 +60,24 @@
         },
         data: function () {
             return {
+                // other idea for default values?
                 max_length: testjob.max_length,
                 cut_width: testjob.cut_width,
                 target_sizes: testjob.target_sizes
             }
         },
         computed: {
+            // having a better idea return "component state"?
             job: function () {
                 return {
                     "max_length": this.max_length,
                     "cut_width": this.cut_width,
                     "target_sizes": this.target_sizes
                 }
+            },
+            valid: function () {
+                return (this.$refs["grp_max_length"].state &&
+                    this.$refs["grp_cut_width"].state)
             }
         }
     }
