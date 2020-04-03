@@ -1,14 +1,17 @@
 <template>
     <!-- compute validness -->
-    <div v-if="result" id="solver-output" class="solver_output">
+    <!-- 1. hidden, 2. valid: show, 3. invalid: (better) warning -->
+    <!-- TODO: stupid mess, see below -->
+    <div v-if="typeof result !== Result && result===0">
+        <h2>Press "solve" to start</h2>
+    </div>
+    <div v-else-if="typeof result !== Result && result===-1">
+        <h2>Invalid result received, try again.</h2>
+    </div>
+    <div v-else-if="typeof result === Result && result !== null" id="solver-output" class="solver_output">
         <h2>Output</h2>
         <b-table sticky-header=true hover outlined :items="result.lengths">
         </b-table>
-
-    </div>
-    <!-- 1. hidden, 2. valid: show, 3. invalid: (better) warning -->
-    <div v-else>
-        <h2>No output available!</h2>
     </div>
 </template>
 
@@ -23,7 +26,10 @@
         name: "SolverOutput",
         props: {
             result: {
-                type: Result,
+                // TODO: is there a better way to differentiate states?
+                // set invalid from internal parsing and hide until first called?
+                // v-if=valid(result), else "invalid"
+                type: [Number, Result],
                 required: true
             }
         },
