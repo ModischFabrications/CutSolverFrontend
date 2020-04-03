@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <b-navbar type="light">
+        <b-navbar type="light" variant="light" print>
             <!-- display as clickable (home) icon in top left -->
 
             <b-navbar-brand href="#">
@@ -9,13 +9,15 @@
             </b-navbar-brand>
 
             <b-navbar-nav class="ml-auto">
-                <!-- fold out/popup short explanation -->
-                <b-nav-item href="#">Manual</b-nav-item>
-                <!-- explain why/how I did it -->
+
                 <b-nav-item href="#">About</b-nav-item>
+                <!-- explain why/how I did it -->
+                <!-- fold out/popup short explanation -->
+                <!-- donate -->
+                <!-- github link -->
 
                 <!-- make icon: fontawesome? -->
-                <b-nav-item href="https://github.com/ModischFabrications/CutSolverFrontend">GitHub</b-nav-item>
+                <!--                <b-nav-item href="https://github.com/ModischFabrications/CutSolverFrontend">GitHub</b-nav-item>-->
             </b-navbar-nav>
         </b-navbar>
 
@@ -57,6 +59,5 @@
         -moz-osx-font-smoothing: grayscale;
         text-align: center;
         color: #2c3e50;
-        margin-top: 60px;
     }
 </style>
