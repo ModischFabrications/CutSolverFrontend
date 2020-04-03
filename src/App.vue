@@ -26,7 +26,7 @@
 
         <!-- Button "solve now" that collects input, calls API and displays output -->
         <!-- centered and square on desktop, long bar button on mobile -->
-        <b-button pill size="lg" type='submit'>Solve</b-button>
+        <b-button pill size="lg" type='submit' @click="startSolving">Solve</b-button>
 
         <!-- output field for json API answer -->
         <SolverOutput :result="result"></SolverOutput>
@@ -41,6 +41,7 @@
     // import Result from "@/components/SolverOutput";
     // TODO example values
     import json_testresult from "./tests/data/testresult.json"
+    // stupid and still won't work somehow
     // let testresult = Result(json_testresult.solver_type, json_testresult.time_ms, json_testresult.lengths);
 
     const title = "CutSolver";
@@ -54,10 +55,23 @@
         },
         data: function () {
             return {
+                // won't change page title, might need to do something else
                 title: title,
-                // typecast to Result
-                result: json_testresult
+                // TODO: typecast to Result
+                result: 0
             };
+        },
+        methods: {
+            startSolving() {
+                console.log("startSolving");
+                console.log(SolverInput.computed.job());
+
+                // TODO: call API
+                let reply = (Math.random() > 0.2) ? json_testresult : -1;
+                console.assert(reply !== null);
+
+                this.result = reply;
+            }
         }
     }
 </script>
