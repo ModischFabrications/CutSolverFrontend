@@ -26,8 +26,10 @@
 
         <!-- Button "solve now" that collects input, calls API and displays output -->
         <!-- centered and square on desktop, long bar button on mobile -->
+        <b-button pill size="lg" type='submit'>Solve</b-button>
 
         <!-- output field for json API answer -->
+        <SolverOutput :result="testresult"></SolverOutput>
 
         <!-- [x] live update ?-->
     </div>
@@ -35,18 +37,23 @@
 
 <script>
     import SolverInput from "@/components/SolverInput";
+    import SolverOutput from "@/components/SolverOutput";
+    // TODO example values
+    import testresult from "./tests/data/testresult.json"
 
     const title = "CutSolver";
 
     export default {
         name: 'App',
         components: {
+            SolverOutput,
             SolverInput,
             // ...
         },
         data: function () {
             return {
                 title: title,
+                testresult: testresult
             };
         }
     }
