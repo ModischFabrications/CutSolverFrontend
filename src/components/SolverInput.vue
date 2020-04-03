@@ -38,6 +38,7 @@
                             <b-form-input type="number" v-model="amount"></b-form-input>
                         </template>-->
             <!-- add interactive third row with size -->
+            <!-- https://bootstrap-vue.js.org/docs/components/progress -->
             <!-- [=======|.......] -->
 
             <!-- make table modifiable -->
