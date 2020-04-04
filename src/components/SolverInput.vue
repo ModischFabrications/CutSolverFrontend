@@ -11,10 +11,9 @@
                         invalid-feedback="Length needs to be between 1 and 9999"
                         :state="(max_length >= 1 && max_length <= 9999)"
                 >
-                    <!-- fix state transfer, somehow input won't be set by group-->
+                    <!-- TODO fix state transfer, somehow input won't be set by group-->
                     <!-- :state="$refs['grp_max_length'].state"-->
-                    <b-form-input id="input-max_length" type="number" trim v-model="max_length"
-                    ></b-form-input>
+                    <b-form-input id="input-max_length" type="number" trim v-model="max_length"></b-form-input>
                 </b-form-group>
             </b-col>
 
@@ -27,8 +26,7 @@
                         :state="(cut_width >= 0 && cut_width <= max_length/10)"
                 >
                     <!-- :state="$refs['grp_cut_width'].state"-->
-                    <b-form-input id="input_cut_width" type="number" trim v-model="cut_width"
-                    ></b-form-input>
+                    <b-form-input id="input_cut_width" type="number" trim v-model="cut_width"></b-form-input>
                 </b-form-group>
             </b-col>
         </b-row>
@@ -63,9 +61,6 @@
 
     export default {
         name: "SolverInput",
-        props: {
-            // nothing...
-        },
         data: function () {
             return {
                 // other idea for default values?
@@ -88,11 +83,11 @@
     }
 </script>
 
-<!-- no idea why borders are broken -->
 <style scoped>
     .solver_input {
-        border: blueviolet;
+        border: 2px solid grey;
         border-radius: 8px;
-        padding: 16px;
+        padding: 8px;
+        margin: 16px;
     }
 </style>

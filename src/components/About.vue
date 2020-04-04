@@ -14,13 +14,13 @@
             paying around 5€/month to host this service. </p>
         <!-- donate -->
 
-        <!-- make icon: fontawesome? -->
         <!-- github link -->
+        <!-- make icon: fontawesome? -->
         <!-- <b-nav-item href="https://github.com/ModischFabrications/CutSolverFrontend">GitHub</b-nav-item>-->
         <p>Check out the code if you want to see how I made it, you are welcome to add to it if you see any
             improvements :) </p>
 
-        <p>You can send jobs to the backend yourself, see ## </p>
+        <p>You can send jobs to my backend all by yourself, see ## </p>
     </b-modal>
 </template>
 
