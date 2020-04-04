@@ -50,30 +50,24 @@
 
 <script>
     // default values
-    import testjob from "../tests/data/testjob.json"
-
-    function Job(max_length, cut_width, target_sizes) {
-        // other idea for default values?
-        this.max_length = max_length;
-        this.cut_width = cut_width;
-        this.target_sizes = target_sizes;
-    }
+    import {Job} from "@/components/data/Job";
+    import json_testjob from "../tests/data/testjob.json"
 
     export default {
         name: "SolverInput",
         data: function () {
             return {
                 // other idea for default values?
-                max_length: testjob.max_length,
-                cut_width: testjob.cut_width,
-                target_sizes: testjob.target_sizes
+                max_length: json_testjob.max_length,
+                cut_width: json_testjob.cut_width,
+                target_sizes: json_testjob.target_sizes
             }
         },
         computed: {
             // better idea to return this component state as collection"?
             job: function () {
                 // TODO: this should return component state, but my ideas did not work
-                return new Job(testjob.max_length, testjob.cut_width, testjob.target_sizes);
+                return new Job(json_testjob.max_length, json_testjob.cut_width, json_testjob.target_sizes);
             },
             valid: function () {
                 return (this.$refs["grp_max_length"].state &&
