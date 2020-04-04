@@ -31,10 +31,14 @@
             </b-col>
         </b-row>
 
-        <b-table sticky-header=true hover outlined :items="target_sizes" :fields="['quantity', 'length']">
-            <!--            <template v-slot:cell(amount)="amount">
-                            <b-form-input type="number" v-model="amount"></b-form-input>
-                        </template>-->
+        <b-table sticky-header=true hover bordered :items="target_sizes" primary-key="id"
+                 :fields="[{key: 'quantity', sortable:true}, {key: 'length', sortable:true}, 'delete']"
+                 sort-by="quantity" sort-desc fixed>
+            <template v-slot:cell(delete)="entry"><i>
+                <!-- TODO icon, minimum width -->
+                <b-button @click="deleteRow(entry.item.id)">[x]</b-button>
+            </i></template>
+
             <!-- add interactive third row with size -->
             <!-- https://bootstrap-vue.js.org/docs/components/progress -->
             <!-- [=======|.......] -->
@@ -60,7 +64,7 @@
                 // other idea for default values?
                 max_length: json_testjob.max_length,
                 cut_width: json_testjob.cut_width,
-                target_sizes: json_testjob.target_sizes
+                target_sizes: this.addIndex(json_testjob.target_sizes)
             }
         },
         computed: {
@@ -73,15 +77,28 @@
                 return (this.$refs["grp_max_length"].state &&
                     this.$refs["grp_cut_width"].state)
             }
+        },
+        methods: {
+            addIndex(array) {
+                let iIndex = 0;
+                array.forEach(row => row.id = iIndex++);
+                return array;
+            },
+            deleteRow(row) {
+                console.log(row);
+                let index = this.target_sizes.findIndex(element => (element.id === row));
+                console.log(this.target_sizes[index]);
+                this.target_sizes.splice(index, 1);
+            }
         }
     }
 </script>
 
 <style scoped>
     .solver_input {
-        border: 2px solid grey;
-        border-radius: 8px;
-        padding: 8px;
+        /*border: 2px solid grey;*/
+        /*border-radius: 8px;*/
+        /*padding: 8px;*/
         margin: 16px;
     }
 </style>
