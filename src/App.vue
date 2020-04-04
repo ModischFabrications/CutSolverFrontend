@@ -67,6 +67,7 @@
                 // TODO: call API
                 let reply = (Math.random() > 0.2) ? testresult : new Result();
                 console.assert(reply !== null);
+                console.log("Result: ");
                 console.log(reply);
 
                 this.result = reply;

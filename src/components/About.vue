@@ -1,6 +1,7 @@
 <template>
     <b-modal id="about-modal" centered scrollable title="About" header-bg-variant="light" hide-footer>
         <!-- might need to be split into different parts or collapses instead... -->
+        <!-- Markdown content instead? Writing HTML is pretty cumbersome -->
         <h5>What it is</h5>
         <p>This service collects your input, sends it to a big calculator of mine, allows it to calculate for a while
             and displays the received result to you.
