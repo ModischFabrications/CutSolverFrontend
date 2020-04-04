@@ -32,9 +32,9 @@
         </b-row>
 
         <!-- resize columns -->
-        <b-table sticky-header=true hover bordered :items="target_sizes" primary-key="id"
+        <b-table id="table_input" sticky-header=true hover bordered :items="target_sizes" primary-key="id"
                  :fields="[{key: 'quantity', sortable:true}, {key: 'length', sortable:true}, {key: 'delete', label: ''}]"
-                 sort-by="quantity" sort-desc>
+                 sort-by="quantity" sort-desc :tbody-transition-props="{name: 'flip-list'}">
             <template v-slot:cell(delete)="row">
                 <!-- TODO icon, minimum width -->
                 <b-button @click="deleteRow(row.item.id)">[x]</b-button>
@@ -110,5 +110,10 @@
 
     .three_digit_input {
         width: 5.5em;
+    }
+
+    table#table_input .flip-list-move {
+        /* TODO fix transition: https://bootstrap-vue.js.org/docs/components/table/#table-body-transition-support */
+        transition: transform 1s;
     }
 </style>
