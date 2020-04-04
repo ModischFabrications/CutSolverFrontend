@@ -29,8 +29,9 @@
         <b-button pill size="lg" type='submit' @click="startSolving">Solve</b-button>
 
         <!-- output field for json API answer -->
-        <SolverOutput :result="result"></SolverOutput>
-
+        <b-collapse id="output-collapse" v-model="showResult">
+            <SolverOutput :result="result"></SolverOutput>
+        </b-collapse>
         <!-- [x] live update ?-->
     </div>
 </template>
@@ -38,11 +39,11 @@
 <script>
     import SolverInput from "@/components/SolverInput";
     import SolverOutput from "@/components/SolverOutput";
-    // import Result from "@/components/SolverOutput";
-    // TODO example values
+    import {Result} from "@/components/data/Result";
+    // example values
     import json_testresult from "./tests/data/testresult.json"
-    // stupid and still won't work somehow
-    // let testresult = Result(json_testresult.solver_type, json_testresult.time_ms, json_testresult.lengths);
+    // stupid, better way?
+    let testresult = new Result(json_testresult.solver_type, json_testresult.time_ms, json_testresult.lengths);
 
     const title = "CutSolver";
 
@@ -57,8 +58,9 @@
             return {
                 // won't change page title, might need to do something else
                 title: title,
-                // TODO: typecast to Result
-                result: 0
+
+                result: new Result(),
+                showResult: false
             };
         },
         methods: {
@@ -66,11 +68,12 @@
                 console.log("startSolving");
                 console.log(SolverInput.computed.job());
 
-                // TODO: call API
-                let reply = (Math.random() > 0.2) ? json_testresult : -1;
+                // TODO: call API, -1 is an invalid value
+                let reply = (Math.random() > 0.2) ? testresult : -1;
                 console.assert(reply !== null);
 
                 this.result = reply;
+                this.showResult = true;
             }
         }
     }
