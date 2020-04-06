@@ -13,7 +13,8 @@
                 >
                     <!-- TODO fix state transfer, somehow input won't be set by group-->
                     <!-- :state="$refs['grp_max_length'].state"-->
-                    <b-form-input id="input-max_length" type="number" v-model="max_length"></b-form-input>
+                    <b-form-input id="input-max_length" type="number" v-model="max_length"
+                                  placeholder="check your supplier"></b-form-input>
                 </b-form-group>
             </b-col>
 
@@ -26,7 +27,8 @@
                         :state="(cut_width >= 0 && cut_width <= max_length/10)"
                 >
                     <!-- :state="$refs['grp_cut_width'].state"-->
-                    <b-form-input id="input_cut_width" type="number" v-model="cut_width"></b-form-input>
+                    <b-form-input id="input_cut_width" type="number" v-model="cut_width"
+                                  placeholder="measure a cut"></b-form-input>
                 </b-form-group>
             </b-col>
         </b-row>
@@ -35,16 +37,18 @@
         <b-table id="table_input" sticky-header=true hover bordered :items="target_sizes" primary-key="id"
                  :fields="[{key: 'quantity', sortable:true}, {key: 'length', sortable:true}, {key: 'delete', label: ''}]"
                  sort-by="quantity" sort-desc :tbody-transition-props="{name: 'flip-list'}">
+            <template v-slot:cell(quantity)="row">
+                <!-- TODO: validator? Correct/ignore wrong-->
+                <b-form-input class="digit_input" type="number" lazy v-model="row.item.quantity"
+                              placeholder="1?"></b-form-input>
+            </template>
+            <template v-slot:cell(length)="row">
+                <b-form-input class="three_digit_input" type="number" lazy v-model="row.item.length"
+                              placeholder="100?"></b-form-input>
+            </template>
             <template v-slot:cell(delete)="row">
                 <!-- TODO icon, minimum width -->
                 <b-button @click="deleteRow(row.item.id)">[x]</b-button>
-            </template>
-            <template v-slot:cell(quantity)="row">
-                <!-- TODO: validator? Correct/ignore wrong-->
-                <b-form-input class="digit_input" type="number" lazy v-model="row.item.quantity"></b-form-input>
-            </template>
-            <template v-slot:cell(length)="row">
-                <b-form-input class="three_digit_input" type="number" lazy v-model="row.item.length"></b-form-input>
             </template>
 
             <!-- add interactive third row with size -->

@@ -12,6 +12,10 @@
             something that people do? Do I need to worry about that? To be honest, I wouldn't know what to do with it,
             if you have a nice welding project send me an email instead so I can look at your fine work.</p>
 
+        <p> Be aware that this is actually a very hard mathematical problem, google "bin packing problem". This means
+            that this calculator will only guarantee perfect results up to 12 elements, anything more will fall back to
+            a smart, but easily fooled algorithm. </p>
+
         <h5>Why it exists</h5>
         <p>This project was born out of the need to cut lengths of steel tubing. Ordering everything
             pre-cut is easy, but costs at least 30% more. I had everything I needed at home, but I needed to know how
