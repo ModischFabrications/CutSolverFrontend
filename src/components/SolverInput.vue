@@ -39,11 +39,11 @@
                  sort-by="quantity" sort-desc :tbody-transition-props="{name: 'flip-list'}">
             <template v-slot:cell(quantity)="row">
                 <!-- TODO: validator? Correct/ignore wrong-->
-                <b-form-input class="digit_input" type="number" lazy v-model="row.item.quantity"
+                <b-form-input type="number" lazy v-model="row.item.quantity"
                               placeholder="1?"></b-form-input>
             </template>
             <template v-slot:cell(length)="row">
-                <b-form-input class="three_digit_input" type="number" lazy v-model="row.item.length"
+                <b-form-input type="number" lazy v-model="row.item.length"
                               placeholder="100?"></b-form-input>
             </template>
             <template v-slot:cell(delete)="row">
@@ -51,12 +51,12 @@
                 <b-button @click="deleteRow(row.item.id)">[x]</b-button>
             </template>
 
-            <!-- add interactive third row with size -->
+            <!-- add interactive third row with size? -->
             <!-- https://bootstrap-vue.js.org/docs/components/progress -->
             <!-- [=======|.......] -->
-
-            <!-- [Add a new size] -->
         </b-table>
+
+        <TargetInput v-on:addRow="addRow($event)"/>
     </div>
 </template>
 
@@ -64,15 +64,17 @@
     // default values
     import {Job} from "@/components/data/Job";
     import json_testjob from "../tests/data/testjob.json"
+    import TargetInput from "@/components/TargetInput";
 
     export default {
         name: "SolverInput",
+        components: {TargetInput},
         data: function () {
             return {
                 // other idea for default values?
                 max_length: json_testjob.max_length,
                 cut_width: json_testjob.cut_width,
-                target_sizes: this.addIndex(json_testjob.target_sizes)
+                target_sizes: this.addIndex(json_testjob.target_sizes),
             }
         },
         computed: {
@@ -91,6 +93,10 @@
                 let iIndex = 0;
                 array.forEach(row => row.id = iIndex++);
                 return array;
+            },
+            addRow(target) {
+                target.id = this.target_sizes.length;
+                this.target_sizes.push(target);
             },
             deleteRow(row) {
                 let index = this.target_sizes.findIndex(element => (element.id === row));
