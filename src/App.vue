@@ -2,7 +2,7 @@
     <div id="app">
         <b-navbar type="light" variant="light" print>
             <b-navbar-brand href="#">
-                <img alt="Vue logo" height="32" src="./assets/logo.png" class="d-inline-block align-top">
+                <img alt="Vue logo" height="32" src="./assets/icon.svg" class="d-inline-block align-top">
                 {{ title }}
             </b-navbar-brand>
             <b-navbar-nav>
