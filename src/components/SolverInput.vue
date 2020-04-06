@@ -40,7 +40,6 @@
                 <div class="del_column">{{entry.label}}</div>
             </template>
             <template v-slot:cell(quantity)="row">
-                <!-- TODO: validator? Correct/ignore wrong-->
                 <b-form-input type="number" lazy v-model="row.item.quantity" min=1 placeholder="1?"
                               :state="validQuantity(row.item.quantity) ? null : false"></b-form-input>
             </template>
@@ -49,8 +48,9 @@
                               :state="validLength(row.item.length) ? null : false"></b-form-input>
             </template>
             <template v-slot:cell(delete)="row">
-                <!-- TODO icon, minimum width -->
-                <b-button @click="deleteRow(row.item.id)">[x]</b-button>
+                <b-button @click="deleteRow(row.item.id)">
+                    <b-icon-trash-fill></b-icon-trash-fill>
+                </b-button>
             </template>
 
             <!-- add interactive third row with size? -->

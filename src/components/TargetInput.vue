@@ -1,5 +1,5 @@
 <template>
-    <b-row>
+    <b-row class="match_table">
         <b-col cols="5">
             <b-form-input type="number" v-model="new_quantity" min=1 placeholder="1?"
                           :state="validQuantity(new_quantity) ? null : false"></b-form-input>
@@ -13,7 +13,7 @@
         <b-col class="del_column">
             <b-button :disabled="!(new_quantity > 0 && new_length > 0)"
                       @click="$emit('addRow', {quantity: new_quantity, length: new_length})">
-                Add
+                <b-icon-plus-circle-fill></b-icon-plus-circle-fill>
             </b-button>
         </b-col>
     </b-row>
@@ -40,6 +40,7 @@
     -> custom table footer instead?
      */
     .match_table {
-        padding: 8px;
+        padding-left: 10px;
+        padding-right: 10px;
     }
 </style>
