@@ -1,11 +1,13 @@
 <template>
     <b-row>
         <b-col sm="4">
-            <b-form-input type="number" v-model="new_quantity" min=1 placeholder="1?"></b-form-input>
+            <b-form-input type="number" v-model="new_quantity" min=1 placeholder="1?"
+                          :state="validQuantity(new_quantity)"></b-form-input>
         </b-col>
 
         <b-col sm="4">
-            <b-form-input type="number" v-model="new_length" min=1 placeholder="100?"></b-form-input>
+            <b-form-input type="number" v-model="new_length" min=1 placeholder="100?"
+                          :state="validLength(new_length)"></b-form-input>
         </b-col>
 
         <b-col sm="4">
@@ -17,8 +19,11 @@
     </b-row>
 </template>
 <script>
+    import validators from "@/components/data/validators";
+
     export default {
         name: 'TargetInput',
+        mixins: [validators],
         data: function () {
             return {
                 new_quantity: 1, //(Math.ceil(Math.random() * 3)),
