@@ -2,12 +2,12 @@
     <b-row>
         <b-col sm="4">
             <b-form-input type="number" v-model="new_quantity" min=1 placeholder="1?"
-                          :state="validQuantity(new_quantity)"></b-form-input>
+                          :state="validQuantity(new_quantity) ? null : false"></b-form-input>
         </b-col>
 
         <b-col sm="4">
             <b-form-input type="number" v-model="new_length" min=1 placeholder="100?"
-                          :state="validLength(new_length)"></b-form-input>
+                          :state="validLength(new_length) ? null : false"></b-form-input>
         </b-col>
 
         <b-col sm="4">

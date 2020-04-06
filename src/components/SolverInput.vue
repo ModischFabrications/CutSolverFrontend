@@ -9,10 +9,11 @@
                         label="Enter the maximum length"
                         label-for="input_max_length"
                         invalid-feedback="Length needs to be between 1 and 9999"
-                        :state="validLength(max_length)"
+                        :state="validLength(max_length) ? null : false"
                 >
                     <b-form-input id="input-max_length" type="number" min=2 v-model="max_length"
-                                  placeholder="check your supplier" :state="validLength(max_length)"></b-form-input>
+                                  placeholder="check your supplier"
+                                  :state="validLength(max_length) ? null : false"></b-form-input>
                 </b-form-group>
             </b-col>
 
@@ -22,10 +23,11 @@
                         label="Enter the cutting width"
                         label-for="input_cut_width"
                         invalid-feedback="Width needs to be between 0 and max-length/10"
-                        :state="validCut(cut_width)"
+                        :state="validCut(cut_width) ? null : false"
                 >
                     <b-form-input id="input_cut_width" type="number" min=0 v-model="cut_width"
-                                  placeholder="measure a cut" :state="validCut(cut_width)"></b-form-input>
+                                  placeholder="measure a cut"
+                                  :state="validCut(cut_width) ? null : false"></b-form-input>
                 </b-form-group>
             </b-col>
         </b-row>
@@ -37,11 +39,11 @@
             <template v-slot:cell(quantity)="row">
                 <!-- TODO: validator? Correct/ignore wrong-->
                 <b-form-input type="number" lazy v-model="row.item.quantity" min=1 placeholder="1?"
-                              :state="validQuantity(row.item.quantity)"></b-form-input>
+                              :state="validQuantity(row.item.quantity) ? null : false"></b-form-input>
             </template>
             <template v-slot:cell(length)="row">
                 <b-form-input type="number" lazy v-model="row.item.length" min=1 placeholder="100?"
-                              :state="validLength(row.item.length)"></b-form-input>
+                              :state="validLength(row.item.length) ? null : false"></b-form-input>
             </template>
             <template v-slot:cell(delete)="row">
                 <!-- TODO icon, minimum width -->
