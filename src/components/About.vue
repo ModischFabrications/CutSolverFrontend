@@ -1,7 +1,9 @@
 <template>
     <b-modal id="about-modal" centered scrollable title="About" header-bg-variant="light" hide-footer>
-        <!-- might need to be split into different parts or collapses instead... -->
+        <!-- TODO: might need to be split into different parts or collapses instead... -->
         <!-- Markdown content instead? Writing HTML is pretty cumbersome -->
+        <h1>Work in Progress!</h1>
+
         <h5>What it is</h5>
         <p>This service collects your input, sends it to a big calculator of mine, allows it to calculate for a while
             and displays the received result to you.
@@ -22,7 +24,7 @@
             many stock bars to order and where to cut them. I finished that project years ago, but the problem keeps
             arising, which is why I finally caved in and developed this project. </p>
 
-        <p>Look at more things I do: </p>
+        <!-- <p>Look at more things I do: </p> -->
         <!-- IG, Thingiverse, Website, XING?, ... -->
 
         <p>I will be forever grateful if you donate something to keep this website up, right now I am
