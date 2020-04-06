@@ -3,10 +3,10 @@
         <h2>Input</h2>
 
         <b-row>
-            <b-col sm="6">
+            <b-col cols="6">
                 <b-form-group
                         ref="grp_max_length"
-                        label="Enter the maximum length"
+                        label="Maximum length"
                         label-for="input_max_length"
                         invalid-feedback="Length needs to be between 1 and 9999"
                         :state="validLength(max_length) ? null : false"
@@ -17,10 +17,10 @@
                 </b-form-group>
             </b-col>
 
-            <b-col sm="6">
+            <b-col cols="6">
                 <b-form-group
                         ref="grp_cut_width"
-                        label="Enter the cutting width"
+                        label="Cutting width"
                         label-for="input_cut_width"
                         invalid-feedback="Width needs to be between 0 and max-length/10"
                         :state="validCut(cut_width) ? null : false"
@@ -33,9 +33,12 @@
         </b-row>
 
         <!-- resize columns -->
-        <b-table id="table_input" sticky-header=true hover bordered :items="target_sizes" primary-key="id"
+        <b-table id="table_input" hover bordered :items="target_sizes" primary-key="id"
                  :fields="[{key: 'quantity', sortable:true}, {key: 'length', sortable:true}, {key: 'delete', label: ''}]"
                  sort-by="quantity" sort-desc :tbody-transition-props="{name: 'flip-list'}">
+            <template v-slot:head(delete)="entry">
+                <div class="del_column">{{entry.label}}</div>
+            </template>
             <template v-slot:cell(quantity)="row">
                 <!-- TODO: validator? Correct/ignore wrong-->
                 <b-form-input type="number" lazy v-model="row.item.quantity" min=1 placeholder="1?"
@@ -118,12 +121,8 @@
         margin: 16px;
     }
 
-    .digit_input {
-        width: 4.5em;
-    }
-
-    .three_digit_input {
-        width: 5.5em;
+    >>> .del_column {
+        width: 3em;
     }
 
     table#table_input .flip-list-move {
