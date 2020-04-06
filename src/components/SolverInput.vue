@@ -13,7 +13,7 @@
                 >
                     <!-- TODO fix state transfer, somehow input won't be set by group-->
                     <!-- :state="$refs['grp_max_length'].state"-->
-                    <b-form-input id="input-max_length" type="number" v-model="max_length"
+                    <b-form-input id="input-max_length" type="number" min=2 v-model="max_length"
                                   placeholder="check your supplier"></b-form-input>
                 </b-form-group>
             </b-col>
@@ -24,10 +24,10 @@
                         label="Enter the cutting width"
                         label-for="input_cut_width"
                         invalid-feedback="Length needs to be between 0 and max-length/10"
-                        :state="(cut_width >= 0 && cut_width <= max_length/10)"
+                        :state="(cut_width && cut_width >= 0 && cut_width <= max_length/10)"
                 >
                     <!-- :state="$refs['grp_cut_width'].state"-->
-                    <b-form-input id="input_cut_width" type="number" v-model="cut_width"
+                    <b-form-input id="input_cut_width" type="number" min=0 v-model="cut_width"
                                   placeholder="measure a cut"></b-form-input>
                 </b-form-group>
             </b-col>
@@ -39,12 +39,10 @@
                  sort-by="quantity" sort-desc :tbody-transition-props="{name: 'flip-list'}">
             <template v-slot:cell(quantity)="row">
                 <!-- TODO: validator? Correct/ignore wrong-->
-                <b-form-input type="number" lazy v-model="row.item.quantity"
-                              placeholder="1?"></b-form-input>
+                <b-form-input type="number" lazy v-model="row.item.quantity" min=1 placeholder="1?"></b-form-input>
             </template>
             <template v-slot:cell(length)="row">
-                <b-form-input type="number" lazy v-model="row.item.length"
-                              placeholder="100?"></b-form-input>
+                <b-form-input type="number" lazy v-model="row.item.length" min=1 placeholder="100?"></b-form-input>
             </template>
             <template v-slot:cell(delete)="row">
                 <!-- TODO icon, minimum width -->
