@@ -13,23 +13,27 @@
                 <b-nav-item @click="$bvModal.show('about-modal')">About</b-nav-item>
             </b-navbar-nav>
         </b-navbar>
-        <!-- needs to be registered, hidden by default -->
+        <!-- needs to be registered somewhere, hidden by default -->
         <About></About>
 
-        <!-- side by side on desktop, top to bottom on mobile? -->
+        <!-- TODO: fix empty Margin/Padding(?) above? Extend to whole page? -->
+        <b-overlay :show="loadingResult">
+            <!-- side by side on desktop, top to bottom on mobile? -->
 
-        <!-- read input values -->
-        <SolverInput></SolverInput>
+            <!-- read input values -->
+            <SolverInput></SolverInput>
 
-        <!-- centered and square on desktop, long bar button on mobile -->
-        <b-button id="solve-button" class="solve_button" pill size="lg" type='submit' @click="startSolving">Solve
-        </b-button>
+            <!-- centered and square on desktop, long bar button on mobile -->
+            <b-button id="solve-button" class="solve_button" pill size="lg" type='submit' @click="startSolving">Solve
+            </b-button>
 
-        <!-- output field for json API answer, hidden by default -->
-        <b-collapse id="output-collapse" v-model="showResult">
-            <SolverOutput :result="result" :job="job"></SolverOutput>
-        </b-collapse>
-        <!-- [x] live update ?-->
+            <!-- output field for json API answer, hidden by default -->
+            <b-collapse id="output-collapse" v-model="showResult">
+                <SolverOutput :result="result" :job="job"></SolverOutput>
+            </b-collapse>
+            <!-- [x] live update ?-->
+
+        </b-overlay>
     </div>
 </template>
 
@@ -42,8 +46,7 @@
     // example values
     import json_testresult from "./tests/data/testresult.json"
 
-    // stupid, better way?
-    let testresult = new Result(json_testresult.solver_type, json_testresult.time_ms, json_testresult.lengths);
+    let testresult = Object.assign(new Result(), json_testresult);
 
     const title = "CutSolver";
 
@@ -61,6 +64,7 @@
 
                 job: new Job(),
                 result: new Result(),
+                loadingResult: false,
                 showResult: false
             };
         },
@@ -69,16 +73,20 @@
                 console.log("startSolving with ");
                 this.job = SolverInput.computed.job();
                 console.log(this.job);
+                this.loadingResult = true;
 
                 // TODO: call API
                 let reply = (Math.random() > 0.2) ? testresult : new Result();
                 console.assert(reply !== null);
-                console.log("Result: ");
-                console.log(reply);
 
-                // TODO: better way for singleshot updates, similar to parameter?
-                this.result = reply;
-                this.showResult = true;
+                setTimeout(() => {
+                    console.log("Result: ");
+                    console.log(reply);
+                    // TODO: better way for singleshot updates, similar to parameter?
+                    this.result = reply;
+                    this.loadingResult = false;
+                    this.showResult = true;
+                }, 2000);
             }
         }
     }
