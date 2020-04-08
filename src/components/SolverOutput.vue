@@ -5,10 +5,11 @@
 
         <b-list-group>
             <b-list-group-item v-for="(stock, id) in result.lengths" :key="id">
-                <b-progress :max=job.max_length>
+                <b-progress :max=job.max_length height="2rem">
                     <template v-for="(length, index) in stock">
-                        <b-progress-bar :key="index" :value="length" show-value variant="info"></b-progress-bar>
-                        <b-progress-bar :key="-1-index" :value="job.cut_width" variant="dark"></b-progress-bar>
+                        <b-progress-bar :key="index" :value="length" show-value class="bar_label"
+                                        variant="secondary"></b-progress-bar>
+                        <b-progress-bar :key="-1-index" :value="job.cut_width" variant="dark" striped></b-progress-bar>
                     </template>
                 </b-progress>
             </b-list-group-item>
@@ -46,5 +47,9 @@
 <style scoped>
     .solver_output {
         margin: 16px;
+    }
+
+    .bar_label {
+        font-size: large;
     }
 </style>
