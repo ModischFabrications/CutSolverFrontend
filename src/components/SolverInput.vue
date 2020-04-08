@@ -36,6 +36,7 @@
         <b-table id="table_input" hover bordered :items="target_sizes" primary-key="id"
                  :fields="[{key: 'quantity', sortable:true}, {key: 'length', sortable:true}, {key: 'delete', label: ''}]"
                  sort-by="quantity" sort-desc :tbody-transition-props="{name: 'flip-list'}">
+            <!-- foot-variant="light" for different style -->
             <template v-slot:head(delete)="entry">
                 <div class="del_column">{{entry.label}}</div>
             </template>
@@ -53,12 +54,31 @@
                 </b-button>
             </template>
 
+            <!-- TODO extract into component (not trivial, component can't have multiple root children) -->
+            <template v-slot:custom-foot>
+                <b-th>
+                    <b-form-input type="number" v-model="new_quantity" min=1
+                                  @keydown.enter="addRow({quantity: new_quantity, length: new_length})"></b-form-input>
+                </b-th>
+
+                <b-th>
+                    <b-form-input type="number" v-model="new_length" min=1
+                                  @keydown.enter="addRow({quantity: new_quantity, length: new_length})"></b-form-input>
+                </b-th>
+
+                <b-th>
+                    <b-button :disabled="!(new_quantity > 0 && new_length > 0)"
+                              @click="addRow({quantity: new_quantity, length: new_length})">
+                        <b-icon-plus-circle-fill></b-icon-plus-circle-fill>
+                    </b-button>
+                </b-th>
+            </template>
+
             <!-- add interactive third row with size? -->
             <!-- https://bootstrap-vue.js.org/docs/components/progress -->
             <!-- [=======|.......] -->
         </b-table>
 
-        <TargetInput v-on:addRow="addRow($event)"/>
     </div>
 </template>
 
@@ -66,19 +86,20 @@
     // default values
     import {Job} from "@/components/data/Job";
     import json_testjob from "../tests/data/testjob.json"
-    import TargetInput from "@/components/TargetInput";
     import validators from "@/components/data/validators";
 
     export default {
         name: "SolverInput",
         mixins: [validators],
-        components: {TargetInput},
         data: function () {
             return {
                 // other idea for default values?
                 max_length: json_testjob.max_length,
                 cut_width: json_testjob.cut_width,
                 target_sizes: this.addIndex(json_testjob.target_sizes),
+
+                new_quantity: '',
+                new_length: ''
             }
         },
         computed: {
@@ -104,6 +125,9 @@
             addRow(target) {
                 target.id = this.target_sizes.length;
                 this.target_sizes.push(target);
+
+                this.new_quantity = '';
+                this.new_length = '';
             },
             deleteRow(row) {
                 let index = this.target_sizes.findIndex(element => (element.id === row));
