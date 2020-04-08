@@ -27,7 +27,7 @@
 
         <!-- output field for json API answer, hidden by default -->
         <b-collapse id="output-collapse" v-model="showResult">
-            <SolverOutput :result="result"></SolverOutput>
+            <SolverOutput :result="result" :job="job"></SolverOutput>
         </b-collapse>
         <!-- [x] live update ?-->
     </div>
@@ -37,8 +37,9 @@
     import About from "@/components/About";
     import SolverInput from "@/components/SolverInput";
     import SolverOutput from "@/components/SolverOutput";
-    // example values
+    import {Job} from "@/components/data/Job";
     import {Result} from "@/components/data/Result";
+    // example values
     import json_testresult from "./tests/data/testresult.json"
 
     // stupid, better way?
@@ -58,6 +59,7 @@
                 // won't change page title, might need to do something else
                 title: title,
 
+                job: new Job(),
                 result: new Result(),
                 showResult: false
             };
@@ -65,7 +67,8 @@
         methods: {
             startSolving() {
                 console.log("startSolving with ");
-                console.log(SolverInput.computed.job());
+                this.job = SolverInput.computed.job();
+                console.log(this.job);
 
                 // TODO: call API
                 let reply = (Math.random() > 0.2) ? testresult : new Result();
@@ -73,6 +76,7 @@
                 console.log("Result: ");
                 console.log(reply);
 
+                // TODO: better way for singleshot updates, similar to parameter?
                 this.result = reply;
                 this.showResult = true;
             }
