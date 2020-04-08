@@ -3,6 +3,9 @@
     <div v-if="result.valid()" id="solver-output" class="solver_output">
         <h2>Output</h2>
 
+        Solved using {{result.solver_type}}.
+        Calculation took {{result.time_ms}}ms.
+
         <b-list-group>
             <b-list-group-item v-for="(stock, id) in result.lengths" :key="id">
                 <b-progress :max=job.max_length height="2rem">

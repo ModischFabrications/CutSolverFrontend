@@ -57,12 +57,12 @@
             <!-- TODO extract into component (not trivial, component can't have multiple root children) -->
             <template v-slot:custom-foot>
                 <b-th>
-                    <b-form-input type="number" v-model="new_quantity" min=1
+                    <b-form-input type="number" v-model="new_quantity" min=1 placeholder="enter quantity"
                                   @keydown.enter="addRow({quantity: new_quantity, length: new_length})"></b-form-input>
                 </b-th>
 
                 <b-th>
-                    <b-form-input type="number" v-model="new_length" min=1
+                    <b-form-input type="number" v-model="new_length" min=1 placeholder="enter length"
                                   @keydown.enter="addRow({quantity: new_quantity, length: new_length})"></b-form-input>
                 </b-th>
 
