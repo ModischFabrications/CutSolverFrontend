@@ -38,7 +38,7 @@
                  sort-by="quantity" sort-desc :tbody-transition-props="{name: 'flip-list'}">
             <!-- foot-variant="light" for different style -->
             <template v-slot:head(delete)>
-                <b-button class="del_column" @click="target_sizes = []">
+                <b-button class="del_column" @click="target_sizes = []" v-b-tooltip.hover title="Clear table">
                     <b-icon-trash-fill></b-icon-trash-fill>
                 </b-button>
             </template>
@@ -51,7 +51,7 @@
                               :state="validLength(row.item.length) ? null : false"></b-form-input>
             </template>
             <template v-slot:cell(delete)="row">
-                <b-button @click="deleteRow(row.item.id)">
+                <b-button @click="deleteRow(row.item.id)" v-b-tooltip.hover title="Remove entry">
                     <b-icon-backspace-fill></b-icon-backspace-fill>
                 </b-button>
             </template>
@@ -59,17 +59,17 @@
             <!-- TODO extract into component (not trivial, component can't have multiple root children) -->
             <template v-slot:custom-foot>
                 <b-th>
-                    <b-form-input type="number" v-model="new_quantity" min=1 placeholder="enter quantity"
+                    <b-form-input type="number" v-model="new_quantity" min=1 placeholder="enter new quantity"
                                   @keydown.enter="addRow({quantity: new_quantity, length: new_length})"></b-form-input>
                 </b-th>
 
                 <b-th>
-                    <b-form-input type="number" v-model="new_length" min=1 placeholder="enter length"
+                    <b-form-input type="number" v-model="new_length" min=1 placeholder="enter new length"
                                   @keydown.enter="addRow({quantity: new_quantity, length: new_length})"></b-form-input>
                 </b-th>
 
                 <b-th>
-                    <b-button :disabled="!(new_quantity > 0 && new_length > 0)"
+                    <b-button :disabled="!(new_quantity > 0 && new_length > 0)" v-b-tooltip.hover title="Add entry"
                               @click="addRow({quantity: new_quantity, length: new_length})">
                         <b-icon-plus-circle-fill></b-icon-plus-circle-fill>
                     </b-button>
@@ -147,7 +147,8 @@
         margin: 16px;
     }
 
-    >>> .del_column {
+    .del_column {
+        /* TODO: shrink cell of table, make button square */
         width: 3em;
     }
 
