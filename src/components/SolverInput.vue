@@ -37,8 +37,10 @@
                  :fields="[{key: 'quantity', sortable:true}, {key: 'length', sortable:true}, {key: 'delete', label: ''}]"
                  sort-by="quantity" sort-desc :tbody-transition-props="{name: 'flip-list'}">
             <!-- foot-variant="light" for different style -->
-            <template v-slot:head(delete)="entry">
-                <div class="del_column">{{entry.label}}</div>
+            <template v-slot:head(delete)>
+                <b-button class="del_column" @click="target_sizes = []">
+                    <b-icon-trash-fill></b-icon-trash-fill>
+                </b-button>
             </template>
             <template v-slot:cell(quantity)="row">
                 <b-form-input type="number" lazy v-model="row.item.quantity" min=1 placeholder="1?"
@@ -50,7 +52,7 @@
             </template>
             <template v-slot:cell(delete)="row">
                 <b-button @click="deleteRow(row.item.id)">
-                    <b-icon-trash-fill></b-icon-trash-fill>
+                    <b-icon-backspace-fill></b-icon-backspace-fill>
                 </b-button>
             </template>
 
