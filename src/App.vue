@@ -20,7 +20,7 @@
             <!-- side by side on desktop, top to bottom on mobile? -->
 
             <!-- read input values -->
-            <SolverInput></SolverInput>
+            <SolverInput ref="main_input"></SolverInput>
 
             <!-- centered and square on desktop, long bar button on mobile -->
             <b-button id="solve-button" class="solve_button" pill size="lg" type='submit' @click="startSolving">Solve
@@ -70,8 +70,9 @@
         methods: {
             startSolving() {
                 console.log("startSolving with ");
-                this.job = SolverInput.computed.job();
+                this.job = this.$refs["main_input"].asJob();
                 console.log(this.job);
+                this.showResult = false;
                 this.loadingResult = true;
 
                 // TODO: call API

@@ -42,9 +42,9 @@
                  primary-key="id"
                  :items="target_sizes"
                  :tbody-transition-props="{name: 'flip-list'}">
-            <!-- foot-variant="light" for different style -->
             <template v-slot:head(delete)>
                 <b-button class="del_column" @click="target_sizes = []" v-b-tooltip.hover title="Clear table">
+                    <!-- TODO: wrap with div to set minimal width, column width is determined by first entry -->
                     <b-icon-trash-fill></b-icon-trash-fill>
                 </b-button>
             </template>
@@ -111,17 +111,11 @@
             }
         },
         computed: {
-            // better idea to return this component state as collection"?
-            job: function () {
-                // TODO: this should return component state instead, but my ideas did not work
-                return new Job(json_testjob.max_length, json_testjob.cut_width, json_testjob.target_sizes);
-            },
-            valid: function () {
-                return (this.$refs["grp_max_length"].state &&
-                    this.$refs["grp_cut_width"].state)
-            }
         },
         methods: {
+            asJob() {
+                return new Job(this.max_length, this.cut_width, this.target_sizes);
+            },
             validCut(width) {
                 return (width !== '' && width >= 0 && width <= this.max_length / 10);
             },
