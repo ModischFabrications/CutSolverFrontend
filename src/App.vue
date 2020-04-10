@@ -1,20 +1,6 @@
 <template>
     <div id="app">
-        <b-navbar type="light" variant="light" print>
-            <b-navbar-brand href="#">
-                <img alt="logo" height="32" src="./assets/logo.svg" class="d-inline-block align-top">
-                {{ title }}
-            </b-navbar-brand>
-            <b-navbar-nav>
-                <b-nav-item href="http://github.com/ModischFabrications">by Modisch Fabrications</b-nav-item>
-            </b-navbar-nav>
-
-            <b-navbar-nav class="ml-auto">
-                <b-nav-item @click="$bvModal.show('about-modal')">About</b-nav-item>
-            </b-navbar-nav>
-        </b-navbar>
-        <!-- needs to be registered somewhere, hidden by default -->
-        <About></About>
+        <NavBar :title="title"></NavBar>
 
         <b-overlay :show="loadingResult">
             <!-- side by side on desktop, top to bottom on mobile? -->
@@ -37,13 +23,13 @@
 </template>
 
 <script>
-    import About from "@/components/About";
     import SolverInput from "@/components/SolverInput";
     import SolverOutput from "@/components/SolverOutput";
     import {Job} from "@/components/data/Job";
     import {Result} from "@/components/data/Result";
     // example values
     import json_testresult from "./tests/data/testresult.json"
+    import NavBar from "@/components/NavBar";
 
     let testresult = Object.assign(new Result(), json_testresult);
 
@@ -52,7 +38,7 @@
     export default {
         name: 'App',
         components: {
-            About,
+            NavBar,
             SolverInput,
             SolverOutput,
         },

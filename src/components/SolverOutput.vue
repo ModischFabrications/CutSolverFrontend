@@ -40,9 +40,6 @@
             }
         },
         computed: {
-            indexedResult: function () {
-                return 1;   // TODO: turn every array entry into object and add id=index++
-            }
         }
     }
 </script>
