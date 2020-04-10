@@ -33,9 +33,15 @@
         </b-row>
 
         <!-- resize columns -->
-        <b-table id="table_input" hover bordered :items="target_sizes" primary-key="id"
+        <b-table id="table_input"
+                 hover bordered small
+                 tbody-tr-class="excel_row"
                  :fields="[{key: 'quantity', sortable:true}, {key: 'length', sortable:true}, {key: 'delete', label: ''}]"
-                 sort-by="quantity" sort-desc :tbody-transition-props="{name: 'flip-list'}">
+                 sort-by="quantity"
+                 sort-desc
+                 primary-key="id"
+                 :items="target_sizes"
+                 :tbody-transition-props="{name: 'flip-list'}">
             <!-- foot-variant="light" for different style -->
             <template v-slot:head(delete)>
                 <b-button class="del_column" @click="target_sizes = []" v-b-tooltip.hover title="Clear table">
@@ -147,6 +153,12 @@
     .del_column {
         /* TODO: shrink cell of table, make button square */
         width: 3em;
+    }
+
+    .excel_row td input {
+        background-color: #0000;
+        border: none;
+        border-radius: 0;
     }
 
     table#table_input .flip-list-move {
