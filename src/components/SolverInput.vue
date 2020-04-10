@@ -141,10 +141,7 @@
 
 <style scoped>
     .solver_input {
-        /*border: 2px solid grey;*/
-        /*border-radius: 8px;*/
-        /*padding: 8px;*/
-        margin: 16px;
+        padding: 16px;
     }
 
     .del_column {

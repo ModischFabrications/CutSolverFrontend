@@ -16,7 +16,6 @@
         <!-- needs to be registered somewhere, hidden by default -->
         <About></About>
 
-        <!-- TODO: fix empty Margin/Padding(?) above? Extend to whole page? -->
         <b-overlay :show="loadingResult">
             <!-- side by side on desktop, top to bottom on mobile? -->
 
