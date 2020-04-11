@@ -15,6 +15,9 @@ I use:
 npm install
 ```
 
+Set the backend path by adding this to your environment:
+`VUE_APP_BACKEND_SOLVER_URL=http://localhost:8000/solve`
+
 ### Compiles and hot-reloads for development
 ```
 npm run serve

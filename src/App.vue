@@ -30,6 +30,7 @@
     // example values
     import json_testresult from "./tests/data/testresult.json"
     import NavBar from "@/components/NavBar";
+    import axios from "axios";
 
     let testresult = Object.assign(new Result(), json_testresult);
 
@@ -61,18 +62,35 @@
                 this.showResult = false;
                 this.loadingResult = true;
 
-                // TODO: call API
+                // this.callMockSolver(this.job)
+                this.callSolver(this.job)
+            },
+            handleResult(result) {
+                console.log("Result: ");
+                console.log(result);
+                // TODO: better way for singleshot updates, similar to parameter?
+                this.result = result;
+                this.loadingResult = false;
+                this.showResult = true;
+            },
+            callMockSolver(job) {
+                console.log("faking output for " + job)
                 let reply = (Math.random() > 0.2) ? testresult : new Result();
                 console.assert(reply !== null);
 
                 setTimeout(() => {
-                    console.log("Result: ");
-                    console.log(reply);
-                    // TODO: better way for singleshot updates, similar to parameter?
-                    this.result = reply;
-                    this.loadingResult = false;
-                    this.showResult = true;
+                    this.handleResult(reply);
                 }, 2000);
+            },
+            callSolver(job) {
+                console.assert(process.env.VUE_APP_BACKEND_SOLVER_URL, "Set environment variable 'BACKEND_SOLVER_URL=http://xxx/solve'");
+                console.log("Posting to " + process.env.VUE_APP_BACKEND_SOLVER_URL);
+                axios.post(process.env.VUE_APP_BACKEND_SOLVER_URL, job)
+                    .then((reply) => {
+                        this.handleResult(Object.assign(new Result(), reply.data));
+                    }).catch(error => {
+                    console.log(error.response.data);
+                });
             }
         }
     }

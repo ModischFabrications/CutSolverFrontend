@@ -8,11 +8,12 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "core-js": "^3.6.4",
-    "vue": "^2.6.11",
+    "@sum.cumo/vue-browserupdate": "^2.0.0",
+    "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
     "bootstrap-vue": "^2.9.0",
-    "@sum.cumo/vue-browserupdate": "^2.0.0"
+    "core-js": "^3.6.4",
+    "vue": "^2.6.11"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.2.0",
