@@ -85,6 +85,7 @@
             callSolver(job) {
                 console.assert(process.env.VUE_APP_BACKEND_SOLVER_URL, "Set environment variable 'BACKEND_SOLVER_URL=http://xxx/solve'");
                 console.log("Posting to " + process.env.VUE_APP_BACKEND_SOLVER_URL);
+
                 axios.post(process.env.VUE_APP_BACKEND_SOLVER_URL, job)
                     .then((reply) => {
                         this.handleResult(Object.assign(new Result(), reply.data));
@@ -94,7 +95,7 @@
                         this.handleResult(error.response.data);
                     } else if (error.request) {
                         // request was made but server did not respond
-                        console.log(error.request);
+                        this.handleResult("Server is offline");
                     }
                 });
             }
