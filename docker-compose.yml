@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+
+  cutsolver_frontend:
+    build: .
+    # image: modischfabrications/cutsolver_frontend:latest
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      # TODO: vue is build to static files without access to ENV
+      # 1. pass during build -> bad for public docker hub images
+      # 2. weird entrypoint bash that replaces env manually
+      - VUE_APP_BACKEND_SOLVER_URL=http://localhost:8000/solve
