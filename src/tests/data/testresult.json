@@ -1,6 +1,6 @@
 {
   "solver_type": "bruteforce",
-  "time_ms": 100,
+  "time_us": 100,
   "lengths": [
     [
       500,
