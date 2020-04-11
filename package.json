@@ -13,7 +13,9 @@
     "bootstrap": "^4.4.1",
     "bootstrap-vue": "^2.9.0",
     "core-js": "^3.6.4",
-    "vue": "^2.6.11"
+    "raw-loader": "^4.0.0",
+    "vue": "^2.6.11",
+    "vue-showdown": "^2.4.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.2.0",

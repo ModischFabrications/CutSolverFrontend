@@ -1,18 +1,24 @@
 import Vue from 'vue'
 import App from './App.vue'
 
+
 import {BootstrapVue, IconsPlugin} from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-
+import VueShowdown from 'vue-showdown';
 import VueBrowserUpdate from '@sum.cumo/vue-browserupdate';
-
-Vue.config.productionTip = false;
-
 // Install BootstrapVue
 Vue.use(BootstrapVue);
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin);
+
+
+Vue.use(VueShowdown, {
+    options: {
+        emoji: true
+    }
+})
+
 
 Vue.use(VueBrowserUpdate, {
     options: {
@@ -21,6 +27,9 @@ Vue.use(VueBrowserUpdate, {
     },
     test: false,
 });
+
+
+Vue.config.productionTip = false;
 
 new Vue({
     render: h => h(App),
