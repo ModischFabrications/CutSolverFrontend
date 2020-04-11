@@ -89,7 +89,13 @@
                     .then((reply) => {
                         this.handleResult(Object.assign(new Result(), reply.data));
                     }).catch(error => {
-                    console.log(error.response.data);
+                    if (error.response) {
+                        // request was made but server responded with status code != 2xx
+                        this.handleResult(error.response.data);
+                    } else if (error.request) {
+                        // request was made but server did not respond
+                        console.log(error.request);
+                    }
                 });
             }
         }

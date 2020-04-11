@@ -1,6 +1,6 @@
 <template>
     <!-- 1. hidden, 2. valid: show, 3. invalid: warning -->
-    <div v-if="result.valid()" id="solver-output" class="solver_output">
+    <div v-if="isResult(result) && result.valid()" id="solver-output" class="solver_output">
         <h2>Output</h2>
 
         Solved using {{result.solver_type}}.
@@ -19,7 +19,7 @@
         </b-list-group>
     </div>
     <div v-else>
-        <h2>Invalid result received, try again.</h2>
+        <h2>Invalid result: {{result}}</h2>
     </div>
 </template>
 
@@ -35,11 +35,17 @@
                 required: true
             },
             result: {
-                type: Result,
+                // string is error message
+                type: [Result, String],
                 required: true
             }
         },
-        computed: {
+        computed: {},
+        methods: {
+            isResult(obj) {
+                // can't reference classes in template
+                return obj instanceof Result;
+            }
         }
     }
 </script>
