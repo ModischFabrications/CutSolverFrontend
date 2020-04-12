@@ -8,9 +8,9 @@ export class Job {
 
     valid() {
         // could use some more checks from Input
-        return (this.max_length !== undefined && this.max_length > 0 &&
-            this.cut_width !== undefined && this.cut_width > 0 &&
-            this.target_sizes !== undefined && this.target_sizes.length > 0
+        return (Number.isInteger(this.max_length) && this.max_length > 0 &&
+            Number.isInteger(this.cut_width) && this.cut_width > 0 &&
+            Array.isArray(this.target_sizes) && this.target_sizes.length > 0
         );
     }
 }

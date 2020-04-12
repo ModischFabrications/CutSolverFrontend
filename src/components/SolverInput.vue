@@ -20,7 +20,7 @@
                         :state="validLength(max_length) ? null : false"
                         min="2"
                         placeholder="check your supplier"
-                        type="number"
+                        number
                     />
                 </b-form-group>
             </b-col>
@@ -39,7 +39,7 @@
                         :state="validCut(cut_width) ? null : false"
                         min="0"
                         placeholder="measure a cut"
-                        type="number"
+                        number
                     />
                 </b-form-group>
             </b-col>
@@ -77,7 +77,7 @@
                     lazy
                     min="1"
                     placeholder="1?"
-                    type="number"
+                    number
                 />
             </template>
             <template v-slot:cell(length)="row">
@@ -87,7 +87,7 @@
                     lazy
                     min="1"
                     placeholder="100?"
-                    type="number"
+                    number
                 />
             </template>
             <template v-slot:cell(delete)="row">
@@ -107,7 +107,7 @@
                         v-model="new_quantity"
                         min="1"
                         placeholder="enter new quantity"
-                        type="number"
+                        number
                         @keydown.enter="addRow({quantity: new_quantity, length: new_length})"
                     />
                 </b-th>
@@ -117,7 +117,7 @@
                         v-model="new_length"
                         min="1"
                         placeholder="enter new length"
-                        type="number"
+                        number
                         @keydown.enter="addRow({quantity: new_quantity, length: new_length})"
                     />
                 </b-th>
@@ -163,12 +163,12 @@
         },
         computed: {
             job() {
-                return new Job(this.max_length, this.cut_width, this.target_sizes);
+                return new Job(Number(this.max_length), Number(this.cut_width), this.target_sizes);
             },
         },
         methods: {
             validCut(width) {
-                return (width !== '' && width >= 0 && width <= this.max_length / 10);
+                return (Number.isInteger(width) && width >= 0 && width <= this.max_length / 10);
             },
             addIndex(array) {
                 let iIndex = 0;

@@ -6,9 +6,9 @@ export class Result {
     }
 
     valid() {
-        return (this.solver_type !== undefined && this.solver_type.length > 0 &&
-            this.time_us !== undefined && this.time_us > 0 &&
-            this.lengths !== undefined && this.lengths.length > 0
+        return (this.solver_type && this.solver_type.length > 0 &&
+            Number.isInteger(this.time_us) && this.time_us > 0 &&
+            Array.isArray(this.lengths) && this.lengths.length > 0
         );
     }
 }

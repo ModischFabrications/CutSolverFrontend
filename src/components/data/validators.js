@@ -1,10 +1,10 @@
 export default {
     methods: {
         validQuantity: function (quantity) {
-            return (quantity > 0);
+            return (Number.isInteger(quantity) && quantity > 0);
         },
         validLength: function (length) {
-            return (length > 0);
+            return (Number.isInteger(length) && length > 0);
         }
     }
 }
