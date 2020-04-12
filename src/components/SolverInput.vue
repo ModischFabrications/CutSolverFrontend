@@ -119,6 +119,7 @@
                         number
                         placeholder="enter new quantity"
                         type="number"
+                        :state="validLength(new_quantity) ? true : null"
                         @keydown.enter="addRow({quantity: new_quantity, length: new_length})"
                     />
                 </b-th>
@@ -131,6 +132,7 @@
                         number
                         placeholder="enter new length"
                         type="number"
+                        :state="validLength(new_length) && new_length < max_length ? true : null"
                         @keydown.enter="addRow({quantity: new_quantity, length: new_length})"
                     />
                 </b-th>
