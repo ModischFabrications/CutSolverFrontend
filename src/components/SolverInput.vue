@@ -9,18 +9,18 @@
             <b-col cols="6">
                 <b-form-group
                     ref="grp_max_length"
+                    :state="validLength(max_length) ? null : false"
+                    invalid-feedback="Length needs to be between 1 and 9999"
                     label="Maximum length"
                     label-for="input_max_length"
-                    invalid-feedback="Length needs to be between 1 and 9999"
-                    :state="validLength(max_length) ? null : false"
                 >
                     <b-form-input
                         id="input-max_length"
                         v-model="max_length"
-                        type="number"
+                        :state="validLength(max_length) ? null : false"
                         min="2"
                         placeholder="check your supplier"
-                        :state="validLength(max_length) ? null : false"
+                        type="number"
                     />
                 </b-form-group>
             </b-col>
@@ -28,18 +28,18 @@
             <b-col cols="6">
                 <b-form-group
                     ref="grp_cut_width"
+                    :state="validCut(cut_width) ? null : false"
+                    invalid-feedback="Width needs to be between 0 and max-length/10"
                     label="Cutting width"
                     label-for="input_cut_width"
-                    invalid-feedback="Width needs to be between 0 and max-length/10"
-                    :state="validCut(cut_width) ? null : false"
                 >
                     <b-form-input
                         id="input_cut_width"
                         v-model="cut_width"
-                        type="number"
+                        :state="validCut(cut_width) ? null : false"
                         min="0"
                         placeholder="measure a cut"
-                        :state="validCut(cut_width) ? null : false"
+                        type="number"
                     />
                 </b-form-group>
             </b-col>
@@ -48,16 +48,16 @@
         <!-- resize columns -->
         <b-table
             id="table_input"
-            hover
-            bordered
-            small
-            tbody-tr-class="excel_row"
             :fields="[{key: 'quantity', sortable:true}, {key: 'length', sortable:true}, {key: 'delete', label: ''}]"
-            sort-by="quantity"
-            sort-desc
-            primary-key="id"
             :items="target_sizes"
             :tbody-transition-props="{name: 'flip-list'}"
+            bordered
+            hover
+            primary-key="id"
+            small
+            sort-by="quantity"
+            sort-desc
+            tbody-tr-class="excel_row"
         >
             <template v-slot:head(delete)>
                 <b-button
@@ -67,27 +67,27 @@
                     @click="target_sizes = []"
                 >
                     <!-- TODO: wrap with div to set minimal width, column width is determined by first entry -->
-                    <b-icon-trash-fill />
+                    <b-icon-trash-fill/>
                 </b-button>
             </template>
             <template v-slot:cell(quantity)="row">
                 <b-form-input
                     v-model="row.item.quantity"
-                    type="number"
+                    :state="validQuantity(row.item.quantity) ? null : false"
                     lazy
                     min="1"
                     placeholder="1?"
-                    :state="validQuantity(row.item.quantity) ? null : false"
+                    type="number"
                 />
             </template>
             <template v-slot:cell(length)="row">
                 <b-form-input
                     v-model="row.item.length"
-                    type="number"
+                    :state="validLength(row.item.length) ? null : false"
                     lazy
                     min="1"
                     placeholder="100?"
-                    :state="validLength(row.item.length) ? null : false"
+                    type="number"
                 />
             </template>
             <template v-slot:cell(delete)="row">
@@ -96,7 +96,7 @@
                     title="Remove entry"
                     @click="deleteRow(row.item.id)"
                 >
-                    <b-icon-backspace-fill />
+                    <b-icon-backspace-fill/>
                 </b-button>
             </template>
 
@@ -105,9 +105,9 @@
                 <b-th>
                     <b-form-input
                         v-model="new_quantity"
-                        type="number"
                         min="1"
                         placeholder="enter new quantity"
+                        type="number"
                         @keydown.enter="addRow({quantity: new_quantity, length: new_length})"
                     />
                 </b-th>
@@ -115,9 +115,9 @@
                 <b-th>
                     <b-form-input
                         v-model="new_length"
-                        type="number"
                         min="1"
                         placeholder="enter new length"
+                        type="number"
                         @keydown.enter="addRow({quantity: new_quantity, length: new_length})"
                     />
                 </b-th>
@@ -129,7 +129,7 @@
                         title="Add entry"
                         @click="addRow({quantity: new_quantity, length: new_length})"
                     >
-                        <b-icon-plus-circle-fill />
+                        <b-icon-plus-circle-fill/>
                     </b-button>
                 </b-th>
             </template>

@@ -1,15 +1,15 @@
 <template>
     <b-navbar
+        print
         type="light"
         variant="light"
-        print
     >
         <b-navbar-brand href="#">
             <img
                 alt="logo"
+                class="d-inline-block align-top"
                 height="32"
                 src="../assets/logo.svg"
-                class="d-inline-block align-top"
             >
             {{ title }}
         </b-navbar-brand>
@@ -26,7 +26,7 @@
         </b-navbar-nav>
 
         <!-- needs to be registered somewhere, hidden by default -->
-        <About />
+        <About/>
     </b-navbar>
 </template>
 

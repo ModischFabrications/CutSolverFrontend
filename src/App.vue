@@ -1,20 +1,20 @@
 <template>
     <div id="app">
-        <NavBar :title="title" />
+        <NavBar :title="title"/>
 
         <b-overlay :show="loadingResult">
             <!-- side by side on desktop, top to bottom on mobile? -->
 
             <!-- read input values -->
-            <SolverInput ref="main_input" />
+            <SolverInput ref="main_input"/>
 
             <!-- centered and square on desktop, long bar button on mobile -->
             <b-button
                 id="solve-button"
-                type="submit"
                 class="solve_button"
                 pill
                 size="lg"
+                type="submit"
                 @click="startSolving"
             >
                 Solve
@@ -26,8 +26,8 @@
                 v-model="showResult"
             >
                 <SolverOutput
-                    :result="result"
                     :job="job"
+                    :result="result"
                 />
             </b-collapse>
             <!-- [x] live update ?-->

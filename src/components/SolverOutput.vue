@@ -23,15 +23,15 @@
                         <b-progress-bar
                             :key="index"
                             :value="length"
-                            show-value
                             class="bar_label"
+                            show-value
                             variant="secondary"
                         />
                         <b-progress-bar
                             :key="-1-index"
                             :value="job.cut_width"
-                            variant="dark"
                             striped
+                            variant="dark"
                         />
                     </template>
                 </b-progress>

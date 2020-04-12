@@ -1,14 +1,14 @@
 <template>
     <b-modal
         id="about-modal"
-        size="lg"
         centered
-        scrollable
-        title="About"
         header-bg-variant="light"
         hide-footer
+        scrollable
+        size="lg"
+        title="About"
     >
-        <VueShowdown :markdown="about_file_content" />
+        <VueShowdown :markdown="about_file_content"/>
     </b-modal>
 </template>
 
