@@ -104,6 +104,7 @@
             <template v-slot:custom-foot>
                 <b-th>
                     <b-form-input
+                        ref="input_new_quantity"
                         v-model="new_quantity"
                         min="1"
                         placeholder="enter new quantity"
@@ -124,9 +125,7 @@
 
                 <b-th>
                     <b-button
-                        v-b-tooltip.hover
                         :disabled="!(new_quantity > 0 && new_length > 0)"
-                        title="Add entry"
                         @click="addRow({quantity: new_quantity, length: new_length})"
                     >
                         <b-icon-plus-circle-fill/>
@@ -181,6 +180,7 @@
 
                 this.new_quantity = '';
                 this.new_length = '';
+                this.$refs["input_new_quantity"].focus();
             },
             deleteRow(row) {
                 let index = this.target_sizes.findIndex(element => (element.id === row));
