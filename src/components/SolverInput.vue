@@ -50,7 +50,7 @@
 
         <!-- resize columns -->
         <b-table
-            id="table_input"
+            id="table-input"
             :fields="[{key: 'quantity', sortable:true},
                       {key: 'length', sortable:true},
                       {key: 'delete', label: '', thStyle: { width: '60px'}}
@@ -65,12 +65,11 @@
             sort-by="quantity"
             sort-desc
             tbody-tr-class="excel_row"
+            thead-tr-class="header"
         >
             <template v-slot:head(delete)>
                 <b-button
-                    v-b-tooltip.hover
-                    class="del_column"
-                    title="Clear table"
+                    v-b-tooltip.hover="'Clear table'"
                     @click="target_sizes = []"
                 >
                     <b-icon-trash-fill/>
@@ -101,8 +100,7 @@
             </template>
             <template v-slot:cell(delete)="row">
                 <b-button
-                    v-b-tooltip.hover
-                    title="Remove entry"
+                    v-b-tooltip.hover="'Remove entry'"
                     @click="deleteRow(row.item.id)"
                 >
                     <b-icon-backspace-fill/>
@@ -210,9 +208,10 @@
         padding: 16px;
     }
 
-    .del_column {
-        /* TODO: shrink cell of table, make button square */
-        width: 3em;
+    .header thead tr th thead text {
+        /* TODO: set size so that it actually works */
+        font-size: larger !important;
+        background: red;
     }
 
     .excel_row td input {
@@ -221,7 +220,7 @@
         border-radius: 0;
     }
 
-    table#table_input .flip-list-move {
+    table#table-input .flip-list-move {
         /* TODO fix transition: https://bootstrap-vue.js.org/docs/components/table/#table-body-transition-support */
         transition: transform 1s;
     }
