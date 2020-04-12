@@ -51,10 +51,14 @@
         <!-- resize columns -->
         <b-table
             id="table_input"
-            :fields="[{key: 'quantity', sortable:true}, {key: 'length', sortable:true}, {key: 'delete', label: ''}]"
+            :fields="[{key: 'quantity', sortable:true},
+                      {key: 'length', sortable:true},
+                      {key: 'delete', label: '', thStyle: { width: '60px'}}
+            ]"
             :items="target_sizes"
             :tbody-transition-props="{name: 'flip-list'}"
             bordered
+            fixed
             hover
             primary-key="id"
             small
@@ -69,7 +73,6 @@
                     title="Clear table"
                     @click="target_sizes = []"
                 >
-                    <!-- TODO: wrap with div to set minimal width, column width is determined by first entry -->
                     <b-icon-trash-fill/>
                 </b-button>
             </template>
