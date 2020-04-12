@@ -7,32 +7,49 @@
         <b-overlay :show="loadingResult">
             <!-- side by side on desktop, top to bottom on mobile? -->
 
-            <!-- read input values -->
-            <SolverInput ref="main_input"/>
+            <b-container>
+                <b-row
+                    align-h="center"
+                >
+                    <b-col xl="5">
+                        <!-- read input values -->
+                        <SolverInput ref="main_input"/>
+                    </b-col>
 
-            <!-- centered and square on desktop, long bar button on mobile -->
-            <b-button
-                id="solve-button"
-                class="solve_button"
-                pill
-                size="lg"
-                type="submit"
-                @click="startSolving"
-            >
-                Solve
-            </b-button>
-
-            <!-- output field for json API answer, hidden by default -->
-            <b-collapse
-                id="output-collapse"
-                v-model="showResult"
-            >
-                <SolverOutput
-                    :job="job"
-                    :result="result"
-                />
-            </b-collapse>
-            <!-- [x] live update ?-->
+                    <b-col
+                        xl="*"
+                        align-self="center"
+                    >
+                        <!-- centered and square on desktop, long bar button on mobile -->
+                        <b-button
+                            id="solve-button"
+                            class="solve_button"
+                            pill
+                            size="lg"
+                            type="submit"
+                            @click="startSolving"
+                        >
+                            Solve
+                        </b-button>
+                    </b-col>
+                
+                    <b-col
+                        xl="5"
+                    >
+                        <!-- output field for json API answer, hidden by default -->
+                        <b-collapse
+                            id="output-collapse"
+                            v-model="showResult"
+                        >
+                            <SolverOutput
+                                :job="job"
+                                :result="result"
+                            />
+                        </b-collapse>
+                    </b-col>
+                    <!-- [x] live update ?-->
+                </b-row>
+            </b-container>
         </b-overlay>
     </div>
 </template>
