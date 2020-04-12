@@ -51,10 +51,24 @@
                 job: new Job(),
                 result: new Result(),
                 loadingResult: false,
-                showResult: false
+                showResult: false,
+
+                SOLVER_URL: process.env.VUE_APP_BACKEND_SOLVER_URL
             };
         },
+        mounted: function () {
+            this.setupEnv();
+            console.assert(this.SOLVER_URL, "Set environment variable 'VUE_APP_BACKEND_SOLVER_URL=http://xxx/solve'");
+        },
         methods: {
+            setupEnv() {
+                // we have node and everything is working as expected
+                if (this.SOLVER_URL) return;
+
+                // magic string substitution from entrypoint.sh replaces placeholder with actual value
+                this.SOLVER_URL = '$VUE_APP_BACKEND_SOLVER_URL';
+                console.log("Solver URL is now " + '$VUE_APP_BACKEND_SOLVER_URL');
+            },
             startSolving() {
                 console.log("startSolving with ");
                 this.job = this.$refs["main_input"].asJob();
@@ -83,10 +97,9 @@
                 }, 2000);
             },
             callSolver(job) {
-                console.assert(process.env.VUE_APP_BACKEND_SOLVER_URL, "Set environment variable 'BACKEND_SOLVER_URL=http://xxx/solve'");
-                console.log("Posting to " + process.env.VUE_APP_BACKEND_SOLVER_URL);
+                console.log("Posting to " + this.SOLVER_URL);
 
-                axios.post(process.env.VUE_APP_BACKEND_SOLVER_URL, job)
+                axios.post(this.SOLVER_URL, job)
                     .then((reply) => {
                         this.handleResult(Object.assign(new Result(), reply.data));
                     }).catch(error => {
