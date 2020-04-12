@@ -5,14 +5,11 @@
         <ModalWarning ref="modal_warning"/>
 
         <b-overlay :show="loadingResult">
-            <!-- side by side on desktop, top to bottom on mobile? -->
-
             <b-container>
                 <b-row
                     align-h="center"
                 >
                     <b-col xl="5">
-                        <!-- read input values -->
                         <SolverInput ref="main_input"/>
                     </b-col>
 
@@ -20,7 +17,7 @@
                         xl="*"
                         align-self="center"
                     >
-                        <!-- centered and square on desktop, long bar button on mobile -->
+                        <!-- centered and square on desktop, long bar button on mobile? -->
                         <b-button
                             id="solve-button"
                             class="solve_button"
@@ -37,6 +34,7 @@
                         xl="5"
                     >
                         <!-- output field for json API answer, hidden by default -->
+                        <!-- show empty frame/placeholder with message instead to keep balance on widescreen? -->
                         <b-collapse
                             id="output-collapse"
                             v-model="showResult"
@@ -131,7 +129,7 @@
             },
             callMockSolver(job) {
                 console.log("faking output for " + job)
-                let reply = (Math.random() > 0.2) ? testresult : new Result();
+                let reply = (Math.random() > 0.2) ? testresult : "fake wrong answer";
                 console.assert(reply !== null);
 
                 setTimeout(() => {
