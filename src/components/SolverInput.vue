@@ -20,9 +20,9 @@
                         v-model="max_length"
                         :state="validLength(max_length) ? null : false"
                         min="2"
+                        number
                         placeholder="check your supplier"
                         type="number"
-                        number
                     />
                 </b-form-group>
             </b-col>
@@ -40,9 +40,9 @@
                         v-model="cut_width"
                         :state="validCut(cut_width) ? null : false"
                         min="0"
+                        number
                         placeholder="measure a cut"
                         type="number"
-                        number
                     />
                 </b-form-group>
             </b-col>
@@ -79,20 +79,21 @@
                     :state="validQuantity(row.item.quantity) ? null : false"
                     lazy
                     min="1"
+                    number
                     placeholder="1?"
                     type="number"
-                    number
                 />
             </template>
             <template v-slot:cell(length)="row">
                 <b-form-input
                     v-model="row.item.length"
+                    :max="max_length"
                     :state="validLength(row.item.length) ? null : false"
                     lazy
                     min="1"
+                    number
                     placeholder="100?"
                     type="number"
-                    number
                 />
             </template>
             <template v-slot:cell(delete)="row">
@@ -112,9 +113,9 @@
                         ref="input_new_quantity"
                         v-model="new_quantity"
                         min="1"
+                        number
                         placeholder="enter new quantity"
                         type="number"
-                        number
                         @keydown.enter="addRow({quantity: new_quantity, length: new_length})"
                     />
                 </b-th>
@@ -122,11 +123,11 @@
                 <b-th>
                     <b-form-input
                         v-model="new_length"
+                        :max="max_length"
                         min="1"
-                        max="max_length"
+                        number
                         placeholder="enter new length"
                         type="number"
-                        number
                         @keydown.enter="addRow({quantity: new_quantity, length: new_length})"
                     />
                 </b-th>
