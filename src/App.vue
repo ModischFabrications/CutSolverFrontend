@@ -1,23 +1,36 @@
 <template>
     <div id="app">
-        <NavBar :title="title"></NavBar>
+        <NavBar :title="title" />
 
         <b-overlay :show="loadingResult">
             <!-- side by side on desktop, top to bottom on mobile? -->
 
             <!-- read input values -->
-            <SolverInput ref="main_input"></SolverInput>
+            <SolverInput ref="main_input" />
 
             <!-- centered and square on desktop, long bar button on mobile -->
-            <b-button id="solve-button" class="solve_button" pill size="lg" type='submit' @click="startSolving">Solve
+            <b-button
+                id="solve-button"
+                type="submit"
+                class="solve_button"
+                pill
+                size="lg"
+                @click="startSolving"
+            >
+                Solve
             </b-button>
 
             <!-- output field for json API answer, hidden by default -->
-            <b-collapse id="output-collapse" v-model="showResult">
-                <SolverOutput :result="result" :job="job"></SolverOutput>
+            <b-collapse
+                id="output-collapse"
+                v-model="showResult"
+            >
+                <SolverOutput
+                    :result="result"
+                    :job="job"
+                />
             </b-collapse>
             <!-- [x] live update ?-->
-
         </b-overlay>
     </div>
 </template>
