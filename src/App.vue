@@ -71,7 +71,7 @@
             },
             startSolving() {
                 console.log("startSolving with ");
-                this.job = this.$refs["main_input"].asJob();
+                this.job = this.$refs["main_input"].job;
                 console.log(this.job);
                 this.showResult = false;
                 this.loadingResult = true;

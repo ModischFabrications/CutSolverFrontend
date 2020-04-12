@@ -111,11 +111,11 @@
             }
         },
         computed: {
-        },
-        methods: {
-            asJob() {
+            job() {
                 return new Job(this.max_length, this.cut_width, this.target_sizes);
             },
+        },
+        methods: {
             validCut(width) {
                 return (width !== '' && width >= 0 && width <= this.max_length / 10);
             },
