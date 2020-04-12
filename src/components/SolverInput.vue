@@ -14,12 +14,14 @@
                     label="Maximum length"
                     label-for="input_max_length"
                 >
+                    <!-- type manages input values, number typecasts entry into number -->
                     <b-form-input
                         id="input-max_length"
                         v-model="max_length"
                         :state="validLength(max_length) ? null : false"
                         min="2"
                         placeholder="check your supplier"
+                        type="number"
                         number
                     />
                 </b-form-group>
@@ -39,6 +41,7 @@
                         :state="validCut(cut_width) ? null : false"
                         min="0"
                         placeholder="measure a cut"
+                        type="number"
                         number
                     />
                 </b-form-group>
@@ -77,6 +80,7 @@
                     lazy
                     min="1"
                     placeholder="1?"
+                    type="number"
                     number
                 />
             </template>
@@ -87,6 +91,7 @@
                     lazy
                     min="1"
                     placeholder="100?"
+                    type="number"
                     number
                 />
             </template>
@@ -108,6 +113,7 @@
                         v-model="new_quantity"
                         min="1"
                         placeholder="enter new quantity"
+                        type="number"
                         number
                         @keydown.enter="addRow({quantity: new_quantity, length: new_length})"
                     />
@@ -117,13 +123,16 @@
                     <b-form-input
                         v-model="new_length"
                         min="1"
+                        max="max_length"
                         placeholder="enter new length"
+                        type="number"
                         number
                         @keydown.enter="addRow({quantity: new_quantity, length: new_length})"
                     />
                 </b-th>
 
                 <b-th>
+                    <!-- tooltips won't disappear correctly with disabled elements -->
                     <b-button
                         :disabled="!(new_quantity > 0 && new_length > 0)"
                         @click="addRow({quantity: new_quantity, length: new_length})"
