@@ -31,7 +31,7 @@
 </template>
 
 <script>
-    import About from "@/components/About";
+    import About from "@/components/ModalAbout";
 
     export default {
         name: "NavBar",
@@ -39,7 +39,10 @@
             About,
         },
         props: {
-            title: String
+            title: {
+                type: String,
+                required: true
+            }
         }
     }
 </script>

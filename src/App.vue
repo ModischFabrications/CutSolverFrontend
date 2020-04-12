@@ -2,6 +2,8 @@
     <div id="app">
         <NavBar :title="title"/>
 
+        <ModalWarning ref="modal_warning"/>
+
         <b-overlay :show="loadingResult">
             <!-- side by side on desktop, top to bottom on mobile? -->
 
@@ -44,6 +46,7 @@
     import json_testresult from "./tests/data/testresult.json"
     import NavBar from "@/components/NavBar";
     import axios from "axios";
+    import ModalWarning from "@/components/ModalWarning";
 
     let testresult = Object.assign(new Result(), json_testresult);
 
@@ -52,6 +55,7 @@
     export default {
         name: 'App',
         components: {
+            ModalWarning,
             NavBar,
             SolverInput,
             SolverOutput,
@@ -71,7 +75,9 @@
         },
         mounted: function () {
             this.setupEnv();
-            console.assert(this.SOLVER_URL, "Set environment variable 'VUE_APP_BACKEND_SOLVER_URL=http://xxx/solve'");
+            if (!this.SOLVER_URL) {
+                this.showWarning("Set environment variable 'VUE_APP_BACKEND_SOLVER_URL=http://xxx/solve'");
+            }
         },
         methods: {
             setupEnv() {
@@ -80,7 +86,13 @@
 
                 // magic string substitution from entrypoint.sh replaces placeholder with actual value
                 this.SOLVER_URL = '$VUE_APP_BACKEND_SOLVER_URL';
+                if (this.SOLVER_URL[0] === "$") this.showWarning("Magic string substitution for backend url failed.");
                 console.log("Solver URL is now " + '$VUE_APP_BACKEND_SOLVER_URL');
+            },
+            showWarning(text) {
+                console.warn(text);
+                this.$refs["modal_warning"].text = text;
+                this.$bvModal.show("modal-warning");
             },
             startSolving() {
                 console.log("startSolving with ");

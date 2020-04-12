@@ -1,6 +1,6 @@
 <template>
     <b-modal
-        id="about-modal"
+        id="modal-about"
         centered
         header-bg-variant="light"
         hide-footer
