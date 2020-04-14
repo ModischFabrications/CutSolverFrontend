@@ -5,7 +5,7 @@
         <ModalWarning ref="modal_warning"/>
 
         <b-overlay :show="loadingResult">
-            <b-container>
+            <b-container fluid="true">
                 <b-row
                     align-h="center"
                 >
