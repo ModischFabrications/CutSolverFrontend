@@ -23,7 +23,7 @@ Vue.use(VueShowdown, {
 Vue.use(VueBrowserUpdate, {
     options: {
         // I'm doing my part for a clean and friendly environment without toxic waste everywhere
-        text: "Your browser ({brow_name}) is outdated and old enough to make me cry about it on the internet, <a{up_but}>update</a> it please!"
+        text: "Your browser ({brow_name}) is outdated and old enough to make me cry about it, <a{up_but}>update</a> it please!"
     },
     test: false,
 });
