@@ -20,7 +20,7 @@
         </b-navbar-nav>
 
         <b-navbar-nav class="ml-auto">
-            <b-nav-item @click="$bvModal.show('about-modal')">
+            <b-nav-item @click="$bvModal.show('modal-about')">
                 About
             </b-nav-item>
         </b-navbar-nav>
