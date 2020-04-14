@@ -64,8 +64,8 @@
             small
             sort-by="quantity"
             sort-desc
-            tbody-tr-class="excel_row"
-            thead-tr-class="header"
+            tbody-tr-class="table_row"
+            thead-tr-class="table_headings"
         >
             <template v-slot:head(delete)>
                 <b-button
@@ -207,14 +207,15 @@
     .solver_input {
         padding: 16px;
     }
+</style>
 
-    .header thead tr th thead text {
-        /* TODO: set size so that it actually works */
-        font-size: larger !important;
-        background: red;
+<style>
+    .table_headings th {
+        font-size: larger;
+        vertical-align: middle !important;
     }
 
-    .excel_row td input {
+    .table_row td input {
         background-color: #0000;
         border: none;
         border-radius: 0;
@@ -222,6 +223,6 @@
 
     table#table-input .flip-list-move {
         /* TODO fix transition: https://bootstrap-vue.js.org/docs/components/table/#table-body-transition-support */
-        transition: transform 1s;
+        transition: transform 0.5s;
     }
 </style>
