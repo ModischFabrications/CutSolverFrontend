@@ -1,6 +1,5 @@
 <template>
     <!-- 1. hidden, 2. valid: show, 3. invalid: warning -->
-    <!-- TODO: show empty frame/placeholder with message instead to keep balance on widescreen? -->
     <div
         id="solver-output"
         class="solver_output"
@@ -91,7 +90,8 @@
             },
             setWarning(text) {
                 this.warning = text;
-                // TODO: set fake result as background?
+                // TODO: set fake result as background as soon as job is included in it.
+                // makes v-else irrelevant, pass only result to object
             }
         }
     }

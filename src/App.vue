@@ -109,7 +109,6 @@
                 console.log(this.job);
 
                 this.busy = true;
-                this.$refs['main_output'].reset();
 
                 // this.callMockSolver(this.job)
                 this.callSolver(this.job)
