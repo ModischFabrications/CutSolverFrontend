@@ -1,70 +1,97 @@
 <template>
     <!-- 1. hidden, 2. valid: show, 3. invalid: warning -->
+    <!-- TODO: show empty frame/placeholder with message instead to keep balance on widescreen? -->
     <div
-        v-if="isResult(result) && result.valid()"
         id="solver-output"
         class="solver_output"
     >
         <h2>Output</h2>
 
-        Solved using {{ result.solver_type }}.
-        Calculation took {{ result.time_us / 1000 }}ms.
-
-        <b-list-group>
-            <b-list-group-item
-                v-for="(stock, id) in result.lengths"
-                :key="id"
-            >
-                <b-progress
-                    :max="job.max_length"
-                    height="2rem"
+        <b-overlay
+            :show="warning || result === null"
+            opacity="0.95"
+        >
+            <template v-slot:overlay>
+                <div
+                    v-if="warning"
+                    class="text-center"
                 >
-                    <template v-for="(length, index) in stock">
-                        <b-progress-bar
-                            :key="index"
-                            :value="length"
-                            class="bar_label"
-                            show-value
-                            variant="secondary"
-                        />
-                        <b-progress-bar
-                            :key="-1-index"
-                            :value="job.cut_width"
-                            striped
-                            variant="dark"
-                        />
-                    </template>
-                </b-progress>
-            </b-list-group-item>
-        </b-list-group>
-    </div>
-    <div v-else>
-        <h2>Invalid result: {{ result }}</h2>
+                    Invalid result: {{ warning }}
+                </div>
+                <div
+                    v-else-if="result === null"
+                    class="text-center"
+                >
+                    Hit [Solve] to get results.
+                </div>
+            </template>
+
+            <div v-if="validResult(result)">
+                Solved using {{ result.solver_type }}.
+                Calculation took {{ result.time_us / 1000 }}ms.
+
+                <LengthsList
+                    :max_length="job.max_length"
+                    :cut_width="job.cut_width"
+                    :result="result"
+                />
+            </div>
+            <div v-else>
+                <!-- fake data -->
+                Solved using pure magic.
+                Calculation took forever.
+
+                <LengthsList
+                    :max_length="job.max_length"
+                    :cut_width="job.cut_width"
+                    :result="testresult"
+                />
+            </div>
+        </b-overlay>
     </div>
 </template>
 
 <script>
     import {Job} from "@/components/data/Job";
+    import validators from "@/components/data/validators";
+    import LengthsList from "@/components/LengthsList";
+
+    import json_testresult from "../tests/data/testresult.json"
     import {Result} from "@/components/data/Result";
+    let testresult = Object.assign(new Result(), json_testresult);
 
     export default {
         name: "SolverOutput",
+        components: {LengthsList},
+        mixins: [validators],
         props: {
             job: {
                 type: Job,
                 required: true
             },
-            result: {
-                // string is error message
-                type: [Result, String],
-                required: true
+        },
+        data() {
+            return {
+                result: null,
+                warning: null,
+
+                testresult: testresult
             }
         },
         computed: {},
         methods: {
-            isResult(obj) {
-                // can't reference classes in template
-                return obj instanceof Result;
+            reset() {
+                this.result = null;
+                this.warning = null;
+            },
+            setResult(result) {
+                console.assert(this.validResult(result));
+                this.result = result;
+                this.warning = null;
+            },
+            setWarning(text) {
+                this.warning = text;
+                // TODO: set fake result as background?
             }
         }
     }
@@ -75,7 +102,4 @@
         margin: 16px;
     }
 
-    .bar_label {
-        font-size: large;
-    }
 </style>

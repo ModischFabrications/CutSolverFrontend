@@ -4,7 +4,7 @@
 
         <ModalWarning ref="modal_warning"/>
 
-        <b-overlay :show="loadingResult">
+        <b-overlay :show="busy">
             <b-container fluid="true">
                 <b-row
                     align-h="center"
@@ -34,16 +34,10 @@
                         xl="5"
                     >
                         <!-- output field for json API answer, hidden by default -->
-                        <!-- show empty frame/placeholder with message instead to keep balance on widescreen? -->
-                        <b-collapse
-                            id="output-collapse"
-                            v-model="showResult"
-                        >
-                            <SolverOutput
-                                :job="job"
-                                :result="result"
-                            />
-                        </b-collapse>
+                        <SolverOutput
+                            ref="main_output"
+                            :job="job"
+                        />
                     </b-col>
                     <!-- [x] live update ?-->
                 </b-row>
@@ -62,6 +56,7 @@
     import NavBar from "@/components/NavBar";
     import axios from "axios";
     import ModalWarning from "@/components/ModalWarning";
+    import validators from "@/components/data/validators";
 
     let testresult = Object.assign(new Result(), json_testresult);
 
@@ -75,15 +70,14 @@
             SolverInput,
             SolverOutput,
         },
+        mixins: [validators],
         data: function () {
             return {
                 // won't change page title, might need to do something else
                 title: title,
 
                 job: new Job(),
-                result: new Result(),
-                loadingResult: false,
-                showResult: false,
+                busy: false,
 
                 SOLVER_URL: process.env.VUE_APP_BACKEND_SOLVER_URL
             };
@@ -113,19 +107,25 @@
                 console.log("startSolving with ");
                 this.job = this.$refs["main_input"].job;
                 console.log(this.job);
-                this.showResult = false;
-                this.loadingResult = true;
+
+                this.busy = true;
+                this.$refs['main_output'].reset();
 
                 // this.callMockSolver(this.job)
                 this.callSolver(this.job)
             },
-            handleResult(result) {
+            handleReply(reply) {
                 console.log("Result: ");
-                console.log(result);
-                // TODO: better way for singleshot updates, similar to parameter?
-                this.result = result;
-                this.loadingResult = false;
-                this.showResult = true;
+                console.log(reply);
+
+                if (this.validResult(reply)) {
+                    this.$refs['main_output'].setResult(reply);
+                }
+                else {
+                    this.$refs['main_output'].setWarning(reply);
+                }
+
+                this.busy = false;
             },
             callMockSolver(job) {
                 console.log("faking output for " + job)
@@ -133,7 +133,7 @@
                 console.assert(reply !== null);
 
                 setTimeout(() => {
-                    this.handleResult(reply);
+                    this.handleReply(reply);
                 }, 2000);
             },
             callSolver(job) {
@@ -141,14 +141,15 @@
 
                 axios.post(this.SOLVER_URL, job)
                     .then((reply) => {
-                        this.handleResult(Object.assign(new Result(), reply.data));
+                        this.handleReply(Object.assign(new Result(), reply.data));
                     }).catch(error => {
+                        console.log(error);
                     if (error.response) {
                         // request was made but server responded with status code != 2xx
-                        this.handleResult(error.response.data);
+                        this.handleReply(error.response.data);
                     } else if (error.request) {
                         // request was made but server did not respond
-                        this.handleResult("Server is offline");
+                        this.handleReply("Server is offline");
                     }
                 });
             }
