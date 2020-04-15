@@ -123,7 +123,7 @@
             }
         },
         created() {
-            // no idea how but it seems to keep in sync all the time
+            // reference, not copy. Keeps in sync as long as variable is modified, not replaced
             this.$emit('update:target_sizes', this.target_sizes);
         },
         methods: {
