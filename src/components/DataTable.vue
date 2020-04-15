@@ -20,7 +20,7 @@
         <template v-slot:head(delete)>
             <b-button
                 v-b-tooltip.hover="'Clear table'"
-                @click="target_sizes = []"
+                @click="target_sizes.splice(0, target_sizes.length)"
             >
                 <b-icon-trash-fill/>
             </b-button>
