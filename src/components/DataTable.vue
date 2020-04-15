@@ -122,6 +122,10 @@
                 target_sizes: this.addIndex(json_testjob.target_sizes),
             }
         },
+        created() {
+            // no idea how but it seems to keep in sync all the time
+            this.$emit('update:target_sizes', this.target_sizes);
+        },
         methods: {
             addIndex(array) {
                 let iIndex = 0;
@@ -137,12 +141,10 @@
                 this.new_quantity = '';
                 this.new_length = '';
                 this.$refs["input_new_quantity"].focus();
-                this.$emit('update:target_sizes', this.target_sizes);
             },
             deleteRow(row) {
                 let index = this.target_sizes.findIndex(element => (element.id === row));
                 this.target_sizes.splice(index, 1);
-                this.$emit('update:target_sizes', this.target_sizes);
             }
         }
     }
