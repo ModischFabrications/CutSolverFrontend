@@ -7,12 +7,12 @@
         <h2>Output</h2>
 
         <b-overlay
-            :show="warning || result === null"
+            :show="warning !== null || result === null"
             opacity="0.95"
         >
             <template v-slot:overlay>
                 <div
-                    v-if="warning"
+                    v-if="warning !== null"
                     class="text-center"
                 >
                     Invalid result: {{ warning }}
