@@ -94,7 +94,7 @@
 
 <style scoped>
     .solver_output {
-        padding: 16px;
+        padding: 8px;
     }
 
 </style>

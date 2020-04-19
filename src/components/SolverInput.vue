@@ -120,6 +120,6 @@
 
 <style scoped>
     .solver_input {
-        padding: 16px;
+        padding: 8px;
     }
 </style>
