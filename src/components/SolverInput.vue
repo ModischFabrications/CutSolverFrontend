@@ -51,6 +51,7 @@
         <!-- resize columns -->
         <DataTable
             ref="main_output"
+            :default-target-sizes="defaultTargetSizes"
             :max-length="max_length"
             :target_sizes.sync="target_sizes"
         />
@@ -73,15 +74,43 @@
                 // other idea for default values?
                 max_length: json_testjob.max_length,
                 cut_width: json_testjob.cut_width,
+                defaultTargetSizes: this.sizes_as_list(json_testjob.target_sizes),
                 target_sizes: []
             }
         },
         computed: {
             job() {
-                return new Job(Number(this.max_length), Number(this.cut_width), this.target_sizes);
+                return new Job(Number(this.max_length), Number(this.cut_width), this.list_to_sizes(this.target_sizes));
             },
         },
         methods: {
+            sizes_as_list(target_sizes) {
+                let out = [];
+
+                for (const [key, value] of Object.entries(target_sizes)) {
+                    // json won't allow numbers as keys
+                    out.push({"length": parseInt(key), "quantity": value})
+                }
+
+                return out
+            },
+            list_to_sizes(sizes_list) {
+                let out = {};
+
+                for (const entry of sizes_list) {
+                    // json won't allow numerical keys
+                    const length = entry["length"].toString();
+                    const quantity = entry["quantity"];
+
+                    // json won't allow numbers as keys
+                    let saved_quantity = out[length];
+                    if (saved_quantity === undefined) saved_quantity = 0;
+                    saved_quantity += quantity;
+                    out[length] = saved_quantity;
+                }
+
+                return out
+            },
             validCut(width) {
                 return (Number.isInteger(width) && width >= 0 && width <= this.max_length / 10);
             },

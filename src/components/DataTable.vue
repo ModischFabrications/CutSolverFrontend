@@ -103,7 +103,6 @@
 </template>
 <script>
     import validators from "@/components/data/validators";
-    import json_testjob from "../tests/data/testjob.json"
 
     export default {
         name: 'DataTable',
@@ -113,13 +112,17 @@
                 type: Number,
                 required: true
             },
+            defaultTargetSizes: {
+                type: Array,
+                required: true
+            }
         },
         data() {
             return {
                 new_length: '',
                 new_quantity: '',
 
-                target_sizes: this.addIndex(json_testjob.target_sizes),
+                target_sizes: this.addIndex(this.defaultTargetSizes),
             }
         },
         created() {
