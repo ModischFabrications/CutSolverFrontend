@@ -41,8 +41,8 @@
                 Calculation took forever.
 
                 <LengthsList
-                    :max_length="result.job.max_length"
-                    :cut_width="result.job.cut_width"
+                    :max_length="testresult.job.max_length"
+                    :cut_width="testresult.job.cut_width"
                     :result="testresult"
                 />
             </div>
