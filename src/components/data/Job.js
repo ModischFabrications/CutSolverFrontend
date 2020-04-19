@@ -10,7 +10,7 @@ export class Job {
         // could use some more checks from Input
         return (Number.isInteger(this.max_length) && this.max_length > 0 &&
             Number.isInteger(this.cut_width) && this.cut_width > 0 &&
-            Array.isArray(this.target_sizes) && this.target_sizes.length > 0
+            (this.target_sizes instanceof Map) && this.target_sizes.length > 0
         );
     }
 }

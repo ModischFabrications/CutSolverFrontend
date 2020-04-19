@@ -30,8 +30,8 @@
                 Calculation took {{ result.time_us / 1000 }}ms.
 
                 <LengthsList
-                    :max_length="job.max_length"
-                    :cut_width="job.cut_width"
+                    :max_length="result.job.max_length"
+                    :cut_width="result.job.cut_width"
                     :result="result"
                 />
             </div>
@@ -41,8 +41,8 @@
                 Calculation took forever.
 
                 <LengthsList
-                    :max_length="job.max_length"
-                    :cut_width="job.cut_width"
+                    :max_length="result.job.max_length"
+                    :cut_width="result.job.cut_width"
                     :result="testresult"
                 />
             </div>
@@ -51,7 +51,6 @@
 </template>
 
 <script>
-    import {Job} from "@/components/data/Job";
     import validators from "@/components/data/validators";
     import LengthsList from "@/components/LengthsList";
 
@@ -64,10 +63,6 @@
         components: {LengthsList},
         mixins: [validators],
         props: {
-            job: {
-                type: Job,
-                required: true
-            },
         },
         data() {
             return {

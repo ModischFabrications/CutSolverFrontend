@@ -36,7 +36,6 @@
                         <!-- output field for json API answer, hidden by default -->
                         <SolverOutput
                             ref="main_output"
-                            :job="job"
                         />
                     </b-col>
                     <!-- [x] live update ?-->

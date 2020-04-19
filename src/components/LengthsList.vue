@@ -1,5 +1,5 @@
 <template>
-    <b-list-group>
+    <b-list-group v-if="result !== null">
         <b-list-group-item
             v-for="(stock, id) in result.lengths"
             :key="id"
