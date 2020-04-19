@@ -167,8 +167,4 @@
     .solve_button {
         margin: 16px;
     }
-
-    .nav_link {
-        color: grey;
-    }
 </style>
