@@ -5,7 +5,10 @@
         <ModalWarning ref="modal_warning"/>
 
         <b-overlay :show="busy">
-            <b-container fluid="true">
+            <b-container
+                fluid="true"
+                class="fix_fluid"
+            >
                 <b-row
                     align-h="center"
                 >
@@ -166,5 +169,10 @@
 
     .solve_button {
         margin: 16px;
+    }
+
+    .fix_fluid {
+        padding-left: 15px;
+        padding-right: 15px;
     }
 </style>
