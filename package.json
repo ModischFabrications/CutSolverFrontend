@@ -15,7 +15,8 @@
     "core-js": "^3.6.4",
     "raw-loader": "^4.0.0",
     "vue": "^2.6.11",
-    "vue-showdown": "^2.4.1"
+    "vue-showdown": "^2.4.1",
+    "webpack": "^4.42.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.2.0",
