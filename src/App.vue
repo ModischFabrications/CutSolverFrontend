@@ -44,6 +44,9 @@
                     <!-- [x] live update ?-->
                 </b-row>
             </b-container>
+            <div class="fluid-container footer">
+                <p> CutSolver {{ version }}, hosted with 🖤️ by yours truly </p>
+            </div>
         </b-overlay>
     </div>
 </template>
@@ -77,6 +80,7 @@
             return {
                 // won't change page title, might need to do something else
                 title: title,
+                version: process.env.VUE_APP_VERSION,
 
                 job: new Job(),
                 busy: false,
@@ -174,5 +178,12 @@
     .fix_fluid {
         padding-left: 15px;
         padding-right: 15px;
+    }
+
+    .fluid-container.footer > *:last-child {
+        /* TODO: push to bottom. not sticky, allowed to be overlapped? maybe outside of overlay */
+        padding-top: 16px;
+        margin-bottom: 0;
+        color: lightgrey;
     }
 </style>

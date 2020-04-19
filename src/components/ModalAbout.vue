@@ -8,7 +8,6 @@
         size="lg"
         title="About"
     >
-        CutSolver {{ version }}, by Modisch Fabrications.
         <VueShowdown :markdown="about_file_content"/>
     </b-modal>
 </template>
@@ -20,7 +19,6 @@
         name: "About",
         data: function () {
             return {
-                version: process.env.VUE_APP_VERSION,
                 about_file_content: about_file_content
             }
         }

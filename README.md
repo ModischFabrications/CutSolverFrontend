@@ -9,6 +9,10 @@ I use:
 1. Vue
 2. Vue Bootstrap
 
+Remember to set all versions for new releases:
+ 1. git tag
+ 2. package.json 
+ 3. Docker Multibuild?
 
 ## Project setup
 ```
