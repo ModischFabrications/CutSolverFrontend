@@ -1,8 +1,9 @@
-[![Docker Image Version](https://images.microbadger.com/badges/version/modischfabrications/cutsolver_frontend.svg)](https://microbadger.com/images/modischfabrications/cutsolver_frontend "Get your own version badge on microbadger.com")
-[![Docker Image Size](https://images.microbadger.com/badges/image/modischfabrications/cutsolver_frontend.svg)](https://microbadger.com/images/modischfabrications/cutsolver_frontend "Get your own image badge on microbadger.com")
-![Vue 2.6](https://img.shields.io/badge/Vue-2.6-brightgreen.svg)
-
 # CutSolverFrontend
+
+[![Vue 2.6](https://img.shields.io/badge/Vue-2.6-brightgreen.svg)](https://vuejs.org/)
+[![Travis Build Status](https://travis-ci.org/ModischFabrications/CutSolverFrontend.svg?branch=master)](https://travis-ci.org/ModischFabrications/CutSolverFrontend)
+[![Docker Image Version](https://img.shields.io/docker/v/modischfabrications/cutsolver_frontend.svg)](https://hub.docker.com/repository/docker/modischfabrications/cutsolver_frontend)
+[![Docker Image Size](https://img.shields.io/docker/image-size/modischfabrications/cutsolver_frontend.svg)](https://hub.docker.com/repository/docker/modischfabrications/cutsolver)
 
 This is a simple vue frontend for my [CutSolver](https://github.com/ModischFabrications/CutSolver). 
 
