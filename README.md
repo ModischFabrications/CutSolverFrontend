@@ -37,11 +37,11 @@ npm run build
 
 ## Tools & Stack
 This project uses:
-1. *WebStorm* as IDE (while I have it as a student)
-1. *Vue* for everything
-2. *Vue Bootstrap* for style
-3. *VueShowdown* for markdown parsing
-4. *Eslint* for linting and code formatting
+1. [WebStorm](https://www.jetbrains.com/webstorm/) as IDE (while I have it as a student)
+1. [Vue](https://vuejs.org/) for everything
+2. [Vue Bootstrap](https://bootstrap-vue.js.org/) for style
+3. [VueShowdown](https://vue-showdown.js.org/) for markdown parsing
+4. [Eslint](https://eslint.vuejs.org/) for linting and code formatting
 
 ## Contributing
 Remember to set all versions for new releases:
