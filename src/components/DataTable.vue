@@ -164,6 +164,8 @@
         border-radius: 0;
     }
 
+    /* hidden usage by table transition */
+    /*noinspection ALL*/
     table#table-input .flip-list-move {
         transition: transform 0.5s;
     }
