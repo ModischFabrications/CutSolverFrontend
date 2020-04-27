@@ -13,7 +13,7 @@
 </template>
 
 <script>
-    import about_file_content from '!raw-loader!../assets/content/about.md';
+    import about_file_content from '../assets/content/about.md';
 
     export default {
         name: "About",
