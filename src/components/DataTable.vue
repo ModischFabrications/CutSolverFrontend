@@ -40,7 +40,7 @@
             <b-form-input
                 v-model="row.item.length"
                 :max="maxLength"
-                :state="validLength(row.item.length) ? null : false"
+                :state="validLength(row.item.length, maxLength) ? null : false"
                 lazy
                 min="1"
                 number
@@ -67,7 +67,7 @@
                     number
                     placeholder="enter new quantity"
                     type="number"
-                    :state="validLength(new_quantity) ? true : null"
+                    :state="validQuantity(new_quantity) ? true : null"
                     @keydown.enter="addRow()"
                 />
             </b-th>
@@ -80,7 +80,7 @@
                     number
                     placeholder="enter new length"
                     type="number"
-                    :state="validLength(new_length) && new_length < maxLength ? true : null"
+                    :state="validLength(new_length, maxLength) ? true : null"
                     @keydown.enter="addRow()"
                 />
             </b-th>
@@ -88,8 +88,8 @@
             <b-th>
                 <!-- tooltips won't disappear correctly with disabled elements -->
                 <b-button
-                    :disabled="!(new_quantity > 0 && new_length > 0)"
-                    @click="addRow"
+                    :disabled="!validNewRow()"
+                    @click="addRow()"
                 >
                     <b-icon-plus-circle-fill/>
                 </b-button>
@@ -135,7 +135,14 @@
                 array.forEach(row => row.id = iIndex++);
                 return array;
             },
+            validNewRow() {
+                return (this.validLength(this.new_length, this.maxLength) && this.validQuantity(this.new_quantity));
+            },
             addRow() {
+                if (!this.validNewRow()) {
+                    return
+                }
+
                 let target = {quantity: this.new_quantity, length: this.new_length};
 
                 target.id = this.target_sizes.length;

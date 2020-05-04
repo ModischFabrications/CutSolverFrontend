@@ -9,7 +9,7 @@
             <b-col cols="6">
                 <b-form-group
                     ref="grp_max_length"
-                    :state="validLength(max_length) ? null : false"
+                    :state="validLength(max_length, max_length) ? null : false"
                     invalid-feedback="Length needs to be between 1 and 9999"
                     label="Maximum length"
                     label-for="input_max_length"
@@ -18,7 +18,7 @@
                     <b-form-input
                         id="input-max_length"
                         v-model="max_length"
-                        :state="validLength(max_length) ? null : false"
+                        :state="validLength(max_length, max_length) ? null : false"
                         min="2"
                         number
                         placeholder="check your supplier"
@@ -82,6 +82,9 @@
             job() {
                 return new Job(Number(this.max_length), Number(this.cut_width), this.list_to_sizes(this.target_sizes));
             },
+            valid() {
+                return this.job.valid();
+            }
         },
         methods: {
             sizes_as_list(target_sizes) {
