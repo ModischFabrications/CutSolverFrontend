@@ -9,7 +9,7 @@ extends:
   - 'plugin:vue/recommended'
 
 rules:
-  "vue/no-unused-vars": "error"
+  "vue/no-unused-vars": "warn"
   "vue/html-indent": ["error", 4, {"baseIndent": 1}]
   "vue/html-closing-bracket-spacing": ["error", {
     "startTag": "never",
