@@ -12,7 +12,6 @@ module.exports = {
                 {
                     test: /\.md$/,
                     use: 'raw-loader',
-                    // loader: 'raw-loader'
                 }
             ]
         }
