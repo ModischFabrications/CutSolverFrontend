@@ -23,10 +23,10 @@ describe('App.vue', () => {
     expect(wrapper.isVisible()).toBe(true)
   })
 
-  // it('renders navbar', () => {
-  //   const wrapper = shallowMount(App)
-  //
-  //   expect(wrapper.find("nav").isVisible()).toBe(true)
-  // })
+  it('contains navbar', () => {
+    const wrapper = mount(App, {localVue})
+
+    expect(wrapper.contains("nav")).toBe(true)
+  })
 })
 
