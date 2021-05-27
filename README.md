@@ -5,6 +5,8 @@
 [![Docker Image Version](https://img.shields.io/docker/v/modischfabrications/cutsolver_frontend.svg)](https://hub.docker.com/repository/docker/modischfabrications/cutsolver_frontend)
 [![Docker Image Size](https://img.shields.io/docker/image-size/modischfabrications/cutsolver_frontend.svg)](https://hub.docker.com/repository/docker/modischfabrications/cutsolver)
 
+![Showcase](docs/mobile.png)
+
 This is a simple vue frontend for my [CutSolver](https://github.com/ModischFabrications/CutSolver). 
 
 This is also my first vue project, keep looking for other references if you want to learn it. 
