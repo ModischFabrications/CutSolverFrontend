@@ -51,4 +51,4 @@ Remember to set all versions for new releases:
  2. package.json 
  3. Docker Multibuild (might be done by travis eventually)
 
-Update all dependencies completely with `vue upgrade` whenever possible, webdev is perpetually broken.
+Update all dependencies completely with `vue upgrade && npm install` whenever possible, webdev is perpetually broken.
