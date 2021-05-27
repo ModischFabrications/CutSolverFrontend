@@ -17,7 +17,7 @@
         tbody-tr-class="table_row"
         thead-tr-class="table_headings"
     >
-        <template v-slot:head(delete)>
+        <template #head(delete)>
             <b-button
                 v-b-tooltip.hover="'Clear table'"
                 @click="target_sizes.splice(0, target_sizes.length)"
@@ -25,7 +25,7 @@
                 <b-icon-trash-fill/>
             </b-button>
         </template>
-        <template v-slot:cell(quantity)="row">
+        <template #cell(quantity)="row">
             <b-form-input
                 v-model="row.item.quantity"
                 :state="validQuantity(row.item.quantity) ? null : false"
@@ -36,7 +36,7 @@
                 type="number"
             />
         </template>
-        <template v-slot:cell(length)="row">
+        <template #cell(length)="row">
             <b-form-input
                 v-model="row.item.length"
                 :max="maxLength"
@@ -48,7 +48,7 @@
                 type="number"
             />
         </template>
-        <template v-slot:cell(delete)="row">
+        <template #cell(delete)="row">
             <b-button
                 v-b-tooltip.hover="'Remove entry'"
                 @click="deleteRow(row.item.id)"
@@ -58,7 +58,7 @@
         </template>
 
         <!-- can't extract into component (not trivial, component can't have multiple root children) -->
-        <template v-slot:custom-foot>
+        <template #custom-foot>
             <b-th>
                 <b-form-input
                     ref="input_new_quantity"

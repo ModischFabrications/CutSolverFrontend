@@ -10,7 +10,7 @@
             :show="warning !== null || result === null"
             opacity="0.95"
         >
-            <template v-slot:overlay>
+            <template #overlay>
                 <div
                     v-if="warning !== null"
                     class="text-center"
