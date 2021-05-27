@@ -7,9 +7,11 @@
 
 ![Showcase](docs/mobile.png)
 
-This is a simple vue frontend for my [CutSolver](https://github.com/ModischFabrications/CutSolver). 
+***WIP***
 
-This is also my first vue project, keep looking for other references if you want to learn it. 
+This is a simple frontend based on vue for [CutSolver](https://github.com/ModischFabrications/CutSolver), my solver for ideal stock cutting lengths. 
+
+It's also my first vue project, you should keep looking for better references. 
 
 ## Usage
 ### recommended, batteries included
@@ -40,7 +42,7 @@ npm run build
 ## Tools & Stack
 This project uses:
 1. [WebStorm](https://www.jetbrains.com/webstorm/) as IDE (while I have it as a student)
-1. [Vue](https://vuejs.org/) for everything
+1. [Vue (2)](https://vuejs.org/) for everything
 2. [Vue Bootstrap](https://bootstrap-vue.js.org/) for style
 3. [VueShowdown](https://vue-showdown.js.org/) for markdown parsing
 4. [Eslint](https://eslint.vuejs.org/) for linting and code formatting
@@ -51,4 +53,6 @@ Remember to set all versions for new releases:
  2. package.json 
  3. Docker Multibuild (might be done by travis eventually)
 
-Update all dependencies completely with `vue upgrade && npm install` whenever possible, webdev is perpetually broken.
+Update all dependencies completely with `vue upgrade && npm install` whenever possible, webdev is perpetually broken. 
+`npm outdated` in combination with `npm install TODO@latest` can be used to migrate to new major versions. 
+*Make sure to test it before committing!*
