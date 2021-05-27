@@ -1,7 +1,10 @@
 #!/bin/sh
+
+# called from Docker container, not meant for manual consumption
+
 echo "substituting env vars"
 if [ -z "$VUE_APP_BACKEND_SOLVER_URL" ]; then
-    echo "VUE_APP_BACKEND_SOLVER_URL is not set!"
+    echo "ERROR: VUE_APP_BACKEND_SOLVER_URL is not set!"
 else
     echo "occurrences of VUE_APP_BACKEND_SOLVER_URL will be set to $VUE_APP_BACKEND_SOLVER_URL"
 fi

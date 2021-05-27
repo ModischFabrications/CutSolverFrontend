@@ -12,7 +12,7 @@ services:
       - cutsolver
     environment:
       # point this to your backend host URL
-      - VUE_APP_BACKEND_SOLVER_URL=http://192.168.178.100:8000/solve
+      - VUE_APP_BACKEND_SOLVER_URL=http://localhost:8000/solve
 
   cutsolver:
     image: modischfabrications/cutsolver:latest

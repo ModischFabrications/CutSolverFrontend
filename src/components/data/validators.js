@@ -5,8 +5,8 @@ export default {
         validQuantity: function (quantity) {
             return (Number.isInteger(quantity) && quantity > 0);
         },
-        validLength: function (length) {
-            return (Number.isInteger(length) && length > 0);
+        validLength: function (length, max_length) {
+            return (Number.isInteger(length) && length > 0 && length <= max_length);
         },
         validResult(obj) {
             // can't reference classes in template

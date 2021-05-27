@@ -11,7 +11,7 @@
                 height="32"
                 src="../assets/logo.svg"
             >
-            {{ title }}
+            CutSolver
         </b-navbar-brand>
         <b-navbar-nav>
             <b-nav-item href="http://github.com/ModischFabrications">
@@ -37,12 +37,6 @@
         name: "NavBar",
         components: {
             About,
-        },
-        props: {
-            title: {
-                type: String,
-                required: true
-            }
         }
     }
 </script>

@@ -17,7 +17,7 @@
         tbody-tr-class="table_row"
         thead-tr-class="table_headings"
     >
-        <template v-slot:head(delete)>
+        <template #head(delete)>
             <b-button
                 v-b-tooltip.hover="'Clear table'"
                 @click="target_sizes.splice(0, target_sizes.length)"
@@ -25,7 +25,7 @@
                 <b-icon-trash-fill/>
             </b-button>
         </template>
-        <template v-slot:cell(quantity)="row">
+        <template #cell(quantity)="row">
             <b-form-input
                 v-model="row.item.quantity"
                 :state="validQuantity(row.item.quantity) ? null : false"
@@ -36,11 +36,11 @@
                 type="number"
             />
         </template>
-        <template v-slot:cell(length)="row">
+        <template #cell(length)="row">
             <b-form-input
                 v-model="row.item.length"
                 :max="maxLength"
-                :state="validLength(row.item.length) ? null : false"
+                :state="validLength(row.item.length, maxLength) ? null : false"
                 lazy
                 min="1"
                 number
@@ -48,7 +48,7 @@
                 type="number"
             />
         </template>
-        <template v-slot:cell(delete)="row">
+        <template #cell(delete)="row">
             <b-button
                 v-b-tooltip.hover="'Remove entry'"
                 @click="deleteRow(row.item.id)"
@@ -58,7 +58,7 @@
         </template>
 
         <!-- can't extract into component (not trivial, component can't have multiple root children) -->
-        <template v-slot:custom-foot>
+        <template #custom-foot>
             <b-th>
                 <b-form-input
                     ref="input_new_quantity"
@@ -67,7 +67,7 @@
                     number
                     placeholder="enter new quantity"
                     type="number"
-                    :state="validLength(new_quantity) ? true : null"
+                    :state="validQuantity(new_quantity) ? true : null"
                     @keydown.enter="addRow()"
                 />
             </b-th>
@@ -80,7 +80,7 @@
                     number
                     placeholder="enter new length"
                     type="number"
-                    :state="validLength(new_length) && new_length < maxLength ? true : null"
+                    :state="validLength(new_length, maxLength) ? true : null"
                     @keydown.enter="addRow()"
                 />
             </b-th>
@@ -88,8 +88,8 @@
             <b-th>
                 <!-- tooltips won't disappear correctly with disabled elements -->
                 <b-button
-                    :disabled="!(new_quantity > 0 && new_length > 0)"
-                    @click="addRow"
+                    :disabled="!validNewRow()"
+                    @click="addRow()"
                 >
                     <b-icon-plus-circle-fill/>
                 </b-button>
@@ -135,7 +135,14 @@
                 array.forEach(row => row.id = iIndex++);
                 return array;
             },
+            validNewRow() {
+                return (this.validLength(this.new_length, this.maxLength) && this.validQuantity(this.new_quantity));
+            },
             addRow() {
+                if (!this.validNewRow()) {
+                    return
+                }
+
                 let target = {quantity: this.new_quantity, length: this.new_length};
 
                 target.id = this.target_sizes.length;

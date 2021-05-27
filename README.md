@@ -5,6 +5,8 @@
 [![Docker Image Version](https://img.shields.io/docker/v/modischfabrications/cutsolver_frontend.svg)](https://hub.docker.com/repository/docker/modischfabrications/cutsolver_frontend)
 [![Docker Image Size](https://img.shields.io/docker/image-size/modischfabrications/cutsolver_frontend.svg)](https://hub.docker.com/repository/docker/modischfabrications/cutsolver)
 
+![Showcase](docs/mobile.png)
+
 This is a simple vue frontend for my [CutSolver](https://github.com/ModischFabrications/CutSolver). 
 
 This is also my first vue project, keep looking for other references if you want to learn it. 
@@ -48,3 +50,5 @@ Remember to set all versions for new releases:
  1. git tag
  2. package.json 
  3. Docker Multibuild (might be done by travis eventually)
+
+Update all dependencies completely with `vue upgrade && npm install` whenever possible, webdev is perpetually broken.

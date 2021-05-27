@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <NavBar :title="title"/>
+        <NavBar/>
 
         <ModalWarning ref="modal_warning"/>
 
@@ -78,7 +78,6 @@
         mixins: [validators],
         data: function () {
             return {
-                // won't change page title, might need to do something else
                 title: title,
                 version: process.env.VUE_APP_VERSION,
 
