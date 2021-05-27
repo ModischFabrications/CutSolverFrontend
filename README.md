@@ -50,3 +50,5 @@ Remember to set all versions for new releases:
  1. git tag
  2. package.json 
  3. Docker Multibuild (might be done by travis eventually)
+
+Update all dependencies completely with `vue upgrade` whenever possible, webdev is perpetually broken.
