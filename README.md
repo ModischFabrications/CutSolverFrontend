@@ -43,7 +43,7 @@ npm run build
 This project uses:
 1. [WebStorm](https://www.jetbrains.com/webstorm/) as IDE (while I have it as a student)
 1. [Vue (2)](https://vuejs.org/) for everything
-2. [Vue Bootstrap](https://bootstrap-vue.js.org/) for style
+2. [Vue Bootstrap](https://bootstrap-vue.org/) for style
 3. [VueShowdown](https://vue-showdown.js.org/) for markdown parsing
 4. [Eslint](https://eslint.vuejs.org/) for linting and code formatting
 
