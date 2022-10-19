@@ -14,13 +14,13 @@ This is a simple frontend based on vue for [CutSolver](https://github.com/Modisc
 It's also my first vue project, you should keep looking for better references. 
 
 ## Usage
-### recommended, batteries included
+### Recommended, batteries included
 Use the provided Docker compose file, add in your URL, done!
 
 Set the backend path by adding a `VUE_APP_BACKEND_SOLVER_URL` to your environment or compose file.
 See docker compose for details. 
 
-### manual usage
+### Manual
 I assume you know what you are doing if you want to install it manually.
 Here are some hints for you if you need some help regardless.
 

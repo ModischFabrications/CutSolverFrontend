@@ -45,7 +45,15 @@
                 </b-row>
             </b-container>
             <div class="fluid-container footer">
-                <p> CutSolver {{ version }}, hosted with 🖤️ by yours truly </p>
+                <p>
+                    CutSolver {{ version }}, hosted with 🖤️ by <a
+                        href="http://modisch.me"
+                        target="_blank"
+                    >yours truly</a> | <a
+                        href="https://legal.modisch.me/en/privacy"
+                        target="_blank"
+                    >Privacy Policy</a>
+                </p>
             </div>
         </b-overlay>
     </div>
@@ -183,6 +191,6 @@
         /* TODO: push to bottom. not sticky, allowed to be overlapped? maybe outside of overlay */
         padding-top: 16px;
         margin-bottom: 0;
-        color: lightgrey;
+        color: #a1a1a1;
     }
 </style>
