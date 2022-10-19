@@ -32,7 +32,7 @@
                             Solve
                         </b-button>
                     </b-col>
-                
+
                     <b-col
                         xl="5"
                     >
@@ -44,18 +44,18 @@
                     <!-- [x] live update ?-->
                 </b-row>
             </b-container>
-            <div class="fluid-container footer">
-                <p>
-                    CutSolver {{ version }}, made with 🖤️ by <a
-                        href="http://modisch.me"
-                        target="_blank"
-                    >Modisch Fabrications</a> | <a
-                        href="https://legal.modisch.me/en/privacy"
-                        target="_blank"
-                    >Privacy Policy</a>
-                </p>
-            </div>
         </b-overlay>
+        <footer class="fluid-container footer">
+            <p>
+                CutSolver {{ version }}, made with 🖤️ by <a
+                    href="http://modisch.me"
+                    target="_blank"
+                >Modisch Fabrications</a> | <a
+                    href="https://legal.modisch.me/en/privacy"
+                    target="_blank"
+                >Privacy Policy</a>
+            </p>
+        </footer>
     </div>
 </template>
 
@@ -188,8 +188,7 @@
     }
 
     .fluid-container.footer > *:last-child {
-        /* TODO: push to bottom. not sticky, allowed to be overlapped? maybe outside of overlay */
-        padding-top: 16px;
+        padding: 4rem 2rem 2rem 2rem;
         margin-bottom: 0;
         color: #a1a1a1;
     }
