@@ -46,10 +46,10 @@
             </b-container>
             <div class="fluid-container footer">
                 <p>
-                    CutSolver {{ version }}, hosted with 🖤️ by <a
+                    CutSolver {{ version }}, made with 🖤️ by <a
                         href="http://modisch.me"
                         target="_blank"
-                    >yours truly</a> | <a
+                    >Modisch Fabrications</a> | <a
                         href="https://legal.modisch.me/en/privacy"
                         target="_blank"
                     >Privacy Policy</a>
