@@ -5,6 +5,7 @@
         <ModalWarning ref="modal_warning"/>
 
         <b-overlay :show="busy">
+            <!-- TODO use a better pattern to pass control -->
             <MainSolver
                 ref="main_solver"
                 :start-solving="startSolving"
@@ -38,14 +39,14 @@ import MainSolver from "@/components/MainSolver";
 let testresult = Object.assign(new Result(), json_testresult);
 
     const title = "CutSolver";
+    const useMockSolver = false;
 
     export default {
         name: 'App',
         components: {
           MainSolver,
-            ModalWarning,
-            NavBar,
-            
+          ModalWarning,
+          NavBar,
         },
         mixins: [validators],
         data: function () {
@@ -87,8 +88,9 @@ let testresult = Object.assign(new Result(), json_testresult);
 
                 this.busy = true;
 
-                // this.callMockSolver(this.job)
-                this.callSolver(this.job)
+                if (useMockSolver) this.callMockSolver(this.job)
+                  else this.callRemoteSolver(this.job)
+
             },
             handleReply(reply) {
                 console.log("Result: ");
@@ -112,7 +114,7 @@ let testresult = Object.assign(new Result(), json_testresult);
                     this.handleReply(reply);
                 }, 2000);
             },
-            callSolver(job) {
+            callRemoteSolver(job) {
                 console.log("Posting to " + this.SOLVER_URL);
 
                 axios.post(this.SOLVER_URL, job)
@@ -121,7 +123,7 @@ let testresult = Object.assign(new Result(), json_testresult);
                     }).catch(error => {
                         console.log(error);
                     if (error.response) {
-                        // request was made but server responded with status code != 2xx
+                        // got response, but it's an error
                         this.handleReply(error.response.data);
                     } else if (error.request) {
                         // request was made but server did not respond

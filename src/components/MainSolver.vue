@@ -47,7 +47,10 @@ export default {
   name: 'MainSolver',
   components: {SolverInput, SolverOutput},
   props: {
-    startSolving: {}
+    startSolving: {
+      type: Function,
+      required: true
+    }
   }
 }
 </script>
