@@ -5,75 +5,48 @@
         <ModalWarning ref="modal_warning"/>
 
         <b-overlay :show="busy">
-            <b-container
-                fluid="true"
-                class="fix_fluid"
-            >
-                <b-row
-                    align-h="center"
-                >
-                    <b-col xl="5">
-                        <SolverInput ref="main_input"/>
-                    </b-col>
-
-                    <b-col
-                        xl="*"
-                        align-self="center"
-                    >
-                        <!-- centered and square on desktop, long bar button on mobile? -->
-                        <b-button
-                            id="solve-button"
-                            class="solve_button"
-                            pill
-                            size="lg"
-                            type="submit"
-                            @click="startSolving"
-                        >
-                            Solve
-                        </b-button>
-                    </b-col>
-                
-                    <b-col
-                        xl="5"
-                    >
-                        <!-- output field for json API answer, hidden by default -->
-                        <SolverOutput
-                            ref="main_output"
-                        />
-                    </b-col>
-                    <!-- [x] live update ?-->
-                </b-row>
-            </b-container>
-            <div class="fluid-container footer">
-                <p> CutSolver {{ version }}, hosted with 🖤️ by yours truly </p>
-            </div>
+            <!-- TODO use a better pattern to pass control -->
+            <MainSolver
+                ref="main_solver"
+                :start-solving="startSolving"
+            />
         </b-overlay>
+        <footer class="fluid-container footer">
+            <p>
+                CutSolver {{ version }}, made with 🖤️ by <a
+                    href="http://modisch.me"
+                    target="_blank"
+                >Modisch Fabrications</a> | <a
+                    href="https://legal.modisch.me/en/privacy"
+                    target="_blank"
+                >Privacy Policy</a>
+            </p>
+        </footer>
     </div>
 </template>
 
 <script>
-    import SolverInput from "@/components/SolverInput";
-    import SolverOutput from "@/components/SolverOutput";
-    import {Job} from "@/components/data/Job";
-    import {Result} from "@/components/data/Result";
-    // example values
-    import json_testresult from "./tests/data/testresult.json"
-    import NavBar from "@/components/NavBar";
-    import axios from "axios";
-    import ModalWarning from "@/components/ModalWarning";
-    import validators from "@/components/data/validators";
+import {Job} from "@/components/data/Job";
+import {Result} from "@/components/data/Result";
+// example values
+import json_testresult from "./tests/data/testresult.json"
+import NavBar from "@/components/NavBar";
+import axios from "axios";
+import ModalWarning from "@/components/ModalWarning";
+import validators from "@/components/data/validators";
+import MainSolver from "@/components/MainSolver";
 
-    let testresult = Object.assign(new Result(), json_testresult);
+let testresult = Object.assign(new Result(), json_testresult);
 
     const title = "CutSolver";
+    const useMockSolver = false;
 
     export default {
         name: 'App',
         components: {
-            ModalWarning,
-            NavBar,
-            SolverInput,
-            SolverOutput,
+          MainSolver,
+          ModalWarning,
+          NavBar,
         },
         mixins: [validators],
         data: function () {
@@ -110,23 +83,24 @@
             },
             startSolving() {
                 console.log("startSolving with ");
-                this.job = this.$refs["main_input"].job;
+                this.job = this.$refs['main_solver'].$refs["input"].job;
                 console.log(this.job);
 
                 this.busy = true;
 
-                // this.callMockSolver(this.job)
-                this.callSolver(this.job)
+                if (useMockSolver) this.callMockSolver(this.job)
+                  else this.callRemoteSolver(this.job)
+
             },
             handleReply(reply) {
                 console.log("Result: ");
                 console.log(reply);
 
                 if (this.validResult(reply)) {
-                    this.$refs['main_output'].setResult(reply);
+                    this.$refs['main_solver'].$refs['output'].setResult(reply);
                 }
                 else {
-                    this.$refs['main_output'].setWarning(reply);
+                    this.$refs['main_solver'].$refs['output'].setWarning(reply);
                 }
 
                 this.busy = false;
@@ -140,7 +114,7 @@
                     this.handleReply(reply);
                 }, 2000);
             },
-            callSolver(job) {
+            callRemoteSolver(job) {
                 console.log("Posting to " + this.SOLVER_URL);
 
                 axios.post(this.SOLVER_URL, job)
@@ -149,7 +123,7 @@
                     }).catch(error => {
                         console.log(error);
                     if (error.response) {
-                        // request was made but server responded with status code != 2xx
+                        // got response, but it's an error
                         this.handleReply(error.response.data);
                     } else if (error.request) {
                         // request was made but server did not respond
@@ -170,19 +144,13 @@
         color: #2c3e50;
     }
 
-    .solve_button {
-        margin: 16px;
-    }
-
-    .fix_fluid {
-        padding-left: 15px;
-        padding-right: 15px;
+    .fluid-container.footer a {
+      color: #005c93;
     }
 
     .fluid-container.footer > *:last-child {
-        /* TODO: push to bottom. not sticky, allowed to be overlapped? maybe outside of overlay */
-        padding-top: 16px;
+        padding: 4rem 2rem 2rem 2rem;
         margin-bottom: 0;
-        color: lightgrey;
+        color: #a1a1a1;
     }
 </style>

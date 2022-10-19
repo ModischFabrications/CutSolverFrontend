@@ -1,0 +1,114 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [ $default-branch ]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+#  deployments: write   ## Github Pages
+#  packages: write      ## Github container registry
+
+concurrency: ci-${{ github.ref }}
+
+jobs:
+  build-and-test:
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ ubuntu-latest, windows-latest ]   # windows takes ~3x longer, not worth the cost for larger projects
+
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Set up Node ⚙
+        uses: actions/setup-node@v3
+
+      - name: Install dependencies & build ⚙️
+        run: |
+          npm ci
+          npm run build
+
+      - name: Lint 🔍
+        run: |
+          npm run lint
+
+      - name: Test 🔍
+        run: |
+          npm run test:unit
+
+  # this might be useless due to it missing the backend connection
+  push-GH-pages:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    # WIP!
+    if: false && github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+
+    steps:
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4.3.3
+        with:
+          branch: gh-pages # use hidden branch to keep main clean
+          folder: public # build target of svelte
+
+  build-and-push-docker:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    # WIP!
+    if: false && github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+
+    steps:
+      # https://github.com/actions-ecosystem/action-get-latest-tag
+      - uses: actions-ecosystem/action-get-latest-tag@v1
+        id: get-latest-tag
+
+      # https://github.com/docker/setup-qemu-action
+      - name: Set up QEMU ⚙
+        uses: docker/setup-qemu-action@v2
+
+      # https://github.com/docker/setup-buildx-action
+      - name: Set up Docker Buildx ⚙
+        id: buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Report Buildx platforms 🖊️
+        run: echo ${{ steps.buildx.outputs.platforms }}
+
+      - name: Login to GHCR 👤
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Login to DH 👤
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push DH 📦
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          tags: modischfabrications/cutsolverfrontend:${{ steps.get-latest-tag.outputs.tag }}
+
+      - name: Update DH description 🖊️
+        uses: peter-evans/dockerhub-description@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          repository: ModischFabrications/CutSolverFrontend
+          readme-filepath: ./README.md
+          short-description: "Webservice to determine ideal cut placements"
