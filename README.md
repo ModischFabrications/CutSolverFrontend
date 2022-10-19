@@ -12,7 +12,7 @@ This is a simple frontend based on vue for [CutSolver](https://github.com/Modisc
 It's also my first vue project, you should keep looking for better references. 
 
 ## Usage
-### Recommended, batteries included
+### Docker
 Use the provided Docker compose file, add in your URL, done!
 
 Set the backend path by adding a `VUE_APP_BACKEND_SOLVER_URL` to your environment or compose file.
@@ -41,7 +41,7 @@ npm run build
 This project uses:
 1. [WebStorm](https://www.jetbrains.com/webstorm/) as IDE (while I have it as a student)
 2. [Vue (2)](https://vuejs.org/) for everything
-3. [Vue Bootstrap](https://bootstrap-vue.js.org/) for style
+3. [Vue Bootstrap](https://bootstrap-vue.org/) for style
 4. [VueShowdown](https://vue-showdown.js.org/) for markdown parsing
 5. [Eslint](https://eslint.vuejs.org/) for linting and code formatting
 
