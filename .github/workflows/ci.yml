@@ -1,4 +1,4 @@
-name: CI/CD
+name: Build, Test, Deploy
 
 on:
   push:
@@ -43,22 +43,6 @@ jobs:
         run: |
           npm run test:unit
 
-  # this might be useless due to it missing the backend connection
-  push-GH-pages:
-    needs: build-and-test
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-
-    # WIP!
-    if: false && github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
-
-    steps:
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4.3.3
-        with:
-          branch: gh-pages # use hidden branch to keep main clean
-          folder: public # build target of svelte
-
   build-and-push-docker:
     needs: build-and-test
     runs-on: ubuntu-latest
@@ -98,7 +82,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push to DH & GHCR 📦
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v3
         with:
           context: .
           platforms: linux/amd64,linux/arm64,linux/arm/v7
