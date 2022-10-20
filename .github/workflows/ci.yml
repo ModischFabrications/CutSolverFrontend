@@ -103,7 +103,7 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
-          tags: modischfabrications/cutsolverfrontend:latest,modischfabrications/cutsolverfrontend:${{ steps.package-version.outputs.current-version }}
+          tags: modischfabrications/cutsolver_frontend:latest,modischfabrications/cutsolver_frontend:${{ steps.package-version.outputs.current-version }}
 
       - name: Update DH description 🖊️
         uses: peter-evans/dockerhub-description@v3
