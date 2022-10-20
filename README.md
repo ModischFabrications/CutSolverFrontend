@@ -1,5 +1,6 @@
 # CutSolverFrontend
 
+[![CI/CD](https://github.com/ModischFabrications/CutSolverFrontend/actions/workflows/ci.yml/badge.svg)](https://github.com/ModischFabrications/CutSolverFrontend/actions/workflows/ci.yml)
 [![Docker Image Version](https://img.shields.io/docker/v/modischfabrications/cutsolver_frontend.svg)](https://hub.docker.com/repository/docker/modischfabrications/cutsolver_frontend)
 [![Docker Image Size](https://img.shields.io/docker/image-size/modischfabrications/cutsolver_frontend.svg)](https://hub.docker.com/repository/docker/modischfabrications/cutsolver)
 
