@@ -70,7 +70,7 @@ jobs:
     steps:
       # https://github.com/martinbeentjes/npm-get-version-action
       - uses: martinbeentjes/npm-get-version-action@main
-        id: get-latest-tag
+        id: package-version
 
       # https://github.com/docker/setup-qemu-action
       - name: Set up QEMU ⚙
