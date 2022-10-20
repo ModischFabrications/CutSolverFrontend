@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os: [ ubuntu-latest, windows-latest ]   # windows takes ~3x longer, not worth the cost for larger projects
+        os: [ ubuntu-latest ] #, windows-latest ]   # windows takes ~3x longer, not worth the cost for larger projects
 
     runs-on: ${{ matrix.os }}
     timeout-minutes: 5
@@ -65,11 +65,11 @@ jobs:
     timeout-minutes: 10
 
     # WIP!
-    if: false && github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+    if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
 
     steps:
-      # https://github.com/actions-ecosystem/action-get-latest-tag
-      - uses: actions-ecosystem/action-get-latest-tag@v1
+      # https://github.com/martinbeentjes/npm-get-version-action
+      - uses: martinbeentjes/npm-get-version-action@main
         id: get-latest-tag
 
       # https://github.com/docker/setup-qemu-action
@@ -84,6 +84,12 @@ jobs:
       - name: Report Buildx platforms 🖊️
         run: echo ${{ steps.buildx.outputs.platforms }}
 
+      - name: Login to DH 👤
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       - name: Login to GHCR 👤
         uses: docker/login-action@v2
         with:
@@ -91,18 +97,13 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Login to DH 👤
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build and push DH 📦
+      - name: Build and push to DH & GHCR 📦
         uses: docker/build-push-action@v4
         with:
           context: .
           platforms: linux/amd64,linux/arm64,linux/arm/v7
-          tags: modischfabrications/cutsolverfrontend:${{ steps.get-latest-tag.outputs.tag }}
+          push: true
+          tags: modischfabrications/cutsolverfrontend:latest,modischfabrications/cutsolverfrontend:${{ steps.package-version.outputs.current-version }}
 
       - name: Update DH description 🖊️
         uses: peter-evans/dockerhub-description@v3
