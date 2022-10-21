@@ -55,6 +55,9 @@ jobs:
     timeout-minutes: 15
 
     steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
       # https://github.com/docker/metadata-action
       - name: Export Metadata for Docker 🖊️
         id: meta
