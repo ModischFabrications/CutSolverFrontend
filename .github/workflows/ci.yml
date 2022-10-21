@@ -56,7 +56,7 @@ jobs:
 
     steps:
       # https://github.com/docker/metadata-action
-      - name: Export Git/Docker Metadata 🖊️
+      - name: Export Metadata for Docker 🖊️
         id: meta
         uses: docker/metadata-action@v4
         with:
@@ -64,6 +64,7 @@ jobs:
             modischfabrications/cutsolver_frontend
             ghcr.io/${{ github.repository_owner }}/cutsolver_frontend
           tags: |
+            type=ref,event=branch
             type=semver,pattern={{version}}
 
       # https://github.com/docker/setup-qemu-action
