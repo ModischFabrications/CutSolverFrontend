@@ -110,6 +110,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          repository: ModischFabrications/CutSolverFrontend
+          repository: modischfabrications/cutsolver_frontend
           readme-filepath: ./README.md
-          short-description: "Webservice to determine ideal cut placements"
+          short-description: ${{ github.event.repository.description }}
