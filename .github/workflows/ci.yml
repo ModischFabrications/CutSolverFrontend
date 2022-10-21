@@ -3,8 +3,10 @@ name: Build, Test, Deploy
 on:
   push:
     branches:
-      - master
-      - main
+      - 'master'
+      - 'main'
+    tags:
+      - 'v*'
   pull_request:
   workflow_dispatch:
 
@@ -50,12 +52,19 @@ jobs:
     if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
 
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
 
     steps:
-      # https://github.com/martinbeentjes/npm-get-version-action
-      - uses: martinbeentjes/npm-get-version-action@main
-        id: package-version
+      # https://github.com/docker/metadata-action
+      - name: Export Git/Docker Metadata 🖊️
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            modischfabrications/cutsolver_frontend
+            ghcr.io/${{ github.repository_owner }}/cutsolver_frontend
+          tags: |
+            type=semver,pattern={{version}}
 
       # https://github.com/docker/setup-qemu-action
       - name: Set up QEMU ⚙
@@ -82,17 +91,15 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      # https://github.com/docker/build-push-action
       - name: Build and push to DH & GHCR 📦
         uses: docker/build-push-action@v3
         with:
           context: .
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
-          tags: |
-            modischfabrications/cutsolver_frontend:latest
-            modischfabrications/cutsolver_frontend:${{ steps.package-version.outputs.current-version }}
-            ghcr.io/modischfabrications/cutsolver_frontend:latest
-            ghcr.io/modischfabrications/cutsolver_frontend:${{ steps.package-version.outputs.current-version }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
 
       - name: Update DH description 🖊️
         uses: peter-evans/dockerhub-description@v3
