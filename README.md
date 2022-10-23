@@ -1,4 +1,4 @@
-# CutSolverFrontend
+# ![logo](./src/assets/logo.svg) CutSolver (Frontend)
 
 [![CI/CD](https://github.com/ModischFabrications/CutSolverFrontend/actions/workflows/ci.yml/badge.svg)](https://github.com/ModischFabrications/CutSolverFrontend/actions/workflows/ci.yml)
 [![Docker Image Version](https://img.shields.io/docker/v/modischfabrications/cutsolver_frontend.svg)](https://hub.docker.com/repository/docker/modischfabrications/cutsolver_frontend)
@@ -26,7 +26,7 @@ It's also my first vue project, you should keep looking for better references.
 
 ## Usage
 
-Use the provided service at [TODO], host this service yourself if that isn't available yet. 
+Use the provided service at <http://vps.modisch.me:8080>, host this service yourself if that isn't available yet. 
 
 Enter the length of your stock, enter the assumed width of your cutting device (e.g. hacksaw with 3mm) and 
 enter the number and length that you desire.
@@ -67,7 +67,7 @@ Update all dependencies completely with `vue upgrade && npm install` whenever po
 
 ### Push Production Docker Images
 
-Docker Hub Images should be updated automatically, but that doesn't work at the moment (see #44).
+Docker Hub Images should be updated automatically, but feel free to build yourself should everything else fail.
 Thankfully, local builds are easy with the modern `buildx` workflow.
 
 Installation of a multibuilder (once):
