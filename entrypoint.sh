@@ -1,6 +1,7 @@
 #!/bin/sh
 
 # called from Docker container, not meant for manual consumption
+# make sure to keep LF endings!
 
 echo "substituting env vars"
 if [ -z "$VUE_APP_BACKEND_SOLVER_URL" ]; then
