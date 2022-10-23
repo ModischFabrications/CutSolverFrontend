@@ -4,18 +4,19 @@ services:
 
   cutsolver_frontend:
     build: .
-    image: modischfabrications/cutsolver_frontend:latest
+    # use specific tags for a persistent reference
+    image: modischfabrications/cutsolver_frontend:master
     restart: unless-stopped
     ports:
       - "8080:80"
     depends_on:
       - cutsolver
     environment:
-      # point this to your backend host URL
+      # point this to your backend host URL!
       - VUE_APP_BACKEND_SOLVER_URL=http://localhost:8000/solve
 
   cutsolver:
-    image: modischfabrications/cutsolver:latest
+    image: modischfabrications/cutsolver:master
     restart: unless-stopped
     ports:
       - "8000:80"
