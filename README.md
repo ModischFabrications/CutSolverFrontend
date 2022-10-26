@@ -26,18 +26,18 @@ It's also my first vue project, you should keep looking for better references.
 
 ## Usage
 
-Use the provided service at <http://vps.modisch.me:8080>, host this service yourself if that isn't available yet. 
+Use the provided service at <https://vps.modisch.me:/cutsolver>, host this service yourself if that isn't available yet. 
 
 Enter the length of your stock, enter the assumed width of your cutting device (e.g. hacksaw with 3mm) and 
 enter the number and length that you desire.
 
-## Docker1 Hosting
+## Docker Hosting
 Remember to host a [backend instance](https://github.com/ModischFabrications/CutSolver) for yourself! 
 
 Set the backend path by adding a `VUE_APP_BACKEND_SOLVER_URL` to your environment or compose file.
 See docker compose for details.
 
-Start that file with `docker-compose up` and have fun!
+Start that file with `docker-compose up [-d]` and have fun!
 
 ## Contributing
 
@@ -68,6 +68,7 @@ Update all dependencies completely with `vue upgrade && npm install` whenever po
 ### Push Production Docker Images
 
 Docker Hub Images should be updated automatically, but feel free to build yourself should everything else fail.
+Adding "[skip ci]" to the commit message will prevent any ci builds should the need arise.
 Thankfully, local builds are easy with the modern `buildx` workflow.
 
 Installation of a multibuilder (once):

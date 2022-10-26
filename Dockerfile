@@ -20,6 +20,6 @@ RUN chmod +x /entrypoint.sh
 
 EXPOSE 80
 # curl not in alpine package
-HEALTHCHECK --interval=5m --timeout=5s CMD wget -q --spider http://localhost:80/ || exit 1
+HEALTHCHECK --interval=1m --timeout=5s CMD wget -q --spider http://localhost:80/ || exit 1
 
 ENTRYPOINT [ "/entrypoint.sh" ]
