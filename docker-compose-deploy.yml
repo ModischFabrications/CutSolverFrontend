@@ -21,7 +21,8 @@ services:
       - "traefik.http.routers.cutsolver_frontend.rule=Host(`${DOMAIN_NAME:?err}`) && Path(`/cutsolver`)"
       - "traefik.http.routers.cutsolver_frontend.entrypoints=websecure"
       - "traefik.http.routers.cutsolver_frontend.tls.certresolver=myresolver"
-      - "traefik.http.middlewares.cutsolver_frontend-stripprefix.stripprefix.forceslash=false"
+      # forceslash/trailing slashes are needed to support relative hrefs
+      - "traefik.http.middlewares.cutsolver_frontend-stripprefix.stripprefix.forceslash=true"
       - "traefik.http.middlewares.cutsolver_frontend-stripprefix.stripprefix.prefixes=/cutsolver"
       - "traefik.http.routers.cutsolver_frontend.middlewares=cutsolver_frontend-stripprefix"
 
@@ -30,12 +31,15 @@ services:
     restart: unless-stopped
     ports:
       - "9501:80"
+    command:
+      # needs to be set for OpenAPI and other internal links
+      - "--root-path=/cutsolver/api"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.cutsolver.rule=Host(`${DOMAIN_NAME:?err}`) && PathPrefix(`/cutsolver/api`)"
       - "traefik.http.routers.cutsolver.entrypoints=websecure"
       - "traefik.http.routers.cutsolver.tls.certresolver=myresolver"
-      - "traefik.http.middlewares.cutsolver-stripprefix.stripprefix.forceslash=false"
+      - "traefik.http.middlewares.cutsolver-stripprefix.stripprefix.forceslash=true"
       - "traefik.http.middlewares.cutsolver-stripprefix.stripprefix.prefixes=/cutsolver/api"
       - "traefik.http.routers.cutsolver.middlewares=cutsolver-stripprefix"
 
