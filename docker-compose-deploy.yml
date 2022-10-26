@@ -1,0 +1,66 @@
+version: '3.3'
+
+# TODO:
+# create .env file with all references
+# Remove debug stuff as needed
+
+services:
+
+  cutsolver_frontend:
+    # use specific tags for a persistent reference
+    image: modischfabrications/cutsolver_frontend:master
+    restart: unless-stopped
+    ports:
+      - "9500:80"
+    depends_on:
+      - cutsolver
+    environment:
+      - VUE_APP_BACKEND_SOLVER_URL=https://${DOMAIN_NAME:?err}/cutsolver/api/solve
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.cutsolver_frontend.rule=Host(`${DOMAIN_NAME:?err}`) && Path(`/cutsolver`)"
+      - "traefik.http.routers.cutsolver_frontend.entrypoints=websecure"
+      - "traefik.http.routers.cutsolver_frontend.tls.certresolver=myresolver"
+      - "traefik.http.middlewares.cutsolver_frontend-stripprefix.stripprefix.forceslash=false"
+      - "traefik.http.middlewares.cutsolver_frontend-stripprefix.stripprefix.prefixes=/cutsolver"
+      - "traefik.http.routers.cutsolver_frontend.middlewares=cutsolver_frontend-stripprefix"
+
+  cutsolver:
+    image: modischfabrications/cutsolver:master
+    restart: unless-stopped
+    ports:
+      - "9501:80"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.cutsolver.rule=Host(`${DOMAIN_NAME:?err}`) && PathPrefix(`/cutsolver/api`)"
+      - "traefik.http.routers.cutsolver.entrypoints=websecure"
+      - "traefik.http.routers.cutsolver.tls.certresolver=myresolver"
+      - "traefik.http.middlewares.cutsolver-stripprefix.stripprefix.forceslash=false"
+      - "traefik.http.middlewares.cutsolver-stripprefix.stripprefix.prefixes=/cutsolver/api"
+      - "traefik.http.routers.cutsolver.middlewares=cutsolver-stripprefix"
+
+  traefik:
+    image: traefik:v2.9
+    restart: unless-stopped
+    command:
+      # TODO remove insecure and debug logs once ready
+      - "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.myresolver.acme.email=${EMAIL_ADDRESS:?err}"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+      # staging for tests; TODO remove once ready
+      - "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+    ports:
+      - "80:80"      # HTTP
+      - "443:443"    # HTTPS
+      - "9001:8080"  # Web UI (enabled by --api.insecure=true)
+    volumes:
+      - "./letsencrypt:/letsencrypt"
+      # listen to docker events, *readonly*
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
