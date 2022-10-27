@@ -82,9 +82,8 @@ let testresult = Object.assign(new Result(), json_testresult);
                 this.$bvModal.show("modal-warning");
             },
             startSolving() {
-                console.log("startSolving with ");
                 this.job = this.$refs['main_solver'].$refs["input"].job;
-                console.log(this.job);
+                // console.log(this.job);
 
                 this.busy = true;
 
@@ -93,8 +92,7 @@ let testresult = Object.assign(new Result(), json_testresult);
 
             },
             handleReply(reply) {
-                console.log("Result: ");
-                console.log(reply);
+                // console.log(reply);
 
                 if (this.validResult(reply)) {
                     this.$refs['main_solver'].$refs['output'].setResult(reply);
