@@ -5,10 +5,11 @@ docs
 workflows
 
 # random stuff
+*.idea
 LICENSE
 Dockerfile
 docker_*
 README.md
 letsencrypt
 .env
-.git*
+.git
