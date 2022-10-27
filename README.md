@@ -26,7 +26,7 @@ It's also my first vue project, you should keep looking for better references.
 
 ## Usage
 
-Use the provided service at <https://vps.modisch.me:/cutsolver>, host this service yourself if that isn't available yet. 
+Use the provided service at <https://vps.modisch.me/cutsolver/>, host this service yourself if it isn't available at the moment. 
 
 Enter the length of your stock, enter the assumed width of your cutting device (e.g. hacksaw with 3mm) and 
 enter the number and length that you desire.
