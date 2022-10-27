@@ -1,8 +1,8 @@
-# ![logo](./src/assets/logo.svg) CutSolver (Frontend)
+# ![logo](https://github.com/ModischFabrications/CutSolverFrontend/raw/master/src/assets/logo.svg) CutSolver (Frontend)
 
 [![CI/CD](https://github.com/ModischFabrications/CutSolverFrontend/actions/workflows/ci.yml/badge.svg)](https://github.com/ModischFabrications/CutSolverFrontend/actions/workflows/ci.yml)
-[![Docker Image Version](https://img.shields.io/docker/v/modischfabrications/cutsolver_frontend.svg)](https://hub.docker.com/repository/docker/modischfabrications/cutsolver_frontend)
-[![Docker Image Size](https://img.shields.io/docker/image-size/modischfabrications/cutsolver_frontend.svg)](https://hub.docker.com/repository/docker/modischfabrications/cutsolver)
+[![Docker Image Version](https://img.shields.io/docker/v/modischfabrications/cutsolver_frontend?sort=semver)](https://hub.docker.com/r/modischfabrications/cutsolver_frontend)
+[![Pulls from DockerHub](https://img.shields.io/docker/pulls/modischfabrications/cutsolver_frontend)](https://hub.docker.com/r/modischfabrications/cutsolver_frontend)
 
 This is a simple frontend for [CutSolver](https://github.com/ModischFabrications/CutSolver), my solver backend for ideal stock cutting lengths.
 
@@ -11,7 +11,7 @@ It seems like no other free service tackles this specific problem in an easy-to-
 
 *You are very welcome to share how you use this tool!*
 
-![Showcase](./docs/mobile.png)
+![Showcase](https://github.com/ModischFabrications/CutSolverFrontend/raw/master/docs/mobile.png)
 
 This Solver is using integers exclusively, as there is no need for arbitrary precision (yet).
 Feel free to shift your numbers a few decimals if you need fractions.

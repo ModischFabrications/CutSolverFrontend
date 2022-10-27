@@ -69,3 +69,17 @@ services:
       - "./letsencrypt:/letsencrypt"
       # listen to docker events, *readonly*
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+
+  # auto-updates
+  # THIS WILL RANDOMLY RESTART YOUR CONTAINERS!
+  watchtower:
+    image: containrrr/watchtower:1.4.0
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command:
+      - "--interval=900" # seconds
+      - "--cleanup"
+      # recovery from broken images
+      - "--include-stopped"
+      - "--revive-stopped"
