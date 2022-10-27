@@ -35,7 +35,7 @@ jobs:
 
       - name: Checkout 🛎️
         # uses: actions/checkout@v3 # incompatible with git lfs cache (https://github.com/actions/checkout/issues/165#issuecomment-940225299)
-        uses: nschloe/action-checkout-with-lfs-cache@v1
+        uses: nschloe/action-checkout-with-lfs-cache@v1.1.2
         with:
           exclude: "docs/*"
 
