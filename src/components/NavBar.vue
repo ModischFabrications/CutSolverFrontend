@@ -9,7 +9,7 @@
                 alt="logo"
                 class="d-inline-block align-top"
                 height="32"
-                src="../assets/logo.svg"
+                :src="require(`@/assets/logo.svg`)"
             >
             CutSolver
         </b-navbar-brand>
