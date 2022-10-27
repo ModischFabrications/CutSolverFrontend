@@ -3,7 +3,7 @@ This service collects your input, sends it to a big calculator, allows it to thi
 displays the received result back to you.
 
 Be aware that this is actually a very hard mathematical problem, see "bin packing problem" for technical details. 
-This means that this calculator will only guarantee perfect results up to 12 elements, anything more will fall back to
+This means that this calculator will only guarantee perfect results up to 10 elements, anything more will fall back to
 a fast, but easily fooled algorithm. 
 
 ## FAQ

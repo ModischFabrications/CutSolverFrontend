@@ -26,8 +26,7 @@
             </template>
 
             <div v-if="validResult(result)">
-                Solved using {{ result.solver_type }}.
-                Calculation took {{ result.time_us / 1000 }}ms.
+                <p>Solved using {{ result.solver_type }}. Calculation took {{ usToMs(result.time_us) }}ms.</p>
 
                 <LengthsList
                     :max-length="result.job.max_length"
@@ -37,8 +36,7 @@
             </div>
             <div v-else>
                 <!-- fake data -->
-                Solved using pure magic.
-                Calculation took forever.
+                <p>Solved using pure magic. Calculation took forever.</p>
 
                 <LengthsList
                     :max-length="testresult.job.max_length"
@@ -87,6 +85,9 @@
                 this.warning = text;
                 // TODO: set fake result as background as soon as job is included in it.
                 // makes v-else irrelevant, pass only result to object
+            },
+            usToMs(duration) {
+              return (duration/1000).toFixed(1);
             }
         }
     }

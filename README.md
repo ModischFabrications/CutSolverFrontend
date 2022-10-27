@@ -19,7 +19,7 @@ It has no concept of units, so you can use whatever you want.
 
 *Nerd talk*: This is the 2D "Cutting Stock Problem", which is NP-hard. It can be reduced to the Bin-Packing-Problem (
 BPP). No efficient algorithm exists to calculate a perfect solution in an acceptable timeframe, therefore brute force (perfect
-solution) is used for small jobs (<13 entries) and FFD (fast solution) für larger ones. Don't be surprised if you get different
+solution) is used for small jobs (<10 entries) and FFD (fast solution) für larger ones. Don't be surprised if you get different
 results, many combinations have equal trimmings and are therefore seen as equally good.
 
 It's also my first vue project, you should keep looking for better references. 

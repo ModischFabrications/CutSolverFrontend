@@ -7,6 +7,7 @@ version: '3.3'
 services:
 
   cutsolver_frontend:
+    build: .
     # use specific tags for a persistent reference
     image: modischfabrications/cutsolver_frontend:master
     restart: unless-stopped
@@ -18,7 +19,7 @@ services:
       - VUE_APP_BACKEND_SOLVER_URL=https://${DOMAIN_NAME:?err}/cutsolver/api/solve
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.cutsolver_frontend.rule=Host(`${DOMAIN_NAME:?err}`) && Path(`/cutsolver`)"
+      - "traefik.http.routers.cutsolver_frontend.rule=Host(`${DOMAIN_NAME:?err}`) && PathPrefix(`/cutsolver`)"
       - "traefik.http.routers.cutsolver_frontend.entrypoints=websecure"
       - "traefik.http.routers.cutsolver_frontend.tls.certresolver=myresolver"
       # forceslash/trailing slashes are needed to support relative hrefs

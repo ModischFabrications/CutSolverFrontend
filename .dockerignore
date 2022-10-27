@@ -1,2 +1,14 @@
 # huge and useless for newly build images
 node_modules
+dist
+docs
+workflows
+
+# random stuff
+LICENSE
+Dockerfile
+docker_*
+README.md
+letsencrypt
+.env
+.git*
