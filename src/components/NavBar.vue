@@ -6,6 +6,7 @@
     >
         <b-navbar-brand href="#">
             <img
+                id="logoIcon"
                 alt="logo"
                 class="d-inline-block align-top"
                 height="32"

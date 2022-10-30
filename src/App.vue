@@ -13,7 +13,7 @@
         </b-overlay>
         <footer class="fluid-container footer">
             <p>
-                CutSolver {{ version }}, made with 🖤️ by <a
+                CutSolver v{{ version }}, made with 🖤️ by <a
                     href="http://modisch.me"
                     target="_blank"
                 >Modisch Fabrications</a> | <a
