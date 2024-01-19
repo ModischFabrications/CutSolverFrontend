@@ -1,7 +1,8 @@
 <template>
     <b-table
         id="table-input"
-        :fields="[{key: 'quantity', sortable:true},
+        :fields="[{key: 'name', sortable:true},
+                  {key: 'quantity', sortable:true},
                   {key: 'length', sortable:true},
                   {key: 'delete', label: '', thStyle: { width: '60px'}}
         ]"
@@ -24,6 +25,13 @@
             >
                 <b-icon-trash-fill/>
             </b-button>
+        </template>
+        <template #cell(name)="row">
+            <b-form-input
+                v-model="row.item.name"
+                lazy
+                :placeholder="'Part' + (row.index + 1)"
+            />
         </template>
         <template #cell(quantity)="row">
             <b-form-input
@@ -59,6 +67,14 @@
 
         <!-- can't extract into component (not trivial, component can't have multiple root children) -->
         <template #custom-foot>
+            <b-th>
+                <b-form-input
+                    ref="input_new_name"
+                    v-model="new_name"
+                    placeholder="enter new name (optional)"
+                    @keydown.enter="addRow()"
+                />
+            </b-th>
             <b-th>
                 <b-form-input
                     ref="input_new_quantity"
@@ -119,6 +135,7 @@
         },
         data() {
             return {
+                new_name: '',
                 new_length: '',
                 new_quantity: '',
 
@@ -143,11 +160,12 @@
                     return
                 }
 
-                let target = {quantity: this.new_quantity, length: this.new_length};
+                let target = {name: this.new_name, quantity: this.new_quantity, length: this.new_length};
 
                 target.id = this.target_sizes.length;
                 this.target_sizes.push(target);
 
+                this.new_name = '';
                 this.new_quantity = '';
                 this.new_length = '';
                 this.$refs["input_new_quantity"].focus();
