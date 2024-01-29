@@ -6,4 +6,7 @@ module.exports = {
   testEnvironmentOptions: {
     customExportConditions: ["node", "node-addons"],
   },
+  moduleNameMapper: {
+    '^axios$': require.resolve('axios'),
+  },
 }
