@@ -3,16 +3,16 @@ name: Build, Test, Deploy
 on:
   push:
     branches:
-      - 'master'
-      - 'main'
+      - "master"
+      - "main"
     tags:
-      - 'v*'
+      - "v*"
   pull_request:
   workflow_dispatch:
 
 permissions:
   contents: read
-  packages: write      ## Github container registry
+  packages: write ## Github container registry
 #  deployments: write   ## Github Pages
 
 concurrency: ci-${{ github.ref }}
@@ -22,17 +22,17 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os: [ ubuntu-latest ] #, windows-latest ]   # windows takes ~3x longer, not worth the cost for larger projects
+        os: [ubuntu-latest] #, windows-latest ]   # windows takes ~3x longer, not worth the cost for larger projects
 
     runs-on: ${{ matrix.os }}
     timeout-minutes: 5
 
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Node ⚙
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
 
       - name: Install dependencies & build ⚙️
         run: |
@@ -49,8 +49,7 @@ jobs:
 
   build-and-push-docker:
     needs: build-and-test
-    if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch) ||
-      startsWith(github.ref, 'refs/tags/v') && github.event.base_ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    if: github.ref == 'refs/heads/{{ github.event.repository.default_branch }}' || startsWith(github.ref, 'refs/tags/v')
 
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -58,14 +57,14 @@ jobs:
     steps:
       - name: Checkout 🛎️
         # uses: actions/checkout@v3 # incompatible with git lfs cache (https://github.com/actions/checkout/issues/165#issuecomment-940225299)
-        uses: nschloe/action-checkout-with-lfs-cache@v1.1.2
+        uses: nschloe/action-checkout-with-lfs-cache@v1.2.2
         with:
           exclude: "docs/*"
 
       # https://github.com/docker/metadata-action
       - name: Export Metadata for Docker 🖊️
         id: meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v5
         with:
           images: |
             modischfabrications/cutsolver_frontend
@@ -76,24 +75,24 @@ jobs:
 
       # https://github.com/docker/setup-qemu-action
       - name: Set up QEMU ⚙
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
 
       # https://github.com/docker/setup-buildx-action
       - name: Set up Docker Buildx ⚙
         id: buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 
       - name: Report Buildx platforms 🖊️
         run: echo ${{ steps.buildx.outputs.platforms }}
 
       - name: Login to DH 👤
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Login to GHCR 👤
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
@@ -101,7 +100,7 @@ jobs:
 
       # https://github.com/docker/build-push-action
       - name: Build and push to DH & GHCR 📦
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v5
         with:
           context: .
           platforms: linux/amd64,linux/arm64,linux/arm/v7
@@ -112,7 +111,7 @@ jobs:
           cache-to: type=inline
 
       - name: Update DH description 🖊️
-        uses: peter-evans/dockerhub-description@v3
+        uses: peter-evans/dockerhub-description@v4
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
