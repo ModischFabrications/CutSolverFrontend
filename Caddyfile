@@ -1,0 +1,30 @@
+{
+    email {$EMAIL_ADDRESS}
+    # acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
+
+    admin off
+    log {
+        format console
+    }
+}
+
+# remove once everyone forgot about it
+vps.modisch.me {
+    redir /cutsolver https://{$DOMAIN_NAME} permanent
+}
+
+{$DOMAIN_NAME} {
+    reverse_proxy /solve cutsolver
+    reverse_proxy cutsolver_frontend
+
+    # optional, but recommended from here
+    reverse_proxy /version cutsolver
+    reverse_proxy /constants cutsolver
+    reverse_proxy /debug cutsolver
+
+    reverse_proxy /docs cutsolver
+    reverse_proxy /redoc cutsolver
+    reverse_proxy /openapi.json cutsolver
+
+    respond /ping "pong at {$DOMAIN_NAME}"
+}

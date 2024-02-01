@@ -1,74 +1,40 @@
-version: '3.3'
-
-# TODO:
-# create .env file with all references
-# Remove debug stuff as needed
+version: "3.3"
 
 services:
-
   cutsolver_frontend:
-    build: .
     # use specific tags for a persistent reference
-    image: modischfabrications/cutsolver_frontend:master
+    image: modischfabrications/cutsolver_frontend:latest
     restart: unless-stopped
-    ports:
-      - "9500:80"
+    environment:
+      - VUE_APP_BACKEND_SOLVER_URL=https://${DOMAIN_NAME:?err}/solve
+    networks:
+      - webserver
+      - cutsolver
     depends_on:
       - cutsolver
-    environment:
-      - VUE_APP_BACKEND_SOLVER_URL=https://${DOMAIN_NAME:?err}/cutsolver/api/solve
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.cutsolver_frontend.rule=Host(`${DOMAIN_NAME:?err}`) && PathPrefix(`/cutsolver`)"
-      - "traefik.http.routers.cutsolver_frontend.entrypoints=websecure"
-      - "traefik.http.routers.cutsolver_frontend.tls.certresolver=myresolver"
-      # forceslash/trailing slashes are needed to support relative hrefs
-      - "traefik.http.middlewares.cutsolver_frontend-stripprefix.stripprefix.forceslash=true"
-      - "traefik.http.middlewares.cutsolver_frontend-stripprefix.stripprefix.prefixes=/cutsolver"
-      - "traefik.http.routers.cutsolver_frontend.middlewares=cutsolver_frontend-stripprefix"
 
   cutsolver:
-    image: modischfabrications/cutsolver:master
+    image: modischfabrications/cutsolver:latest
     restart: unless-stopped
-    ports:
-      - "9501:80"
-    command:
-      # needs to be set for OpenAPI and other internal links
-      - "--root-path=/cutsolver/api"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.cutsolver.rule=Host(`${DOMAIN_NAME:?err}`) && PathPrefix(`/cutsolver/api`)"
-      - "traefik.http.routers.cutsolver.entrypoints=websecure"
-      - "traefik.http.routers.cutsolver.tls.certresolver=myresolver"
-      - "traefik.http.middlewares.cutsolver-stripprefix.stripprefix.forceslash=true"
-      - "traefik.http.middlewares.cutsolver-stripprefix.stripprefix.prefixes=/cutsolver/api"
-      - "traefik.http.routers.cutsolver.middlewares=cutsolver-stripprefix"
+    networks:
+      - webserver
+      - cutsolver
 
-  traefik:
-    image: traefik:v2.9
+  caddy:
+    image: caddy:2.7-alpine
     restart: unless-stopped
-    command:
-      # TODO remove insecure and debug logs once ready
-      - "--log.level=DEBUG"
-      - "--api.insecure=true"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
-      - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
-      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
-      - "--certificatesresolvers.myresolver.acme.email=${EMAIL_ADDRESS:?err}"
-      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
-      # staging for tests; TODO remove once ready
-      - "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
-    ports:
-      - "80:80"      # HTTP
-      - "443:443"    # HTTPS
-      - "9001:8080"  # Web UI (enabled by --api.insecure=true)
+    environment:
+      - EMAIL_ADDRESS=${EMAIL_ADDRESS:?err}
+      - DOMAIN_NAME=${DOMAIN_NAME:?err}
     volumes:
-      - "./letsencrypt:/letsencrypt"
-      # listen to docker events, *readonly*
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./caddy/data:/data
+      - ./caddy/config:/config
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - webserver
 
   # auto-updates
   # THIS WILL RANDOMLY RESTART YOUR CONTAINERS!
@@ -83,3 +49,10 @@ services:
       # recovery from broken images
       - "--include-stopped"
       - "--revive-stopped"
+
+networks:
+  webserver:
+    name: webserver
+    driver: bridge
+  cutsolver:
+    name: cutsolver
