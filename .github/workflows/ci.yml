@@ -75,17 +75,18 @@ jobs:
             type=ref,event=branch
             type=semver,pattern={{version}}
 
-      # https://github.com/docker/setup-qemu-action
-      - name: Set up QEMU ⚙
-        uses: docker/setup-qemu-action@v3
+      # Multi-Arch takes over 30min right now, it's not worth it
+      # # https://github.com/docker/setup-qemu-action
+      # - name: Set up QEMU ⚙
+      #   uses: docker/setup-qemu-action@v3
 
-      # https://github.com/docker/setup-buildx-action
-      - name: Set up Docker Buildx ⚙
-        id: buildx
-        uses: docker/setup-buildx-action@v3
+      # # https://github.com/docker/setup-buildx-action
+      # - name: Set up Docker Buildx ⚙
+      #   id: buildx
+      #   uses: docker/setup-buildx-action@v3
 
-      - name: Report Buildx platforms 🖊️
-        run: echo ${{ steps.buildx.outputs.platforms }}
+      # - name: Report Buildx platforms 🖊️
+      #   run: echo ${{ steps.buildx.outputs.platforms }}
 
       - name: Login to DH 👤
         uses: docker/login-action@v3
@@ -105,7 +106,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          # platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
