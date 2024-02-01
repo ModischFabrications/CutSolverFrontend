@@ -25,8 +25,7 @@ results, many combinations have equal trimmings and are therefore seen as equall
 It's also my first vue project, you should keep looking for better references. 
 
 ## Usage
-
-Use the provided service at <https://vps.modisch.me/cutsolver/>, host this service yourself if it isn't available at the moment. 
+Use the provided service at <https://cutsolver.modisch.me>, host this service yourself if you want to waste an hour of your time. 
 
 Enter the length of your stock, enter the assumed width of your cutting device (e.g. hacksaw with 3mm) and 
 enter the number and length that you desire.
@@ -40,10 +39,10 @@ See docker compose for details.
 Start that file with `docker-compose up [-d]` and have fun!
 
 ## Contributing
-
 Feel free to contact me or make a pull-request if you want to participate.
+Do look through open issues, you might see one you can help with. 
 
-Remember to set all versions for new releases:
+Remember to update all version references for new releases:
 1. git tag
 2. package.json
 
@@ -58,15 +57,13 @@ Here are some hints for you if you need some help regardless:
 - Run Tests: `npm run test:unit`
 
 ### Updates
-
 Update all dependencies completely with `vue upgrade && npm install` whenever possible, webdev is perpetually broken.
 `npm outdated` in combination with `npm install TODO@latest` can be used to migrate to new major versions.
 
 *Make sure to test before committing any updates!*
 
 ### Push Production Docker Images
-
-Docker Hub Images should be updated automatically, but feel free to build yourself should everything else fail.
+Docker Hub Images should be updated by the CI automatically, but feel free to build yourself should everything else fail.
 Adding "[skip ci]" to the commit message will prevent any ci builds should the need arise.
 Thankfully, local builds are easy with the modern `buildx` workflow.
 
