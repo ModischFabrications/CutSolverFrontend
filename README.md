@@ -1,4 +1,4 @@
-# ![logo](https://github.com/ModischFabrications/CutSolverFrontend/raw/master/src/assets/logo.svg) CutSolver (Frontend)
+# ![logo](https://github.com/ModischFabrications/CutSolverFrontend/raw/main/src/assets/logo.svg) CutSolver (Frontend)
 
 [![CI/CD](https://github.com/ModischFabrications/CutSolverFrontend/actions/workflows/ci.yml/badge.svg)](https://github.com/ModischFabrications/CutSolverFrontend/actions/workflows/ci.yml)
 [![Docker Image Version](https://img.shields.io/docker/v/modischfabrications/cutsolver_frontend?sort=semver)](https://hub.docker.com/r/modischfabrications/cutsolver_frontend)
@@ -11,7 +11,7 @@ It seems like no other free service tackles this specific problem in an easy-to-
 
 *You are very welcome to share how you use this tool!*
 
-![Showcase](https://github.com/ModischFabrications/CutSolverFrontend/raw/master/docs/mobile.png)
+![Showcase](https://github.com/ModischFabrications/CutSolverFrontend/raw/main/docs/mobile.png)
 
 This Solver is using integers exclusively, as there is no need for arbitrary precision (yet).
 Feel free to shift your numbers a few decimals if you need fractions.

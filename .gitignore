@@ -2,7 +2,6 @@
 node_modules
 /dist
 letsencrypt
-workflows
 
 # local env files
 .env.local
