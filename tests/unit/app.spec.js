@@ -50,4 +50,6 @@ describe('App.vue', () => {
 
     expect(wrapper.get(".footer").text()).toContain(versionCode);
   })
+
+  // TODO extend with a lot more tests
 })

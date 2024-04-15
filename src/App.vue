@@ -41,7 +41,7 @@ import MainSolver from "@/components/MainSolver";
 let testresult = Object.assign(new Result(), json_testresult);
 
     const title = "CutSolver";
-    const useMockSolver = false;
+    const isTesting = process.env.JEST_WORKER_ID !== undefined;
 
     export default {
         name: 'App',
@@ -86,6 +86,9 @@ let testresult = Object.assign(new Result(), json_testresult);
                 console.log("Solver URL is now " + '$VUE_APP_BACKEND_SOLVER_URL');
             },
             getBackendVersion(){
+                if (isTesting) 
+                    return;
+
                 console.log("Requesting version from " + this.SOLVER_URL + "version");
                 axios.get(this.SOLVER_URL + "version")
                     .then((reply) => {
@@ -113,7 +116,7 @@ let testresult = Object.assign(new Result(), json_testresult);
 
                 this.busy = true;
 
-                if (useMockSolver) this.callMockSolver(this.job)
+                if (isTesting) this.callMockSolver(this.job)
                   else this.callRemoteSolver(this.job)
 
             },
