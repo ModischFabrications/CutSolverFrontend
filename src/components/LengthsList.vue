@@ -1,23 +1,23 @@
 <template>
     <b-list-group v-if="result !== null">
         <b-list-group-item
-            v-for="(stock, id) in result.lengths"
+            v-for="(entry, id) in result.layout"
             :key="id"
         >
             <b-progress
-                :max="maxLength"
+                :max="entry.stock.length"
                 height="2.5rem"
             >
-                <template v-for="(length, index) in stock">
+                <template v-for="(cut, index) in entry.cuts">
                     <b-progress-bar
                         :key="index"
-                        :value="length[0]"
+                        :value="cut.length"
                         class="bar_label"
                         show-value
                         variant="secondary"
                     >
-                        <span>{{ length[0] }}</span>
-                        <span class="bar_label_name">{{ length[1] }}</span>
+                        <span>{{ cut.length }}</span>
+                        <span v-if="cut.name" class="bar_label_name">{{ cut.name }}</span>
                     </b-progress-bar>
                     <b-progress-bar
                         :key="-1 - index"
@@ -36,11 +36,6 @@ import { Result } from "@/components/data/Result";
 export default {
   name: "LengthsList",
   props: {
-    // use internal job for values
-    maxLength: {
-      type: Number,
-      required: true,
-    },
     cutWidth: {
       type: Number,
       required: true,

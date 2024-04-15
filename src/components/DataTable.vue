@@ -6,14 +6,14 @@
                   {key: 'length', sortable:true},
                   {key: 'delete', label: '', thStyle: { width: '60px'}}
         ]"
-        :items="target_sizes"
+        :items="required"
         :tbody-transition-props="{name: 'flip-list'}"
         bordered
         fixed
         hover
         primary-key="id"
         small
-        sort-by="quantity"
+        sort-by="length"
         sort-desc
         tbody-tr-class="table_row"
         thead-tr-class="table_headings"
@@ -21,7 +21,7 @@
         <template #head(delete)>
             <b-button
                 v-b-tooltip.hover="'Clear table'"
-                @click="target_sizes.splice(0, target_sizes.length)"
+                @click="required.splice(0, required.length)"
             >
                 <b-icon-trash-fill/>
             </b-button>
@@ -30,7 +30,7 @@
             <b-form-input
                 v-model="row.item.name"
                 lazy
-                :placeholder="'Part' + (row.index + 1)"
+                :placeholder="'Part?'"
             />
         </template>
         <template #cell(quantity)="row">
@@ -128,7 +128,7 @@
                 type: Number,
                 required: true
             },
-            defaultTargetSizes: {
+            defaultRequired: {
                 type: Array,
                 required: true
             }
@@ -139,12 +139,12 @@
                 new_length: '',
                 new_quantity: '',
 
-                target_sizes: this.addIndex(this.defaultTargetSizes),
+                required: this.addIndex(this.defaultRequired),
             }
         },
         created() {
             // reference, not copy. Keeps in sync as long as variable is modified, not replaced
-            this.$emit('update:target_sizes', this.target_sizes);
+            this.$emit('update:required', this.required);
         },
         methods: {
             addIndex(array) {
@@ -162,8 +162,8 @@
 
                 let target = {name: this.new_name, quantity: this.new_quantity, length: this.new_length};
 
-                target.id = this.target_sizes.length;
-                this.target_sizes.push(target);
+                target.id = this.required.length;
+                this.required.push(target);
 
                 this.new_name = '';
                 this.new_quantity = '';
@@ -171,8 +171,8 @@
                 this.$refs["input_new_quantity"].focus();
             },
             deleteRow(row) {
-                let index = this.target_sizes.findIndex(element => (element.id === row));
-                this.target_sizes.splice(index, 1);
+                let index = this.required.findIndex(element => (element.id === row));
+                this.required.splice(index, 1);
             }
         }
     }

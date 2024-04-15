@@ -8,11 +8,6 @@
     }
 }
 
-# remove once everyone forgot about it
-vps.modisch.me {
-    redir /cutsolver https://{$DOMAIN_NAME} permanent
-}
-
 {$DOMAIN_NAME} {
     reverse_proxy /solve cutsolver
     reverse_proxy cutsolver_frontend
@@ -27,4 +22,11 @@ vps.modisch.me {
     reverse_proxy /openapi.json cutsolver
 
     respond /ping "pong at {$DOMAIN_NAME}"
+}
+
+# This could be managed by DNS!
+
+# remove once everyone forgot about it
+vps.modisch.me {
+    redir /cutsolver https://{$DOMAIN_NAME} permanent
 }

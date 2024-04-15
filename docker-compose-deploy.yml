@@ -6,7 +6,7 @@ services:
     image: modischfabrications/cutsolver_frontend:latest
     restart: unless-stopped
     environment:
-      - VUE_APP_BACKEND_SOLVER_URL=https://${DOMAIN_NAME:?err}/solve
+      - VUE_APP_BACKEND_SOLVER_URL=https://${DOMAIN_NAME:?err}/
     networks:
       - webserver
       - cutsolver

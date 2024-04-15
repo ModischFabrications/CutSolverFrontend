@@ -13,11 +13,13 @@
         </b-overlay>
         <footer class="fluid-container footer">
             <p>
-                CutSolver v{{ version }}, made with 🖤️ by <a
-                    href="http://modisch.me"
+                Frontend v{{ version }} + Backend {{ backend_version }}
+                <br>
+                Made with 🖤️ by <a
+                    href="https://fabrications.modisch.me"
                     target="_blank"
                 >Modisch Fabrications</a> | <a
-                    href="https://legal.modisch.me/en/privacy"
+                    href="https://fabrications.modisch.me/privacy/"
                     target="_blank"
                 >Privacy Policy</a>
             </p>
@@ -53,6 +55,7 @@ let testresult = Object.assign(new Result(), json_testresult);
             return {
                 title: title,
                 version: process.env.VUE_APP_VERSION,
+                backend_version: "?.?.?",
 
                 job: new Job(),
                 busy: false,
@@ -62,19 +65,42 @@ let testresult = Object.assign(new Result(), json_testresult);
         },
         mounted: function () {
             this.setupEnv();
+            this.getBackendVersion();
             if (!this.SOLVER_URL) {
-                this.showWarning("Set environment variable 'VUE_APP_BACKEND_SOLVER_URL=http://xxx/solve'");
+                this.showWarning("Set environment variable 'VUE_APP_BACKEND_SOLVER_URL=http://your.example.com/'");
             }
         },
         methods: {
             setupEnv() {
                 // we have node and everything is working as expected
-                if (this.SOLVER_URL) return;
+                if (this.SOLVER_URL) 
+                    return;
 
                 // magic string substitution from entrypoint.sh replaces placeholder with actual value
                 this.SOLVER_URL = '$VUE_APP_BACKEND_SOLVER_URL';
-                if (this.SOLVER_URL[0] === "$") this.showWarning("Magic string substitution for backend url failed.");
+                if (this.SOLVER_URL[0] === "$") {
+                    this.showWarning("Magic string substitution for backend url failed.");
+                    return;
+                }
+                if (!this.SOLVER_URL.endsWith("/")) this.SOLVER_URL + "/";
                 console.log("Solver URL is now " + '$VUE_APP_BACKEND_SOLVER_URL');
+            },
+            getBackendVersion(){
+                console.log("Requesting version from " + this.SOLVER_URL + "version");
+                axios.get(this.SOLVER_URL + "version")
+                    .then((reply) => {
+                        this.backend_version = reply.data;
+                        console.log("backend version is " + this.backend_version);
+                    }).catch(error => {
+                        console.log(error);
+                    if (error.response) {
+                        // got response, but it's an error
+                        this.showWarning(error.response.data);
+                    } else if (error.request) {
+                        // request was made but server did not respond
+                        this.showWarning("Server is offline");
+                    }
+                });
             },
             showWarning(text) {
                 console.warn(text);
@@ -113,18 +139,16 @@ let testresult = Object.assign(new Result(), json_testresult);
                 }, 2000);
             },
             callRemoteSolver(job) {
-                console.log("Posting to " + this.SOLVER_URL);
+                console.log("Requesting solve from " + this.SOLVER_URL + "solve");
 
-                axios.post(this.SOLVER_URL, job)
+                axios.post(this.SOLVER_URL + "solve", job)
                     .then((reply) => {
                         this.handleReply(Object.assign(new Result(), reply.data));
                     }).catch(error => {
                         console.log(error);
                     if (error.response) {
-                        // got response, but it's an error
                         this.handleReply(error.response.data);
                     } else if (error.request) {
-                        // request was made but server did not respond
                         this.handleReply("Server is offline");
                     }
                 });
