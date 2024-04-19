@@ -29,7 +29,6 @@
                 <p>Solved using {{ result.solver_type }}. Calculation took {{ usToMs(result.time_us) }}ms.</p>
 
                 <LengthsList
-                    :max-length="result.job.max_length"
                     :cut-width="result.job.cut_width"
                     :result="result"
                 />
@@ -39,7 +38,6 @@
                 <p>Solved using pure magic. Calculation took forever.</p>
 
                 <LengthsList
-                    :max-length="testresult.job.max_length"
                     :cut-width="testresult.job.cut_width"
                     :result="testresult"
                 />

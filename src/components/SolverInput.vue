@@ -51,9 +51,9 @@
         <!-- resize columns -->
         <DataTable
             ref="main_output"
-            :default-target-sizes="defaultTargetSizes"
+            :default-required="defaultRequired"
             :max-length="max_length"
-            :target_sizes.sync="target_sizes"
+            :required.sync="required"
         />
     </div>
 </template>
@@ -71,24 +71,26 @@
         mixins: [validators],
         data: function () {
             return {
-                // other idea for default values?
-                max_length: json_testjob.max_length,
+                // testjob is a good default
+                // TODO implement multi-stock-support
+                max_length: json_testjob.stocks[0].length,
                 cut_width: json_testjob.cut_width,
-                defaultTargetSizes: this.sizes_as_list(json_testjob.target_sizes),
-                target_sizes: []
+                defaultRequired: this.sizes_as_list(json_testjob.required),
+                required: []
             }
         },
         computed: {
             job() {
-                return new Job(Number(this.max_length), Number(this.cut_width), this.target_sizes);
+                // TODO workaround; this is where the new stock system would be attached
+                return new Job([{length: Number(this.max_length)}], Number(this.cut_width), this.required);
             },
             valid() {
                 return this.job.valid();
             }
         },
         methods: {
-            sizes_as_list(target_sizes) {
-                return target_sizes.map((size) => ({"name": size.name, "quantity": parseInt(size.quantity), "length": parseInt(size.length)}));
+            sizes_as_list(required) {
+                return required.map((size) => ({"name": size.name, "quantity": parseInt(size.quantity), "length": parseInt(size.length)}));
             },
             validCut(width) {
                 return (Number.isInteger(width) && width >= 0 && width <= this.max_length / 10);

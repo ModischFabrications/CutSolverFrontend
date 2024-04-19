@@ -1,7 +1,6 @@
-version: '3'
+version: '3.3'
 
 services:
-
   cutsolver_frontend:
     # use specific tags for a persistent reference
     image: modischfabrications/cutsolver_frontend:latest
@@ -12,7 +11,7 @@ services:
       - cutsolver
     environment:
       # point this to your backend host URL!
-      - VUE_APP_BACKEND_SOLVER_URL=http://localhost:8000/solve
+      - VUE_APP_BACKEND_SOLVER_URL=http://localhost:8000/
 
   cutsolver:
     image: modischfabrications/cutsolver:latest
