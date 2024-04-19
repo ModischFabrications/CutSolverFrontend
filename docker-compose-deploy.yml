@@ -3,7 +3,7 @@ version: "3.3"
 services:
   cutsolver_frontend:
     # use specific tags for a persistent reference
-    image: modischfabrications/cutsolver_frontend:latest
+    image: modischfabrications/cutsolver_frontend:1.1.0
     restart: unless-stopped
     environment:
       - VUE_APP_BACKEND_SOLVER_URL=https://${DOMAIN_NAME:?err}/
@@ -14,8 +14,12 @@ services:
       - cutsolver
 
   cutsolver:
-    image: modischfabrications/cutsolver:latest
+    image: modischfabrications/cutsolver:1.1.0
     restart: unless-stopped
+    environment:
+        # can be increased to 1k or something once >=v1.0.3
+      - BRUTEFORCE_MAX_COMBINATIONS=8000
+      - SOLVER_N_MAX=1500
     networks:
       - webserver
       - cutsolver

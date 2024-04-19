@@ -15,6 +15,7 @@
     # optional, but recommended from here
     reverse_proxy /version cutsolver
     reverse_proxy /constants cutsolver
+    reverse_proxy /settings cutsolver
     reverse_proxy /debug cutsolver
 
     reverse_proxy /docs cutsolver
