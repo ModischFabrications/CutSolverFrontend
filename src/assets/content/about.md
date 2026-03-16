@@ -13,11 +13,11 @@ This wouldn't just be possible, it might even be a lot faster. Unfortunately, th
 
 *Do you steal my valuable data and sell it to shady criminals on the black market?*
 
-No, is that something that people do? Do I need to worry about that?  
+No, is that something that people do? Should I start doing that?  
 To be honest, I wouldn't know what to do with it.
 If you have a nice project email me instead, so I can look at your fine work.
 
-[Here](https://legal.modisch.me/en/privacy) is my privacy policy, give it a look for more details (than you could ever possibly want).
+Read my privacy policy for more details than you could ever possibly want.
 
 ## Why did you build this?
 This project was born out of the need to cut lengths of steel tubing. Ordering everything

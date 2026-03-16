@@ -9,20 +9,14 @@
 }
 
 {$DOMAIN_NAME} {
-    reverse_proxy /solve cutsolver
-    reverse_proxy cutsolver_frontend
-
-    # optional, but recommended from here
-    reverse_proxy /version cutsolver
-    reverse_proxy /constants cutsolver
-    reverse_proxy /settings cutsolver
-    reverse_proxy /debug cutsolver
-
-    reverse_proxy /docs cutsolver
-    reverse_proxy /redoc cutsolver
-    reverse_proxy /openapi.json cutsolver
-
     respond /ping "pong at {$DOMAIN_NAME}"
+    
+    # API paths -> backend
+    @api path /solve* /version* /constants* /settings* /debug* /docs* /redoc* /openapi.json*
+    reverse_proxy @api cutsolver
+    
+    # Everything else -> frontend
+    reverse_proxy / cutsolver_frontend
 }
 
 # This could be managed by DNS!

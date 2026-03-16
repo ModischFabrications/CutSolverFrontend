@@ -9,7 +9,7 @@ This is a simple frontend for [CutSolver](https://github.com/ModischFabrications
 This tool can be used to solve the common problem of finding the perfect placement of cuts for specified lengths.
 It seems like no other free service tackles this specific problem in an easy-to-use format, so this is my attempt.
 
-*You are very welcome to share how you use this tool!*
+_You are very welcome to share how you use this tool!_
 
 ![Showcase](https://github.com/ModischFabrications/CutSolverFrontend/raw/main/docs/mobile.png)
 
@@ -17,21 +17,55 @@ This Solver is using integers exclusively, as there is no need for arbitrary pre
 Feel free to shift your numbers a few decimals if you need fractions.
 It has no concept of units, so you can use whatever you want.
 
-*Nerd talk*: This is the 2D "Cutting Stock Problem", which is NP-hard. It can be reduced to the Bin-Packing-Problem (
+_Nerd talk_: This is the 2D "Cutting Stock Problem", which is NP-hard. It can be reduced to the Bin-Packing-Problem (
 BPP). No efficient algorithm exists to calculate a perfect solution in an acceptable timeframe, therefore brute force (perfect
 solution) is used for small jobs (<10 entries) and FFD (fast solution) für larger ones. Don't be surprised if you get different
 results, many combinations have equal trimmings and are therefore seen as equally good.
 
-It's also my first vue project, you should keep looking for better references. 
+It's also my first vue project, you should keep looking for better references.
 
 ## Usage
-Use the provided service at <https://cutsolver.modisch.me>, host this service yourself if you want to waste an hour of your time. 
 
-Enter the length of your stock, enter the assumed width of your cutting device (e.g. hacksaw with 3mm) and 
+Use the provided service at <https://cutsolver.modisch.me>, host this service yourself if you want to waste an hour of your time.
+
+Enter the length of your stock, enter the assumed width of your cutting device (e.g. hacksaw with 3mm) and
 enter the number and length that you desire.
 
 ## Docker Hosting
-Remember to host a [backend instance](https://github.com/ModischFabrications/CutSolver) for yourself! 
+
+### Production Deployment
+
+1. **Copy environment template**
+
+   ```bash
+   cp .env.example .env
+   ```
+
+2. **Edit `.env`** with your values:
+
+   ```
+   DOMAIN_NAME=cutsolver.modisch.me
+   EMAIL_ADDRESS=your-email@example.com
+   ```
+
+3. **Start containers**
+
+   ```bash
+   docker compose -f docker-compose.prod.yml up -d
+   ```
+
+4. **Reload Caddy**
+   ```bash
+   docker exec caddy caddy reload
+   ```
+
+Ports 80/443 must be available on the host.
+
+---
+
+### Development / Self-Hosting
+
+Remember to host a [backend instance](https://github.com/ModischFabrications/CutSolver) for yourself!
 
 Set the backend path by adding a `VUE_APP_BACKEND_SOLVER_URL` to your environment or compose file.
 See docker compose for details.
@@ -39,17 +73,21 @@ See docker compose for details.
 Start that file with `docker-compose up [-d]` and have fun!
 
 ## Contributing
+
 Feel free to contact me or make a pull-request if you want to participate.
-Do look through open issues, you might see one you can help with. 
+Do look through open issues, you might see one you can help with.
 
 Remember to update all version references for new releases:
+
 1. git tag
 2. package.json
 
 ### Build & Dev Environment
+
 I assume you know what you are doing if you want to develop and install it manually.
 
 Here are some hints for you if you need some help regardless:
+
 - Initial setup: `npm install`
 - Compiles and hot-reloads for development:: `npm run serve`
 - Compiles and minifies for production: `npm run build`
@@ -57,12 +95,14 @@ Here are some hints for you if you need some help regardless:
 - Run Tests: `npm run test:unit`
 
 ### Updates
+
 Update all dependencies completely with `vue upgrade && npm install` whenever possible, webdev is perpetually broken.
 `npm outdated` in combination with `npm install TODO@latest` can be used to migrate to new major versions.
 
-*Make sure to test before committing any updates!*
+_Make sure to test before committing any updates!_
 
 ### Push Production Docker Images
+
 Docker Hub Images should be updated by the CI automatically, but feel free to build yourself should everything else fail.
 Adding "[skip ci]" to the commit message will prevent any ci builds should the need arise.
 Thankfully, local builds are easy with the modern `buildx` workflow.
@@ -87,7 +127,8 @@ and be bored, that's healthy from time to time.
 Check [Docker Hub](https://hub.docker.com/r/modischfabrications/cutsolver_frontend) to see results.
 
 ## Dependencies
-*Everything should be handled by Docker and/or NPM.*
+
+_Everything should be handled by Docker and/or NPM._
 
 This project uses:
 

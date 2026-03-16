@@ -1,5 +1,8 @@
 version: "3.3"
 
+# Production deployment for cutsolver
+# Includes simple infrastructure with Caddy (ports 80/443)
+
 services:
   cutsolver_frontend:
     # use specific tags for a persistent reference
@@ -9,7 +12,6 @@ services:
       - VUE_APP_BACKEND_SOLVER_URL=https://${DOMAIN_NAME:?err}/
     networks:
       - webserver
-      - cutsolver
     depends_on:
       - cutsolver
 
@@ -17,15 +19,14 @@ services:
     image: modischfabrications/cutsolver:1.1.0
     restart: unless-stopped
     environment:
-        # can be increased to 1k or something once >=v1.0.3
+      # can be increased to 1k or something once >=v1.0.3
       - BRUTEFORCE_MAX_COMBINATIONS=8000
       - SOLVER_N_MAX=1500
     networks:
       - webserver
-      - cutsolver
 
   caddy:
-    image: caddy:2.7-alpine
+    image: caddy:2.11-alpine
     restart: unless-stopped
     environment:
       - EMAIL_ADDRESS=${EMAIL_ADDRESS:?err}
@@ -40,23 +41,7 @@ services:
     networks:
       - webserver
 
-  # auto-updates
-  # THIS WILL RANDOMLY RESTART YOUR CONTAINERS!
-  watchtower:
-    image: containrrr/watchtower:1.4.0
-    restart: unless-stopped
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    command:
-      - "--interval=900" # seconds
-      - "--cleanup"
-      # recovery from broken images
-      - "--include-stopped"
-      - "--revive-stopped"
-
 networks:
   webserver:
     name: webserver
     driver: bridge
-  cutsolver:
-    name: cutsolver
