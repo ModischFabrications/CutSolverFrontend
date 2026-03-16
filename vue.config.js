@@ -12,7 +12,7 @@ module.exports = {
       rules: [
         {
           test: /\.md$/,
-          use: "raw-loader",
+          type: "asset/source",
         },
       ],
     },
