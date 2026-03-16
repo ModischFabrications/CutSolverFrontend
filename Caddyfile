@@ -9,19 +9,19 @@
 }
 
 {$DOMAIN_NAME} {
+    encode zstd gzip
+
     respond /ping "pong at {$DOMAIN_NAME}"
     
     # API paths -> backend
     @api path /solve* /version* /constants* /settings* /debug* /docs* /redoc* /openapi.json*
-    reverse_proxy @api cutsolver
+    reverse_proxy @api cutsolver:80
     
     # Everything else -> frontend
-    reverse_proxy / cutsolver_frontend
+    reverse_proxy / cutsolver_frontend:80
 }
 
-# This could be managed by DNS!
-
-# remove once everyone forgot about it
+# Legacy redirect
 vps.modisch.me {
     redir /cutsolver https://{$DOMAIN_NAME} permanent
 }
