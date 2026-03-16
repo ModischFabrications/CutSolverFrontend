@@ -11,14 +11,15 @@
 {$DOMAIN_NAME} {
     encode zstd gzip
 
-    respond /ping "pong at {$DOMAIN_NAME}"
+    header /ping Content-Type text/plain
+    respond /ping "pong at {$DOMAIN_NAME}" 200
     
     # API paths -> backend
     @api path /solve* /version* /constants* /settings* /debug* /docs* /redoc* /openapi.json*
     reverse_proxy @api cutsolver:80
     
     # Everything else -> frontend
-    reverse_proxy / cutsolver_frontend:80
+    reverse_proxy cutsolver_frontend:80
 }
 
 # Legacy redirect

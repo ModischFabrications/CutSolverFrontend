@@ -6,7 +6,7 @@ version: "3.3"
 services:
   cutsolver_frontend:
     # use specific tags for a persistent reference
-    image: modischfabrications/cutsolver_frontend:1.1.0
+    image: modischfabrications/cutsolver_frontend:1.1.2
     restart: unless-stopped
     environment:
       - VUE_APP_BACKEND_SOLVER_URL=https://${DOMAIN_NAME:?err}/
