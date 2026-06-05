@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@sum.cumo/vue-browserupdate": "~3.0.1",
-    "axios": "~1.13.6",
+    "axios": "~1.16.0",
     "bootstrap": "~4.6.2",
     "bootstrap-vue": "~2.23.1",
     "core-js": "~3.48.0",
