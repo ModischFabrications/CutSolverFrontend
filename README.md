@@ -70,6 +70,8 @@ Remember to host a [backend instance](https://github.com/ModischFabrications/Cut
 Set the backend path by adding a `VUE_APP_BACKEND_SOLVER_URL` to your environment or compose file.
 See docker compose for details.
 
+> **Note on backend URL substitution**: In the Docker image, `entrypoint.sh` runs `envsubst` to replace the literal string `$VUE_APP_BACKEND_SOLVER_URL` in the compiled JS bundle (`/usr/share/nginx/html/js/app.*.js`) before starting Nginx. Avoid changing this to a relative path (`/`) unless you add a reverse proxy into the container itself, as the standalone Nginx image only serves static assets and does not proxy API endpoints.
+
 Start that file with `docker-compose up [-d]` and have fun!
 
 ## Contributing
