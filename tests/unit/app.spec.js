@@ -51,5 +51,29 @@ describe('App.vue', () => {
     expect(wrapper.get(".footer").text()).toContain(versionCode);
   })
 
-  // TODO extend with a lot more tests
+  it('ensures trailing slash on SOLVER_URL when missing', () => {
+    const wrapper = shallowMount(App, {
+      localVue,
+      data() {
+        return {
+          SOLVER_URL: "http://localhost:8000"
+        };
+      }
+    });
+    wrapper.vm.setupEnv();
+    expect(wrapper.vm.SOLVER_URL).toBe("http://localhost:8000/");
+  })
+
+  it('preserves trailing slash on SOLVER_URL when already present', () => {
+    const wrapper = shallowMount(App, {
+      localVue,
+      data() {
+        return {
+          SOLVER_URL: "http://localhost:8000/"
+        };
+      }
+    });
+    wrapper.vm.setupEnv();
+    expect(wrapper.vm.SOLVER_URL).toBe("http://localhost:8000/");
+  })
 })

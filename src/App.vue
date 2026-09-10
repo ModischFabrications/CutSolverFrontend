@@ -72,18 +72,19 @@ let testresult = Object.assign(new Result(), json_testresult);
         },
         methods: {
             setupEnv() {
-                // we have node and everything is working as expected
-                if (this.SOLVER_URL) 
-                    return;
-
-                // magic string substitution from entrypoint.sh replaces placeholder with actual value
-                this.SOLVER_URL = '$VUE_APP_BACKEND_SOLVER_URL';
-                if (this.SOLVER_URL[0] === "$") {
-                    this.showWarning("Magic string substitution for backend url failed.");
-                    return;
+                // if not set at build time (e.g. in Docker container), use runtime substituted placeholder
+                if (!this.SOLVER_URL) {
+                    this.SOLVER_URL = '$VUE_APP_BACKEND_SOLVER_URL';
+                    if (this.SOLVER_URL[0] === "$") {
+                        this.showWarning("Magic string substitution for backend url failed.");
+                        return;
+                    }
                 }
-                if (!this.SOLVER_URL.endsWith("/")) this.SOLVER_URL + "/";
-                console.log("Solver URL is now " + '$VUE_APP_BACKEND_SOLVER_URL');
+
+                if (this.SOLVER_URL && !this.SOLVER_URL.endsWith("/")) {
+                    this.SOLVER_URL += "/";
+                }
+                console.log("Solver URL is now " + this.SOLVER_URL);
             },
             getBackendVersion(){
                 if (isTesting) 
