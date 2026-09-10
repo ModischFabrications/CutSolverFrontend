@@ -28,12 +28,12 @@ jobs:
 
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           lfs: true
 
       - name: Set up Node ⚙
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
 
       - name: Install dependencies & build ⚙️
         run: |
@@ -57,14 +57,13 @@ jobs:
 
     steps:
       - name: Checkout 🛎️
-        # uses: actions/checkout@v3 # incompatible with git lfs cache (https://github.com/actions/checkout/issues/165#issuecomment-940225299)
-        uses: nschloe/action-checkout-with-lfs-cache@v1.2.2
+        uses: actions/checkout@v6
         with:
-          exclude: "docs/*"
+          lfs: true
 
       - name: Export Metadata for Docker 🖊️
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: |
             modischfabrications/cutsolver_frontend
@@ -73,31 +72,33 @@ jobs:
             type=ref,event=branch
             type=semver,pattern={{version}}
 
+      # https://github.com/docker/setup-qemu-action
       - name: Set up QEMU ⚙
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
 
+      # https://github.com/docker/setup-buildx-action
       - name: Set up Docker Buildx ⚙
         id: buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Report Buildx platforms 🖊️
         run: echo ${{ steps.buildx.outputs.platforms }}
 
       - name: Login to DH 👤
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Login to GHCR 👤
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push to DH & GHCR 📦
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           context: .
           platforms: linux/amd64,linux/arm64 #,linux/arm/v7       # Multi-Arch takes over 30min with v7, it's not worth it
