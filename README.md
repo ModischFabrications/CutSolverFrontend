@@ -19,8 +19,7 @@ It has no concept of units, so you can use whatever you want.
 
 _Nerd talk_: This is the 2D "Cutting Stock Problem", which is NP-hard. It can be reduced to the Bin-Packing-Problem (
 BPP). No efficient algorithm exists to calculate a perfect solution in an acceptable timeframe, therefore brute force (perfect
-solution) is used for small jobs (<10 entries) and FFD (fast solution) für larger ones. Don't be surprised if you get different
-results, many combinations have equal trimmings and are therefore seen as equally good.
+solution) is used for small jobs (<10 entries) and FFD (fast solution) for larger ones. When multiple solutions yield equal total trimmings, the solver breaks ties deterministically to favor larger, reusable scrap pieces over fragmented cut-offs.
 
 It's also my first vue project, you should keep looking for better references.
 
@@ -70,7 +69,9 @@ Remember to host a [backend instance](https://github.com/ModischFabrications/Cut
 Set the backend path by adding a `VUE_APP_BACKEND_SOLVER_URL` to your environment or compose file.
 See docker compose for details.
 
-> **Note on backend URL substitution**: In the Docker image, `entrypoint.sh` runs `envsubst` to replace the literal string `$VUE_APP_BACKEND_SOLVER_URL` in the compiled JS bundle (`/usr/share/nginx/html/js/app.*.js`) before starting Nginx. Avoid changing this to a relative path (`/`) unless you add a reverse proxy into the container itself, as the standalone Nginx image only serves static assets and does not proxy API endpoints.
+> **Note on backend URL substitution & routing**:
+> - In the Docker image, `entrypoint.sh` runs `envsubst` to replace the literal string `$VUE_APP_BACKEND_SOLVER_URL` in the compiled JS bundle (`/usr/share/nginx/html/js/app.*.js`) before starting Nginx.
+> - In `src/App.vue`, trailing slashes are automatically sanitized (`cleanBaseUrl = this.solverUrl.replace(/\/+$/, '')`) so API routes (e.g. `/solve`) resolve cleanly regardless of whether the environment variable has a trailing slash.
 
 Start that file with `docker-compose up [-d]` and have fun!
 
@@ -79,10 +80,16 @@ Start that file with `docker-compose up [-d]` and have fun!
 Feel free to contact me or make a pull-request if you want to participate.
 Do look through open issues, you might see one you can help with.
 
-Remember to update all version references for new releases:
+### Release & Versioning
 
-1. git tag
-2. package.json
+1. Update `version` in both `package.json` and `package-lock.json`.
+2. Commit your changes and tag manually:
+   ```bash
+   git tag vX.Y.Z
+   git push origin main
+   git push origin vX.Y.Z
+   ```
+GitHub Actions CI will automatically run unit tests, compile the Vue SPA bundle, and build/publish multi-arch Docker images (`linux/amd64,linux/arm64`) to Docker Hub (`modischfabrications/cutsolver_frontend:<VERSION>`) and GHCR. Note: 32-bit ARM (`linux/arm/v7`) is retired.
 
 ### Build & Dev Environment
 
@@ -103,30 +110,14 @@ Update all dependencies completely with `vue upgrade && npm install` whenever po
 
 _Make sure to test before committing any updates!_
 
-### Push Production Docker Images
+### Docker
 
-Docker Hub Images should be updated by the CI automatically, but feel free to build yourself should everything else fail.
-Adding "[skip ci]" to the commit message will prevent any ci builds should the need arise.
-Thankfully, local builds are easy with the modern `buildx` workflow.
+Prebuilt multi-arch images (`linux/amd64,linux/arm64`) are built and published automatically to Docker Hub and GHCR upon pushing a release tag.
 
-Installation of a multibuilder (once):
-
+For local production container builds:
+```bash
+docker build -t modischfabrications/cutsolver_frontend:local .
 ```
-docker buildx create --name multibuilder --use
-docker buildx inspect multibuilder --bootstrap
-```
-
-Build and push the new multi-arch image with the following steps (add version, e.g. v0.3.7):
-
-```
-docker login -u modischfabrications
-docker buildx build --platform linux/amd64,linux/arm/v7,linux/arm64 -t modischfabrications/cutsolver_frontend:<VERSION> -t modischfabrications/cutsolver_frontend:latest --push .
-```
-
-Wait a while for every dependency to build (~600) and all layers to be pushed (~200s). Feel free to drink some water
-and be bored, that's healthy from time to time.
-
-Check [Docker Hub](https://hub.docker.com/r/modischfabrications/cutsolver_frontend) to see results.
 
 ## Dependencies
 
