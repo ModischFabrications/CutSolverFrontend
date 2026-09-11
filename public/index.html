@@ -10,6 +10,17 @@
     <link rel='icon' type='image/png' href='./favicon.png'>
     <meta content="#da532c" name="msapplication-TileColor">
     <meta content="#764141" name="theme-color">
+
+    <!-- Umami Analytics (Tracks cutsolver.modisch.me and third-party hostings; ignores localhost) -->
+    <script>
+      if (!['localhost', '127.0.0.1'].includes(window.location.hostname)) {
+        const s = document.createElement('script');
+        s.defer = true;
+        s.src = 'https://analytics.modisch.me/script.js';
+        s.setAttribute('data-website-id', '1466a35c-b1d1-4906-801b-676804a500ae');
+        document.head.appendChild(s);
+      }
+    </script>
 </head>
 <body>
 <noscript>
